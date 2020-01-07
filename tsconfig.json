@@ -1,0 +1,4 @@
+{
+  "extends": "@vtex/tsconfig",
+  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts"]
+}

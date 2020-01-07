@@ -1,0 +1,17 @@
+{
+  "name": "react-hook-form-jsonschema",
+  "version": "0.1.0",
+  "description": "Wrapper arround react-hook-form to create forms from a JSON schema.",
+  "main": "index.js",
+  "author": "Helena Steck <helena.steck@vtex.com.br>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.1.4",
+    "@vtex/tsconfig": "^0.3.0",
+    "eslint": "^6.8.0",
+    "eslint-config-vtex": "^11.2.1",
+    "eslint-config-vtex-react": "^5.1.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.4"
+  }
+}
