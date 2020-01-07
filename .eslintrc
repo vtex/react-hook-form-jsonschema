@@ -1,5 +1,5 @@
 {
-  "extends": "vtex",
+  "extends": "vtex-react",
   "root": true,
   "env": {
     "node": true,
