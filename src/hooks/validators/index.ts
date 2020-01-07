@@ -1,0 +1,1 @@
+export { getStringValidator } from './getStringValidator'
