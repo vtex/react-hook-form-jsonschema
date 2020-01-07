@@ -6,12 +6,20 @@
   "author": "Helena Steck <helena.steck@vtex.com.br>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^13.1.4",
-    "@vtex/tsconfig": "^0.3.0",
+    "@types/react": "^16.8.22",
+    "@types/react-intl": "^2.3.18",
+    "@vtex/test-tools": "^0.3.2",
+    "@vtex/tsconfig": "^0.2.0",
     "eslint": "^6.8.0",
-    "eslint-config-vtex": "^11.2.1",
     "eslint-config-vtex-react": "^5.1.0",
-    "prettier": "^1.19.1",
-    "typescript": "^3.7.4"
-  }
+    "prettier": "^1.18.2",
+    "prop-types": "^15.7.2",
+    "typescript": "3.7.3"
+  },
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-hook-form": "^4.4.4"
+  },
+  "repository": "git@github.com:vtex/react-hook-form-jsonschema.git"
 }
