@@ -1,7 +1,5 @@
-import { useContext } from 'react'
-
 import { JSONSchemaType } from './types'
-import { InternalFormContext } from '../components/types'
+import { useFormContext } from '../components/types'
 
 const concatFormPath = (path: string, newNode: string): string => {
   return path + '/' + newNode
@@ -20,7 +18,7 @@ const getSplitPath = (path: string): Array<string> => {
 
 const useObjectFromPath = (path: string): [JSONSchemaType, boolean] => {
   const splitPath = getSplitPath(path)
-  let currentOriginal = useContext(InternalFormContext).schema
+  let currentOriginal = useFormContext().schema
   let isRequired = false
 
   for (let node = 0; node < splitPath.length; node++) {
@@ -51,7 +49,7 @@ const useObjectFromPath = (path: string): [JSONSchemaType, boolean] => {
 }
 
 const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
-  const originalSchema = useContext(InternalFormContext).schema
+  const originalSchema = useFormContext().schema
   const orderedSchemaKeys = Object.keys(data).sort()
   const objectFromData: JSONSchemaType = {}
 
