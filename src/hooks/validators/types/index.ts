@@ -6,4 +6,5 @@ export enum ErrorTypes {
   minValue = '__form_error_minValue__',
   pattern = '__form_error_pattern__',
   multipleOf = '__form_error_multipleOf',
+  undefinedError = '__form_error_undefinedError__',
 }
