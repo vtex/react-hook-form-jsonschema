@@ -1,16 +1,17 @@
 import React from 'react'
-import { ValidationOptions } from 'react-hook-form'
+import { ValidationOptions, FieldError } from 'react-hook-form'
 
 import { UseRadioParameters } from './types'
-import { getStringValidator } from './validators'
 import { useFormContext } from '../components/types'
 import { useObjectFromPath } from '../JSONSchema'
 import {
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
+  getBooleanValidator,
   getNumberValidator,
-} from './validators/getNumberValidator'
+  getStringValidator,
+} from './validators'
 
 const getItemInputId = (
   path: string,
@@ -29,7 +30,7 @@ const getItemLabelId = (
 }
 
 export const useRadio: UseRadioParameters = path => {
-  const { register } = useFormContext()
+  const { register, errors } = useFormContext()
   const [currentObject, isRequired] = useObjectFromPath(path)
 
   let validator: ValidationOptions = {}
@@ -44,12 +45,15 @@ export const useRadio: UseRadioParameters = path => {
     const minimum = getNumberMinimum(currentObject)
     const maximum = getNumberMaximum(currentObject)
     const step = getNumberStep(currentObject)
-    if (minimum && maximum && step != 'any') {
+    if (minimum !== undefined && maximum !== undefined && step != 'any') {
       validator = getNumberValidator(currentObject, isRequired)
       for (let i = minimum; i < maximum; i += step) {
         items.push(i.toString())
       }
     }
+  } else if (currentObject.type === 'boolean') {
+    validator = getBooleanValidator(isRequired)
+    items = ['true', 'false']
   }
 
   return {
@@ -82,5 +86,15 @@ export const useRadio: UseRadioParameters = path => {
       return itemProps
     },
     getItems: () => items,
+    getError: () => {
+      if (errors[path]) {
+        const retError = {
+          message: (errors[path] as FieldError).message,
+        }
+        return retError
+      } else {
+        return undefined
+      }
+    },
   }
 }
