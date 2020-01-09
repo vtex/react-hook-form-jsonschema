@@ -1,5 +1,6 @@
 import { JSONSchemaType } from './types'
 import { useFormContext } from '../components/types'
+import { object } from 'prop-types'
 
 const concatFormPath = (path: string, newNode: string): string => {
   return path + '/' + newNode
@@ -16,10 +17,11 @@ const getSplitPath = (path: string): Array<string> => {
   return split
 }
 
-const useObjectFromPath = (path: string): [JSONSchemaType, boolean] => {
+const useObjectFromPath = (path: string): [JSONSchemaType, boolean, string] => {
   const splitPath = getSplitPath(path)
   let currentOriginal = useFormContext().schema
   let isRequired = false
+  let objectName = ''
 
   for (let node = 0; node < splitPath.length; node++) {
     if (
@@ -27,25 +29,23 @@ const useObjectFromPath = (path: string): [JSONSchemaType, boolean] => {
       currentOriginal.type &&
       currentOriginal.type === 'object'
     ) {
-      currentOriginal = currentOriginal.properties[splitPath[node]]
       if (
-        node < splitPath.length - 1 &&
-        currentOriginal &&
         currentOriginal.required &&
-        (currentOriginal.required as Array<string>).indexOf(
-          splitPath[node + 1]
-        ) > -1
+        (currentOriginal.required as Array<string>).indexOf(splitPath[node]) >
+          -1
       ) {
         isRequired = true
       } else {
         isRequired = false
       }
+      objectName = splitPath[node]
+      currentOriginal = currentOriginal.properties[splitPath[node]]
     } else {
       currentOriginal = {}
       break
     }
   }
-  return [currentOriginal, isRequired]
+  return [currentOriginal, isRequired, objectName]
 }
 
 const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
