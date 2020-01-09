@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { FormContextValues, FieldValues } from 'react-hook-form'
+import { FormContextValues, FieldValues, Mode, OnSubmit } from 'react-hook-form'
 
 import { JSONSchemaType } from '../../JSONSchema'
 
@@ -17,4 +17,11 @@ export function useFormContext<T extends FieldValues>(): FormValuesWithSchema<
   return useContext(InternalFormContext) as FormValuesWithSchema<T>
 }
 
-export type FormContextProps = { schema: JSONSchemaType }
+export type FormContextProps = {
+  mode?: Mode
+  revalidateMode?: Mode
+  submitFocusError?: boolean
+  onSubmit?: OnSubmit<FieldValues>
+  noNativeValidate?: boolean
+  schema: JSONSchemaType
+}
