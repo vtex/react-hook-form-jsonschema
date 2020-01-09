@@ -8,3 +8,12 @@ export enum ErrorTypes {
   multipleOf = '__form_error_multipleOf',
   undefinedError = '__form_error_undefinedError__',
 }
+
+export type ErrorMessageValues = boolean | number | string | undefined
+
+export type ErrorMessage =
+  | {
+      message: ErrorTypes
+      expected: ErrorMessageValues
+    }
+  | undefined

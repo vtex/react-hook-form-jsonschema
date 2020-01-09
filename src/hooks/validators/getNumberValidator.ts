@@ -6,9 +6,14 @@ import { ErrorTypes } from './types'
 // Used for exclusiveMinimum and exlusiveMaximum values
 const epsilon = 0.0001
 
+export const toFixed = (value: number, precision: number): string => {
+  const power = Math.pow(10, precision || 0)
+  return String(Math.round(value * power) / power)
+}
+
 export const getNumberStep = (
   currentObject: JSONSchemaType
-): number | 'any' => {
+): [number | 'any', number | undefined] => {
   // Get dominant step value if it is defined
   const step =
     currentObject.multipleOf !== undefined
@@ -18,13 +23,24 @@ export const getNumberStep = (
       : currentObject.type === 'integer'
       ? 1
       : 'any'
-  return step
+
+  let decimalPlaces = undefined
+  if (currentObject.multipleOf) {
+    const decimals = currentObject.multipleOf.toString().split('.')[1]
+    if (decimals) {
+      decimalPlaces = decimals.length
+    } else {
+      decimalPlaces = 0
+    }
+  }
+
+  return [step, decimalPlaces]
 }
 
 export const getNumberMinimum = (
   currentObject: JSONSchemaType
 ): number | undefined => {
-  const step = getNumberStep(currentObject)
+  const [step] = getNumberStep(currentObject)
 
   // Calculates wether there is a minimum or exclusiveMinimum value defined somewhere
   let minimum =
@@ -46,7 +62,7 @@ export const getNumberMinimum = (
 export const getNumberMaximum = (
   currentObject: JSONSchemaType
 ): number | undefined => {
-  const step = getNumberStep(currentObject)
+  const [step] = getNumberStep(currentObject)
 
   // Calculates wether there is a maximum or exclusiveMaximum value defined somewhere
   let maximum =
