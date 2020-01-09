@@ -5,12 +5,14 @@ import { UseRadioParameters } from './types'
 import { useFormContext } from '../components/types'
 import { useObjectFromPath } from '../JSONSchema'
 import {
+  getBooleanValidator,
+  getError,
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
-  getBooleanValidator,
   getNumberValidator,
   getStringValidator,
+  toFixed,
 } from './validators'
 
 const getItemInputId = (
@@ -35,6 +37,11 @@ export const useRadio: UseRadioParameters = path => {
 
   let validator: ValidationOptions = {}
   let items: Array<string> = []
+  let minimum: number | undefined
+  let maximum: number | undefined
+  let step: number | 'any'
+  let decimalPlaces: number | undefined
+
   if (currentObject.type === 'string') {
     items = currentObject.enum ? currentObject.enum : []
     validator = getStringValidator(currentObject, isRequired)
@@ -42,13 +49,17 @@ export const useRadio: UseRadioParameters = path => {
     currentObject.type === 'number' ||
     currentObject.type === 'integer'
   ) {
-    const minimum = getNumberMinimum(currentObject)
-    const maximum = getNumberMaximum(currentObject)
-    const step = getNumberStep(currentObject)
+    const stepAndDecimalPlaces = getNumberStep(currentObject)
+    step = stepAndDecimalPlaces[0]
+    decimalPlaces = stepAndDecimalPlaces[1]
+
+    minimum = getNumberMinimum(currentObject)
+    maximum = getNumberMaximum(currentObject)
+
     if (minimum !== undefined && maximum !== undefined && step != 'any') {
       validator = getNumberValidator(currentObject, isRequired)
       for (let i = minimum; i < maximum; i += step) {
-        items.push(i.toString())
+        items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
       }
     }
   } else if (currentObject.type === 'boolean') {
@@ -86,15 +97,14 @@ export const useRadio: UseRadioParameters = path => {
       return itemProps
     },
     getItems: () => items,
-    getError: () => {
-      if (errors[path]) {
-        const retError = {
-          message: (errors[path] as FieldError).message,
-        }
-        return retError
-      } else {
-        return undefined
-      }
-    },
+    getError: () =>
+      getError(
+        errors[path] ? (errors[path] as FieldError) : undefined,
+        currentObject,
+        isRequired,
+        minimum,
+        maximum,
+        step
+      ),
   }
 }
