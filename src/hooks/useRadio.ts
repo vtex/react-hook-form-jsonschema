@@ -33,7 +33,7 @@ const getItemLabelId = (
 
 export const useRadio: UseRadioParameters = path => {
   const { register, errors } = useFormContext()
-  const [currentObject, isRequired] = useObjectFromPath(path)
+  const [currentObject, isRequired, currentName] = useObjectFromPath(path)
 
   let validator: ValidationOptions = {}
   let items: Array<string> = []
@@ -94,6 +94,7 @@ export const useRadio: UseRadioParameters = path => {
       return itemProps
     },
     getItems: () => items,
+    getName: () => currentName,
     getError: () =>
       getError(
         errors[path] ? (errors[path] as FieldError) : undefined,
