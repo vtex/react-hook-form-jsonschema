@@ -1,7 +1,7 @@
 import React from 'react'
 import { ValidationOptions, FieldError } from 'react-hook-form'
 
-import { UseRawFormParameters } from './types'
+import { UseRawInputParameters } from './types'
 import { useFormContext } from '../components/types'
 import {
   getError,
@@ -21,7 +21,7 @@ const getLabelId = (path: string, inputType: string): string => {
   return path + '-' + inputType + '-label'
 }
 
-export const useRawInput: UseRawFormParameters = (
+export const useRawInput: UseRawInputParameters = (
   path,
   inputType,
   currentObject,
