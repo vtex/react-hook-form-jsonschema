@@ -3,47 +3,55 @@ import React from 'react'
 import { ErrorMessage } from '../validators'
 import { JSONSchemaType } from '../../JSONSchema'
 
+export interface BasicInputReturnType {
+  getLabelProps(): React.ComponentProps<'label'>
+  getName(): string
+  getError(): ErrorMessage
+}
+
+export interface UseRadioReturnType extends BasicInputReturnType {
+  getItems(): Array<string>
+  getItemInputProps(index: number): React.ComponentProps<'input'>
+  getItemLabelProps(index: number): React.ComponentProps<'label'>
+}
+
 export interface UseRadioParameters {
-  (path: string): {
-    getLabelProps(): React.ComponentProps<'label'>
-    getItems(): Array<string>
-    getItemInputProps(index: number): React.ComponentProps<'input'>
-    getItemLabelProps(index: number): React.ComponentProps<'label'>
-    getError(): ErrorMessage
-  }
+  (path: string): UseRadioReturnType
+}
+
+export interface UseSelectReturnType extends BasicInputReturnType {
+  getItemOptionProps(index: number): React.ComponentProps<'option'>
+  getItems(): Array<string>
+  getLabelProps(): React.ComponentProps<'label'>
+  getSelectProps(): React.ComponentProps<'select'>
 }
 
 export interface UseSelectParameters {
-  (path: string): {
-    getError(): ErrorMessage
-    getItemOptionProps(index: number): React.ComponentProps<'option'>
-    getItems(): Array<string>
-    getLabelProps(): React.ComponentProps<'label'>
-    getName(): string
-    getSelectProps(): React.ComponentProps<'select'>
-  }
+  (path: string): UseSelectReturnType
 }
 
-export interface UseRawFormParameters {
+export interface UseRawInputReturnType extends BasicInputReturnType {
+  getInputProps(): React.ComponentProps<'input'>
+}
+
+export interface UseRawInputParameters {
   (
     path: string,
     inputType: string,
     currentObject: JSONSchemaType,
     isRequired: boolean,
     currentName: string
-  ): {
-    getLabelProps(): React.ComponentProps<'label'>
-    getInputProps(): React.ComponentProps<'input'>
-    getName(): string
-    getError(): ErrorMessage
-  }
+  ): UseRawInputReturnType
+}
+
+export interface UseInputParameters {
+  (path: string): UseRawInputReturnType
+}
+
+export interface UseTextAreaReturnType extends BasicInputReturnType {
+  getTextAreaProps(): React.ComponentProps<'textarea'>
 }
 
 export interface UseTextAreaParameters {
-  (path: string): {
-    getLabelProps(): React.ComponentProps<'label'>
-    getTextAreaProps(): React.ComponentProps<'textarea'>
-    getName(): string
-    getError(): ErrorMessage
-  }
+  (path: string): UseTextAreaReturnType
 }
