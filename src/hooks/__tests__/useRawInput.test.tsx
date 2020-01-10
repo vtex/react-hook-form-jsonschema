@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { render, wait, fireEvent } from '@vtex/test-tools/react'
 
-import { useRawForm } from '../useRawForm'
+import { useRawInput } from '../useRawInput'
 import { FormContext } from '../../components'
 
 const mockRawFormSchema = {
@@ -37,7 +37,7 @@ const mockRawFormSchema = {
 }
 
 const MockRawForm: FC<{ path: string }> = props => {
-  const methods = useRawForm(props.path, 'text')
+  const methods = useRawInput(props.path, 'text')
 
   return (
     <label {...methods.getLabelProps()}>

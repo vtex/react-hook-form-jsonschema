@@ -22,7 +22,7 @@ const getLabelId = (path: string, inputType: string): string => {
   return path + '-' + inputType + '-label'
 }
 
-export const useRawForm: UseRawFormParameters = (path, inputType) => {
+export const useRawInput: UseRawFormParameters = (path, inputType) => {
   const { register, errors } = useFormContext()
   const [currentObject, isRequired, currentName] = useObjectFromPath(path)
 
