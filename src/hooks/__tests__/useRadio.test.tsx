@@ -118,7 +118,7 @@ test('should have boolean true and false', () => {
 })
 
 test('should raise error', async () => {
-  const { getByText, debug } = render(
+  const { getByText } = render(
     // esling-disable-next-line no-console
     <FormContext
       schema={mockRadioSchema}
@@ -132,7 +132,6 @@ test('should raise error', async () => {
   )
 
   getByText('Submit').click()
-  debug()
 
   await wait(() => expect(getByText('This is an error!')).toBeDefined())
 })
