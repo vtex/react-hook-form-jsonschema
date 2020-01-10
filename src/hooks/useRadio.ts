@@ -82,10 +82,7 @@ export const useRadio: UseRadioParameters = path => {
       itemProps.type = 'radio'
       itemProps.required = isRequired
       itemProps.id = getItemInputId(path, index, items)
-      itemProps.value =
-        currentObject.enum && currentObject.enum[index]
-          ? currentObject.enum[index]
-          : ''
+      itemProps.value = items[index]
 
       return itemProps
     },
