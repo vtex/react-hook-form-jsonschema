@@ -3,7 +3,6 @@ import { ValidationOptions, FieldError } from 'react-hook-form'
 
 import { UseRawFormParameters } from './types'
 import { useFormContext } from '../components/types'
-import { useObjectFromPath } from '../JSONSchema'
 import {
   getError,
   getNumberMaximum,
@@ -22,9 +21,14 @@ const getLabelId = (path: string, inputType: string): string => {
   return path + '-' + inputType + '-label'
 }
 
-export const useRawInput: UseRawFormParameters = (path, inputType) => {
+export const useRawInput: UseRawFormParameters = (
+  path,
+  inputType,
+  currentObject,
+  isRequired,
+  currentName
+) => {
   const { register, errors } = useFormContext()
-  const [currentObject, isRequired, currentName] = useObjectFromPath(path)
 
   let validator: ValidationOptions = {}
   let minimum: number | undefined

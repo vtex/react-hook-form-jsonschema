@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ErrorMessage } from '../validators'
+import { JSONSchemaType } from '../../JSONSchema'
 
 export interface UseRadioParameters {
   (path: string): {
@@ -24,7 +25,13 @@ export interface UseSelectParameters {
 }
 
 export interface UseRawFormParameters {
-  (path: string, inputType: string): {
+  (
+    path: string,
+    inputType: string,
+    currentObject: JSONSchemaType,
+    isRequired: boolean,
+    currentName: string
+  ): {
     getLabelProps(): React.ComponentProps<'label'>
     getInputProps(): React.ComponentProps<'input'>
     getName(): string

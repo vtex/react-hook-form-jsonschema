@@ -3,6 +3,7 @@ import { render, wait, fireEvent } from '@vtex/test-tools/react'
 
 import { useRawInput } from '../useRawInput'
 import { FormContext } from '../../components'
+import { useObjectFromPath } from '../../JSONSchema'
 
 const mockRawFormSchema = {
   type: 'object',
@@ -37,7 +38,14 @@ const mockRawFormSchema = {
 }
 
 const MockRawForm: FC<{ path: string }> = props => {
-  const methods = useRawInput(props.path, 'text')
+  const [currentObject, isRequired, currentName] = useObjectFromPath(props.path)
+  const methods = useRawInput(
+    props.path,
+    'text',
+    currentObject,
+    isRequired,
+    currentName
+  )
 
   return (
     <label {...methods.getLabelProps()}>
