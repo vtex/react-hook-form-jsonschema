@@ -31,3 +31,12 @@ export interface UseRawFormParameters {
     getError(): ErrorMessage
   }
 }
+
+export interface UseTextAreaParameters {
+  (path: string): {
+    getLabelProps(): React.ComponentProps<'label'>
+    getTextAreaProps(): React.ComponentProps<'textarea'>
+    getName(): string
+    getError(): ErrorMessage
+  }
+}
