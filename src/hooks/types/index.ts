@@ -12,6 +12,17 @@ export interface UseRadioParameters {
   }
 }
 
+export interface UseSelectParameters {
+  (path: string): {
+    getError(): ErrorMessage
+    getItemOptionProps(index: number): React.ComponentProps<'option'>
+    getItems(): Array<string>
+    getLabelProps(): React.ComponentProps<'label'>
+    getName(): string
+    getSelectProps(): React.ComponentProps<'select'>
+  }
+}
+
 export interface UseRawFormParameters {
   (path: string, inputType: string): {
     getLabelProps(): React.ComponentProps<'label'>
