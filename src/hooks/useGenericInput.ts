@@ -1,8 +1,8 @@
-import { FieldError } from 'react-hook-form'
+import { FormContextValues, FieldError } from 'react-hook-form'
 
-import { GenericInputParameters } from './types'
+import { GenericInputParameters, BasicInputReturnType } from './types'
 import { useFormContext } from '../components/types'
-import { useObjectFromPath } from '../JSONSchema'
+import { useObjectFromPath, JSONSchemaType } from '../JSONSchema'
 import {
   getError,
   getNumberMaximum,
@@ -10,9 +10,14 @@ import {
   getNumberStep,
 } from './validators'
 
-export const useGenericInput: GenericInputParameters = path => {
-  const formContext = useFormContext()
-  const [currentObject, isRequired, currentName] = useObjectFromPath(path)
+export const getGenericInput = (
+  formContext: FormContextValues,
+  pathInfo: [JSONSchemaType, boolean, string],
+  path: string
+): BasicInputReturnType => {
+  const currentObject = pathInfo[0]
+  const isRequired = pathInfo[1]
+  const currentName = pathInfo[2]
 
   let minimum: number | undefined
   let maximum: number | undefined
@@ -44,4 +49,10 @@ export const useGenericInput: GenericInputParameters = path => {
       ),
     getObject: () => currentObject,
   }
+}
+
+export const useGenericInput: GenericInputParameters = path => {
+  const formContext = useFormContext()
+  const pathInfo = useObjectFromPath(path)
+  return getGenericInput(formContext, pathInfo, path)
 }
