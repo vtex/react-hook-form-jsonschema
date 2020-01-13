@@ -1,10 +1,12 @@
 import React from 'react'
-import { ValidationOptions, FieldError } from 'react-hook-form'
+import { ValidationOptions } from 'react-hook-form'
 
-import { UseRawInputParameters } from './types'
-import { useFormContext } from '../components/types'
 import {
-  getError,
+  UseRawInputParameters,
+  BasicInputReturnType,
+  UseRawInputReturnType,
+} from './types'
+import {
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
@@ -21,14 +23,12 @@ const getLabelId = (path: string, inputType: string): string => {
   return path + '-' + inputType + '-label'
 }
 
-export const useRawInput: UseRawInputParameters = (
-  path,
-  inputType,
-  currentObject,
-  isRequired,
-  currentName
-) => {
-  const { register, errors } = useFormContext()
+export const getRawInputCustomFields = (
+  baseFields: BasicInputReturnType,
+  inputType: string
+): UseRawInputReturnType => {
+  const { register } = baseFields.formContext
+  const currentObject = baseFields.getObject()
 
   let validator: ValidationOptions = {}
   let minimum: number | undefined
@@ -38,7 +38,7 @@ export const useRawInput: UseRawInputParameters = (
 
   const itemProps: React.ComponentProps<'input'> = { key: '' }
   if (currentObject.type === 'string') {
-    validator = getStringValidator(currentObject, isRequired)
+    validator = getStringValidator(currentObject, baseFields.isRequired)
 
     itemProps.pattern = currentObject.pattern
     itemProps.minLength = currentObject.minLength
@@ -54,7 +54,7 @@ export const useRawInput: UseRawInputParameters = (
     minimum = getNumberMinimum(currentObject)
     maximum = getNumberMaximum(currentObject)
 
-    validator = getNumberValidator(currentObject, isRequired)
+    validator = getNumberValidator(currentObject, baseFields.isRequired)
 
     itemProps.min = minimum
     itemProps.max = maximum
@@ -63,33 +63,26 @@ export const useRawInput: UseRawInputParameters = (
   }
 
   return {
+    ...baseFields,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getLabelId(path, inputType)
-      itemProps.htmlFor = getInputId(path, inputType)
+      itemProps.id = getLabelId(baseFields.path, inputType)
+      itemProps.htmlFor = getInputId(baseFields.path, inputType)
 
       return itemProps
     },
     getInputProps: () => {
-      itemProps.name = path
+      itemProps.name = baseFields.path
       itemProps.ref = register(validator)
       itemProps.type = inputType
-      itemProps.required = isRequired
-      itemProps.id = getInputId(path, inputType)
+      itemProps.required = baseFields.isRequired
+      itemProps.id = getInputId(baseFields.path, inputType)
 
       return itemProps
     },
-    getName: () => {
-      return currentName
-    },
-    getError: () =>
-      getError(
-        errors[path] ? (errors[path] as FieldError) : undefined,
-        currentObject,
-        isRequired,
-        minimum,
-        maximum,
-        step
-      ),
   }
+}
+
+export const useRawInput: UseRawInputParameters = (baseObject, inputType) => {
+  return getRawInputCustomFields(baseObject, inputType)
 }

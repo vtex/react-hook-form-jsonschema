@@ -1,9 +1,15 @@
-import { UseInputParameters } from './types'
-import { useObjectFromPath } from '../JSONSchema'
-import { useRawInput } from './useRawInput'
+import {
+  UseInputParameters,
+  BasicInputReturnType,
+  UseRawInputReturnType,
+} from './types'
+import { getRawInputCustomFields } from './useRawInput'
+import { useGenericInput } from './useGenericInput'
 
-export const useInput: UseInputParameters = path => {
-  const [currentObject, isRequired, currentName] = useObjectFromPath(path)
+export const getInputCustomFields = (
+  baseObject: BasicInputReturnType
+): UseRawInputReturnType => {
+  const currentObject = baseObject.getObject()
 
   let inputType: string
   switch (currentObject.format) {
@@ -24,5 +30,9 @@ export const useInput: UseInputParameters = path => {
       inputType = 'text'
   }
 
-  return useRawInput(path, inputType, currentObject, isRequired, currentName)
+  return getRawInputCustomFields(baseObject, inputType)
+}
+
+export const useInput: UseInputParameters = path => {
+  return getInputCustomFields(useGenericInput(path))
 }

@@ -41,7 +41,7 @@ const MockTextArea: FC<{ path: string }> = props => {
 
   return (
     <>
-      <label {...methods.getLabelProps()}>{methods.getName()}</label>
+      <label {...methods.getLabelProps()}>{methods.name}</label>
       <textarea {...methods.getTextAreaProps()} />
       {methods.getError() && <p>This is an error!</p>}
     </>

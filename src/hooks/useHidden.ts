@@ -1,23 +1,25 @@
-import { UseInputParameters } from './types'
-import { useObjectFromPath } from '../JSONSchema'
-import { useRawInput } from './useRawInput'
+import {
+  UseInputParameters,
+  BasicInputReturnType,
+  UseRawInputReturnType,
+} from './types'
+import { useGenericInput } from './useGenericInput'
+import { getRawInputCustomFields } from './useRawInput'
 
-export const useHidden: UseInputParameters = path => {
-  const [currentObject, , currentName] = useObjectFromPath(path)
+export const getHiddenCustomFields = (
+  baseObject: BasicInputReturnType
+): UseRawInputReturnType => {
+  baseObject.isRequired = false
 
-  const inputType = 'hidden'
-
-  const returnObject = useRawInput(
-    path,
-    inputType,
-    currentObject,
-    false,
-    currentName
-  )
+  const returnObject = getRawInputCustomFields(baseObject, 'hidden')
 
   returnObject.getLabelProps = () => {
     return {}
   }
 
   return returnObject
+}
+
+export const useHidden: UseInputParameters = path => {
+  return getHiddenCustomFields(useGenericInput(path))
 }

@@ -1,15 +1,24 @@
 import React from 'react'
+import { FormContextValues } from 'react-hook-form'
 
 import { ErrorMessage } from '../validators'
 import { JSONSchemaType } from '../../JSONSchema'
 
 export interface BasicInputReturnType {
-  getLabelProps(): React.ComponentProps<'label'>
-  getName(): string
   getError(): ErrorMessage
+  getObject(): JSONSchemaType
+  formContext: FormContextValues
+  isRequired: boolean
+  name: string
+  path: string
+}
+
+export interface GenericInputParameters {
+  (path: string): BasicInputReturnType
 }
 
 export interface UseRadioReturnType extends BasicInputReturnType {
+  getLabelProps(): React.ComponentProps<'label'>
   getItems(): Array<string>
   getItemInputProps(index: number): React.ComponentProps<'input'>
   getItemLabelProps(index: number): React.ComponentProps<'label'>
@@ -20,9 +29,9 @@ export interface UseRadioParameters {
 }
 
 export interface UseSelectReturnType extends BasicInputReturnType {
+  getLabelProps(): React.ComponentProps<'label'>
   getItemOptionProps(index: number): React.ComponentProps<'option'>
   getItems(): Array<string>
-  getLabelProps(): React.ComponentProps<'label'>
   getSelectProps(): React.ComponentProps<'select'>
 }
 
@@ -31,17 +40,12 @@ export interface UseSelectParameters {
 }
 
 export interface UseRawInputReturnType extends BasicInputReturnType {
+  getLabelProps(): React.ComponentProps<'label'>
   getInputProps(): React.ComponentProps<'input'>
 }
 
 export interface UseRawInputParameters {
-  (
-    path: string,
-    inputType: string,
-    currentObject: JSONSchemaType,
-    isRequired: boolean,
-    currentName: string
-  ): UseRawInputReturnType
+  (baseObject: BasicInputReturnType, inputType: string): UseRawInputReturnType
 }
 
 export interface UseInputParameters {
@@ -49,9 +53,21 @@ export interface UseInputParameters {
 }
 
 export interface UseTextAreaReturnType extends BasicInputReturnType {
+  getLabelProps(): React.ComponentProps<'label'>
   getTextAreaProps(): React.ComponentProps<'textarea'>
 }
 
 export interface UseTextAreaParameters {
   (path: string): UseTextAreaReturnType
+}
+
+export type UseObjectReturnType = Array<
+  | UseRawInputReturnType
+  | UseTextAreaReturnType
+  | UseSelectReturnType
+  | UseRadioReturnType
+>
+
+export interface UseObjectProperties {
+  (path: string): UseObjectReturnType
 }

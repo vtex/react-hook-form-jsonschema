@@ -49,7 +49,7 @@ const MockSelect: FC<{ path: string }> = props => {
 
   return (
     <>
-      <label {...methods.getLabelProps()}>{methods.getName()}</label>
+      <label {...methods.getLabelProps()}>{methods.name}</label>
       <select {...methods.getSelectProps()}>
         {methods.getItems().map((value, index) => {
           return (

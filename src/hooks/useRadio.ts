@@ -1,12 +1,13 @@
 import React from 'react'
-import { ValidationOptions, FieldError } from 'react-hook-form'
+import { ValidationOptions } from 'react-hook-form'
 
-import { UseRadioParameters } from './types'
-import { useFormContext } from '../components/types'
-import { useObjectFromPath } from '../JSONSchema'
+import {
+  UseRadioParameters,
+  BasicInputReturnType,
+  UseRadioReturnType,
+} from './types'
 import {
   getBooleanValidator,
-  getError,
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
@@ -14,6 +15,7 @@ import {
   getStringValidator,
   toFixed,
 } from './validators'
+import { useGenericInput } from './useGenericInput'
 
 const getItemInputId = (
   path: string,
@@ -31,9 +33,10 @@ const getItemLabelId = (
   return path + '-radio-label-' + (items[index] ? items[index] : '')
 }
 
-export const useRadio: UseRadioParameters = path => {
-  const { register, errors } = useFormContext()
-  const [currentObject, isRequired, currentName] = useObjectFromPath(path)
+export const getRadioCustomFields = (
+  baseObject: BasicInputReturnType
+): UseRadioReturnType => {
+  const currentObject = baseObject.getObject()
 
   let validator: ValidationOptions = {}
   let items: Array<string> = []
@@ -44,7 +47,7 @@ export const useRadio: UseRadioParameters = path => {
 
   if (currentObject.type === 'string') {
     items = currentObject.enum ? currentObject.enum : []
-    validator = getStringValidator(currentObject, isRequired)
+    validator = getStringValidator(currentObject, baseObject.isRequired)
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'
@@ -57,52 +60,49 @@ export const useRadio: UseRadioParameters = path => {
     maximum = getNumberMaximum(currentObject)
 
     if (minimum !== undefined && maximum !== undefined && step != 'any') {
-      validator = getNumberValidator(currentObject, isRequired)
+      validator = getNumberValidator(currentObject, baseObject.isRequired)
       for (let i = minimum; i < maximum; i += step) {
         items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
       }
     }
   } else if (currentObject.type === 'boolean') {
-    validator = getBooleanValidator(isRequired)
+    validator = getBooleanValidator(baseObject.isRequired)
     items = ['true', 'false']
   }
 
   return {
+    ...baseObject,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}
-      labelProps.id = path + '-label'
+      labelProps.id = baseObject.path + '-label'
       labelProps.htmlFor =
-        currentObject.title !== undefined ? currentObject.title : path
+        currentObject.title !== undefined
+          ? currentObject.title
+          : baseObject.path
       return labelProps
     },
     getItemInputProps: index => {
       const itemProps: React.ComponentProps<'input'> = { key: '' }
-      itemProps.name = path
-      itemProps.ref = register(validator)
+      itemProps.name = baseObject.path
+      itemProps.ref = baseObject.formContext.register(validator)
       itemProps.type = 'radio'
-      itemProps.required = isRequired
-      itemProps.id = getItemInputId(path, index, items)
+      itemProps.required = baseObject.isRequired
+      itemProps.id = getItemInputId(baseObject.path, index, items)
       itemProps.value = items[index]
 
       return itemProps
     },
     getItemLabelProps: index => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getItemLabelId(path, index, items)
-      itemProps.htmlFor = getItemInputId(path, index, items)
+      itemProps.id = getItemLabelId(baseObject.path, index, items)
+      itemProps.htmlFor = getItemInputId(baseObject.path, index, items)
 
       return itemProps
     },
     getItems: () => items,
-    getName: () => currentName,
-    getError: () =>
-      getError(
-        errors[path] ? (errors[path] as FieldError) : undefined,
-        currentObject,
-        isRequired,
-        minimum,
-        maximum,
-        step
-      ),
   }
+}
+
+export const useRadio: UseRadioParameters = path => {
+  return getRadioCustomFields(useGenericInput(path))
 }

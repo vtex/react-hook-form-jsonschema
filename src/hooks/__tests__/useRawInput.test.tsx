@@ -3,7 +3,7 @@ import { render, wait, fireEvent } from '@vtex/test-tools/react'
 
 import { useRawInput } from '../useRawInput'
 import { FormContext } from '../../components'
-import { useObjectFromPath } from '../../JSONSchema'
+import { useGenericInput } from '../useGenericInput'
 
 const mockRawFormSchema = {
   type: 'object',
@@ -38,18 +38,11 @@ const mockRawFormSchema = {
 }
 
 const MockRawForm: FC<{ path: string }> = props => {
-  const [currentObject, isRequired, currentName] = useObjectFromPath(props.path)
-  const methods = useRawInput(
-    props.path,
-    'text',
-    currentObject,
-    isRequired,
-    currentName
-  )
+  const methods = useRawInput(useGenericInput(props.path), 'text')
 
   return (
     <label {...methods.getLabelProps()}>
-      {methods.getName()}
+      {methods.name}
       <input {...methods.getInputProps()} />
       {methods.getError() && <p>This is an error!</p>}
     </label>
