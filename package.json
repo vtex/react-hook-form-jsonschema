@@ -6,6 +6,7 @@
   "author": "Helena Steck <helena.steck@vtex.com.br>",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@types/react": "^16.8.22",
     "@types/react-intl": "^2.3.18",
