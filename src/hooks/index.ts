@@ -6,3 +6,5 @@ export { usePassword } from './usePassword'
 export { useRadio } from './useRadio'
 export { useSelect } from './useSelect'
 export { useTextArea } from './useTextArea'
+
+export * from './types'
