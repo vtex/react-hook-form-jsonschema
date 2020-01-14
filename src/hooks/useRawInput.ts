@@ -5,6 +5,7 @@ import {
   UseRawInputParameters,
   BasicInputReturnType,
   UseRawInputReturnType,
+  InputTypes,
 } from './types'
 import {
   getNumberMaximum,
@@ -64,6 +65,7 @@ export const getRawInputCustomFields = (
 
   return {
     ...baseFields,
+    type: InputTypes.input,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
       itemProps.id = getLabelId(baseFields.path, inputType)

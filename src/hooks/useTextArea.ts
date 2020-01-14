@@ -5,6 +5,7 @@ import {
   UseTextAreaParameters,
   BasicInputReturnType,
   UseTextAreaReturnType,
+  InputTypes,
 } from './types'
 import { getNumberValidator, getStringValidator } from './validators'
 import { useGenericInput } from './useGenericInput'
@@ -39,6 +40,7 @@ export const getTextAreaCustomFields = (
 
   return {
     ...baseObject,
+    type: InputTypes.textArea,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
       itemProps.id = getLabelId(baseObject.path)

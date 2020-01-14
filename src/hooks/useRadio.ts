@@ -5,6 +5,7 @@ import {
   UseRadioParameters,
   BasicInputReturnType,
   UseRadioReturnType,
+  InputTypes,
 } from './types'
 import {
   getBooleanValidator,
@@ -72,6 +73,7 @@ export const getRadioCustomFields = (
 
   return {
     ...baseObject,
+    type: InputTypes.radio,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}
       labelProps.id = baseObject.path + '-label'

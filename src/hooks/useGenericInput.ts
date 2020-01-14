@@ -1,6 +1,10 @@
 import { FormContextValues, FieldError } from 'react-hook-form'
 
-import { GenericInputParameters, BasicInputReturnType } from './types'
+import {
+  GenericInputParameters,
+  BasicInputReturnType,
+  InputTypes,
+} from './types'
 import { useFormContext } from '../components/types'
 import { useObjectFromPath, JSONSchemaType } from '../JSONSchema'
 import {
@@ -36,6 +40,7 @@ export const getGenericInput = (
     path: path,
     isRequired: isRequired,
     formContext: formContext,
+    type: InputTypes.generic,
     getError: () =>
       getError(
         formContext.errors[path]

@@ -4,6 +4,14 @@ import { FormContextValues } from 'react-hook-form'
 import { ErrorMessage } from '../validators'
 import { JSONSchemaType } from '../../JSONSchema'
 
+export enum InputTypes {
+  generic = '__input_type_generic__',
+  radio = '__input_type_radio__',
+  select = '__input_type_select__',
+  input = '__input_type_input__',
+  textArea = '__input_type_textArea__',
+}
+
 export interface BasicInputReturnType {
   getError(): ErrorMessage
   getObject(): JSONSchemaType
@@ -11,6 +19,7 @@ export interface BasicInputReturnType {
   isRequired: boolean
   name: string
   path: string
+  type: InputTypes
 }
 
 export interface GenericInputParameters {
@@ -29,6 +38,7 @@ export interface UseRadioParameters {
 }
 
 export interface UseSelectReturnType extends BasicInputReturnType {
+  type: InputTypes.select
   getLabelProps(): React.ComponentProps<'label'>
   getItemOptionProps(index: number): React.ComponentProps<'option'>
   getItems(): Array<string>
@@ -61,12 +71,13 @@ export interface UseTextAreaParameters {
   (path: string): UseTextAreaReturnType
 }
 
-export type UseObjectReturnType = Array<
+export type InputReturnTypes =
   | UseRawInputReturnType
   | UseTextAreaReturnType
   | UseSelectReturnType
   | UseRadioReturnType
->
+
+export type UseObjectReturnType = Array<InputReturnTypes>
 
 export interface UseObjectProperties {
   (path: string): UseObjectReturnType
