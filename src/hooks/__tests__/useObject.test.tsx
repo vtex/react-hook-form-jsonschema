@@ -9,7 +9,14 @@ import {
   InputTypes,
   UseRadioReturnType,
   UseSelectReturnType,
+  UISchemaType,
+  UITypes,
 } from '../types'
+
+const toFixed = (value: number, precision: number): string => {
+  const power = Math.pow(10, precision || 0)
+  return String(Math.round(value * power) / power)
+}
 
 const mockObjectSchema = {
   type: 'object',
@@ -42,6 +49,15 @@ const mockObjectSchema = {
       type: 'string',
       name: 'test-showError',
       enum: ['should', 'show', 'error', 'when', 'submitted'],
+    },
+  },
+}
+
+const mockUISchema: UISchemaType = {
+  type: UITypes.default,
+  properties: {
+    numberTest: {
+      type: UITypes.select,
     },
   },
 }
@@ -100,8 +116,8 @@ const SpecializedObject: FC<{ baseObject: InputReturnTypes }> = props => {
   return <></>
 }
 
-const MockObject: FC<{ path: string }> = props => {
-  const methods = useObject(props.path)
+const MockObject: FC<{ path: string; UISchema?: UISchemaType }> = props => {
+  const methods = useObject({ path: props.path, UISchema: props.UISchema })
 
   const objectForm = []
   for (const obj of methods) {
@@ -145,4 +161,20 @@ test('should raise error', async () => {
   getByText('Submit').click()
 
   await wait(() => expect(getByText('This is an error!')).toBeDefined())
+})
+
+test('ui schema should render number and input as select', async () => {
+  const { getByText } = render(
+    <FormContext schema={mockObjectSchema}>
+      <MockObject path="#" UISchema={mockUISchema} />
+    </FormContext>
+  )
+
+  for (
+    let i = mockObjectSchema.properties.numberTest.minimum;
+    i < mockObjectSchema.properties.numberTest.maximum;
+    i += mockObjectSchema.properties.numberTest.multipleOf
+  ) {
+    expect(getByText(toFixed(i, 1))).toBeDefined()
+  }
 })

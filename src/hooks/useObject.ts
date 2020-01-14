@@ -1,6 +1,12 @@
 import { FormContextValues } from 'react-hook-form'
 
-import { UseObjectProperties, UseObjectReturnType } from './types'
+import {
+  UseObjectProperties,
+  UseObjectReturnType,
+  BasicInputReturnType,
+  UISchemaType,
+  UITypes,
+} from './types'
 import {
   JSONSchemaType,
   useObjectFromPath,
@@ -11,16 +17,16 @@ import { getInputCustomFields } from './useInput'
 import { getRadioCustomFields } from './useRadio'
 import { useFormContext } from '../components/types'
 import { getSelectCustomFields } from './useSelect'
+import { getHiddenCustomFields } from './useHidden'
+import { getPasswordCustomFields } from './usePassword'
+import { getTextAreaCustomFields } from './useTextArea'
 
-function getStructure(
-  formContext: FormContextValues,
-  pathInfo: [JSONSchemaType, boolean, string],
-  path: string
+function getFromGeneric(
+  genericInput: BasicInputReturnType
 ): UseObjectReturnType {
-  let inputs: UseObjectReturnType = []
-  const currentObject = pathInfo[0]
+  const currentObject = genericInput.getObject()
+  const inputs: UseObjectReturnType = []
 
-  const genericInput = getGenericInput(formContext, pathInfo, path)
   switch (currentObject.type) {
     case 'string':
       if (currentObject.enum) {
@@ -36,36 +42,86 @@ function getStructure(
     case 'boolean':
       inputs.push(getRadioCustomFields(genericInput))
       break
-    case 'object':
-      {
-        const objKeys = Object.keys(currentObject.properties)
-        const requiredFields: Array<string> | undefined = currentObject.required
-        for (const key of objKeys) {
-          const isRequired = requiredFields
-            ? requiredFields.indexOf(key) !== -1
-            : false
-          const currentPathInfo: [JSONSchemaType, boolean, string] = [
-            currentObject.properties[key],
-            isRequired,
-            key,
-          ]
-          const currentPath = concatFormPath(path, key)
-          inputs = inputs.concat(
-            getStructure(formContext, currentPathInfo, currentPath)
-          )
-        }
+  }
+  return inputs
+}
+
+function getStructure(
+  formContext: FormContextValues,
+  pathInfo: [JSONSchemaType, boolean, string],
+  path: string,
+  UISchema: UISchemaType | undefined
+): UseObjectReturnType {
+  let inputs: UseObjectReturnType = []
+  const currentObject = pathInfo[0]
+
+  const genericInput = getGenericInput(formContext, pathInfo, path)
+
+  if (currentObject.type === 'object') {
+    const objKeys = Object.keys(currentObject.properties)
+    const requiredFields: Array<string> | undefined = currentObject.required
+    for (const key of objKeys) {
+      const isRequired = requiredFields
+        ? requiredFields.indexOf(key) !== -1
+        : false
+
+      const currentPathInfo: [JSONSchemaType, boolean, string] = [
+        currentObject.properties[key],
+        isRequired,
+        key,
+      ]
+
+      const currentPath = concatFormPath(path, key)
+
+      let newUISchema = undefined
+      if (UISchema && UISchema.properties) {
+        newUISchema = UISchema.properties[key]
       }
+
+      inputs = inputs.concat(
+        getStructure(formContext, currentPathInfo, currentPath, newUISchema)
+      )
+    }
+    return inputs
+  }
+
+  if (!UISchema) {
+    return inputs.concat(getFromGeneric(genericInput))
+  }
+
+  switch (UISchema.type) {
+    case UITypes.default:
+      inputs = inputs.concat(getFromGeneric(genericInput))
+      break
+    case UITypes.hidden:
+      inputs.push(getHiddenCustomFields(genericInput))
+      break
+    case UITypes.input:
+      inputs.push(getInputCustomFields(genericInput))
+      break
+    case UITypes.password:
+      inputs.push(getPasswordCustomFields(genericInput))
+      break
+    case UITypes.radio:
+      inputs.push(getRadioCustomFields(genericInput))
+      break
+    case UITypes.select:
+      inputs.push(getSelectCustomFields(genericInput))
+      break
+    case UITypes.textArea:
+      inputs.push(getTextAreaCustomFields(genericInput))
       break
   }
 
   return inputs
 }
 
-export const useObject: UseObjectProperties = path => {
+export const useObject: UseObjectProperties = props => {
   const childArray = getStructure(
     useFormContext(),
-    useObjectFromPath(path),
-    path
+    useObjectFromPath(props.path),
+    props.path,
+    props.UISchema
   )
 
   return childArray
