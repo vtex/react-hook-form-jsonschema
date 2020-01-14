@@ -1,4 +1,4 @@
-import { FormContextValues, useFormContext } from 'react-hook-form'
+import { FormContextValues } from 'react-hook-form'
 
 import { UseObjectProperties, UseObjectReturnType } from './types'
 import {
@@ -8,6 +8,8 @@ import {
 } from '../JSONSchema'
 import { getGenericInput } from './useGenericInput'
 import { getInputCustomFields } from './useInput'
+import { getRadioCustomFields } from './useRadio'
+import { useFormContext } from '../components/types'
 
 const useObjectStructure = (path: string): UseObjectReturnType => {
   function getStructure(
