@@ -26,6 +26,12 @@
       "./setupTest.js"
     ]
   },
+  "scripts": {
+    "build": "rollup -c",
+    "build-watch": "rollup -cw",
+    "test": "vtex-test-tools test",
+    "test-watch": "vtex-test-tools test --watch"
+  },
   "dependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
