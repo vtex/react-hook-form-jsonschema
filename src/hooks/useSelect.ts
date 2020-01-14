@@ -7,8 +7,6 @@ import {
   UseSelectReturnType,
   InputTypes,
 } from './types'
-import { useFormContext } from '../components/types'
-import { useObjectFromPath } from '../JSONSchema'
 import {
   getBooleanValidator,
   getNumberMaximum,
