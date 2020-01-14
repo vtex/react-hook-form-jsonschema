@@ -6,6 +6,7 @@
   "author": "Helena Steck <helena.steck@vtex.com.br>",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^7.0.0",
     "@types/react": "^16.8.22",
     "@types/react-intl": "^2.3.18",
     "@vtex/test-tools": "^0.3.2",
@@ -15,7 +16,9 @@
     "mutationobserver-shim": "^0.3.3",
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
-    "typescript": "3.7.3"
+    "rollup": "^1.29.0",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "typescript": "^3.7.4"
   },
   "jest": {
     "setupFilesAfterEnv": [
