@@ -10,6 +10,7 @@ import { getGenericInput } from './useGenericInput'
 import { getInputCustomFields } from './useInput'
 import { getRadioCustomFields } from './useRadio'
 import { useFormContext } from '../components/types'
+import { getSelectCustomFields } from './useSelect'
 
 function getStructure(
   formContext: FormContextValues,
@@ -22,7 +23,11 @@ function getStructure(
   const genericInput = getGenericInput(formContext, pathInfo, path)
   switch (currentObject.type) {
     case 'string':
-      inputs.push(getInputCustomFields(genericInput))
+      if (currentObject.enum) {
+        inputs.push(getSelectCustomFields(genericInput))
+      } else {
+        inputs.push(getInputCustomFields(genericInput))
+      }
       break
     case 'integer':
     case 'number':
