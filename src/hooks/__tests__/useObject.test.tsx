@@ -8,6 +8,7 @@ import {
   InputReturnTypes,
   InputTypes,
   UseRadioReturnType,
+  UseSelectReturnType,
 } from '../types'
 
 const toFixed = (value: number, precision: number): string => {
@@ -77,6 +78,26 @@ const SpecializedObject: FC<{ baseObject: InputReturnTypes }> = props => {
               </label>
             )
           })}
+        </>
+      )
+    }
+    case InputTypes.select: {
+      const selectObject = props.baseObject as UseSelectReturnType
+      return (
+        <>
+          <label {...selectObject.getLabelProps()}>{selectObject.name}</label>
+          <select {...selectObject.getSelectProps()}>
+            {selectObject.getItems().map((value, index) => {
+              return (
+                <option
+                  {...selectObject.getItemOptionProps(index)}
+                  key={`${value}${index}`}
+                >
+                  {value}
+                </option>
+              )
+            })}
+          </select>
         </>
       )
     }
