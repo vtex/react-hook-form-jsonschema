@@ -11,11 +11,6 @@ import {
   UseSelectReturnType,
 } from '../types'
 
-const toFixed = (value: number, precision: number): string => {
-  const power = Math.pow(10, precision || 0)
-  return String(Math.round(value * power) / power)
-}
-
 const mockObjectSchema = {
   type: 'object',
   required: ['errorTest'],
