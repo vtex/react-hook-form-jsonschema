@@ -12,6 +12,16 @@ export enum InputTypes {
   textArea = '__input_type_textArea__',
 }
 
+export enum UITypes {
+  default = '__input_type_default__',
+  radio = '__input_type_radio__',
+  select = '__input_type_select__',
+  input = '__input_type_input__',
+  hidden = '__input_type_hidden__',
+  password = '__input_type_password__',
+  textArea = '__input_type_textArea__',
+}
+
 export interface BasicInputReturnType {
   getError(): ErrorMessage
   getObject(): JSONSchemaType
@@ -79,6 +89,15 @@ export type InputReturnTypes =
 
 export type UseObjectReturnType = Array<InputReturnTypes>
 
+export type UISchemaType = {
+  type: UITypes
+  properties?: {
+    [key: string]: UISchemaType
+  }
+}
+
+export type UseObjectParameters = { path: string; UISchema?: UISchemaType }
+
 export interface UseObjectProperties {
-  (path: string): UseObjectReturnType
+  (props: UseObjectParameters): UseObjectReturnType
 }
