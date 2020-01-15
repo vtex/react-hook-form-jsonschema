@@ -2,7 +2,8 @@
   "name": "react-hook-form-jsonschema",
   "version": "0.1.0",
   "description": "Wrapper arround react-hook-form to create forms from a JSON schema.",
-  "main": "index.js",
+  "main": "output/index.cjs.js",
+  "module": "output/index.esm.js",
   "author": "Helena Steck <helena.steck@vtex.com.br>",
   "license": "MIT",
   "devDependencies": {
@@ -18,6 +19,7 @@
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "rollup": "^1.29.0",
+    "rollup-plugin-terser": "^5.2.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "typescript": "^3.7.4"
   },
@@ -28,14 +30,16 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build-watch": "rollup -cw",
+    "build:watch": "rollup -cw",
     "test": "vtex-test-tools test",
-    "test-watch": "vtex-test-tools test --watch"
+    "test:watch": "vtex-test-tools test --watch"
   },
   "dependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
     "react-hook-form": "^4.4.4"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "repository": "git@github.com:vtex/react-hook-form-jsonschema.git"
 }
