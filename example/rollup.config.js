@@ -45,8 +45,6 @@ export default {
     }),
     resolve({
       browser: true,
-      dedupe: importee =>
-        importee === 'svelte' || importee.startsWith('svelte/'),
     }),
     commonjs({
       include: 'node_modules/**',
