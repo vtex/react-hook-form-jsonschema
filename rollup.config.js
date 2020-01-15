@@ -1,24 +1,23 @@
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from 'rollup-plugin-typescript2'
-import react from 'react'
-import reactDom from 'react-dom'
+import { terser } from 'rollup-plugin-terser'
+import pkg from './package.json'
+
+const PROD = !process.env.ROLLUP_WATCH
 
 export default {
   input: 'src/index.ts',
-  output: {
-    dir: 'output',
-    format: 'cjs',
-  },
-  plugins: [
-    resolve(),
-    typescript(),
-    commonjs({
-      include: 'node_modules/**',
-      namedExports: {
-        react: Object.keys(react),
-        'react-dom': Object.keys(reactDom),
-      },
-    }),
+  output: [
+    {
+      file: pkg.main,
+      format: 'cjs',
+    },
+    {
+      file: pkg.module,
+      format: 'es',
+    },
   ],
+  plugins: [resolve(), commonjs(), typescript(), PROD && terser()],
+  external: ['react', 'react-dom'],
 }
