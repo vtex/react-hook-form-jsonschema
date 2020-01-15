@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import {
   useObject,
   FormContext,
@@ -116,7 +115,7 @@ function RenderMyJSONSchema() {
 
   return (
     <FormContext schema={personSchema}>
-      {/* <ObjectRenderer path="#" UISchema={UISchema} /> */}
+      <ObjectRenderer path="#" UISchema={UISchema} />
     </FormContext>
   )
 }
