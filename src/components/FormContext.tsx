@@ -2,6 +2,7 @@ import React, { FC, createContext, useContext } from 'react'
 import { useForm, FieldValues } from 'react-hook-form'
 
 import { FormContextProps, FormValuesWithSchema } from './types'
+import { node } from 'prop-types'
 
 export const InternalFormContext = createContext<FormValuesWithSchema<
   FieldValues
@@ -24,11 +25,12 @@ export const FormContext: FC<FormContextProps> = props => {
   if (props.onSubmit) {
     formProps.onSubmit = methods.handleSubmit(props.onSubmit)
   }
+  if (props.noNativeValidate) {
+    formProps.noValidate = props.noNativeValidate
+  }
   return (
     <InternalFormContext.Provider value={{ ...methods, schema: props.schema }}>
-      <form {...formProps} noValidate>
-        {props.children}
-      </form>
+      <form {...formProps}>{props.children}</form>
     </InternalFormContext.Provider>
   )
 }
