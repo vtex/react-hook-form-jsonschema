@@ -5,7 +5,7 @@ import {
   BasicInputReturnType,
   InputTypes,
 } from './types'
-import { useFormContext } from '../components/types'
+import { useFormContext } from '../components'
 import { useObjectFromPath, JSONSchemaType } from '../JSONSchema'
 import {
   getError,
