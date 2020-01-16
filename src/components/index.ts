@@ -1,2 +1,2 @@
-export { FormContextProps, useFormContext } from './types'
-export { FormContext } from './FormContext'
+export { FormContextProps } from './types'
+export { FormContext, useFormContext } from './FormContext'

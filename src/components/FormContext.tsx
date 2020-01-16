@@ -1,7 +1,17 @@
-import React, { FC } from 'react'
-import { useForm } from 'react-hook-form'
+import React, { FC, createContext, useContext } from 'react'
+import { useForm, FieldValues } from 'react-hook-form'
 
-import { FormContextProps, InternalFormContext } from './types'
+import { FormContextProps, FormValuesWithSchema } from './types'
+
+export const InternalFormContext = createContext<FormValuesWithSchema<
+  FieldValues
+> | null>(null)
+
+export function useFormContext<T extends FieldValues>(): FormValuesWithSchema<
+  T
+> {
+  return useContext(InternalFormContext) as FormValuesWithSchema<T>
+}
 
 export const FormContext: FC<FormContextProps> = props => {
   const methods = useForm({

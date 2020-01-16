@@ -1,5 +1,5 @@
 import { JSONSchemaType } from './types'
-import { useFormContext } from '../components/types'
+import { useFormContext } from '../components'
 
 const concatFormPath = (path: string, newNode: string): string => {
   return path + '/' + newNode
