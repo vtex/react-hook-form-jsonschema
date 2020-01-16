@@ -218,9 +218,9 @@ const UISchema = {
 ```
 
 - The **`UITypes`** is an enum with the following values:
-  - `'default'`: input will have a default type based on what react-hook-form-jsonschema thinks is better.
-  - `'radio'`: input will be of the radio type, just as returned by the `useRadio` hook
-  - `'select'`: input will be of the select type, just as returned by the `useSelect` hook
+  - `default`: input will have a default type based on what react-hook-form-jsonschema thinks is better.
+  - `radio`: input will be of the radio type, just as returned by the `useRadio` hook
+  - `select`: input will be of the select type, just as returned by the `useSelect` hook
   - `input`: input will be of the input type, just as returned by the `useInput` hook
   - `hidden`: input will be of the hidden type, just as returned by the `useHidden` hook
   - `password`: input will be of the password type, just as returned by the `usePassword` hook
