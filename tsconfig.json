@@ -8,5 +8,5 @@
     "declarationDir": "./output",
     "outDir": "./output"
   },
-  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts"]
+  "exclude": ["**/__mocks__/*", "**/__tests__/*"]
 }
