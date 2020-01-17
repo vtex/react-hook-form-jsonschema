@@ -6,9 +6,7 @@
   "module": "output/index.esm.js",
   "types": "output/index.d.ts",
   "files": [
-    "output",
-    "!**/__mocks__/",
-    "!**/__tests__/"
+    "output"
   ],
   "author": "Helena Steck <helena.steck@vtex.com.br>",
   "license": "MIT",
