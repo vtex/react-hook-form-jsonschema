@@ -77,7 +77,7 @@ yarn add react-hook-form-jsonschema
 ##### Optional:
 
 - `mode`: String to indicate when to validate the input, default is `'onSubmit'`.
-  - `'onblur'`: Validate when an input field is blurred
+  - `'onBlur'`: Validate when an input field is blurred
   - `'onChange'`: Validate when an input field value changes
   - `'onSubmit'`: Validate when the submit is triggered
 - `revalidateMode`: String to indicate when inputs with errors get re-validated, default is `'onChange'`.
