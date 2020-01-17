@@ -1,6 +1,6 @@
 {
   "name": "react-hook-form-jsonschema",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Wrapper arround react-hook-form to create forms from a JSON schema.",
   "main": "output/index.cjs.js",
   "module": "output/index.esm.js",
