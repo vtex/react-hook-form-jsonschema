@@ -192,7 +192,7 @@ function InputField(props) {
 
 ##### Description
 
-This hook works a little different than the others. This hook will return an array of where each of it's elements corresponds to the return type of one of the others hook.
+This hook works a little differently than the others. This hook will return an array of which each of its elements corresponds to the return type of one of the other hooks.
 
 ##### Parameters:
 
