@@ -320,7 +320,7 @@ function ObjectRenderer(props) {
       <div key={`${obj.type}${obj.path}`}>
         <SpecializedObject baseObject={obj} />
         // This is the simplest way to check if there was an error, but
-        // remeber that you can still check the error message to
+        // remember that you can still check the error message to
         // specialize the kind of information you give to your
         // user.
         {obj.getError() && <p>This is an error!</p>}
