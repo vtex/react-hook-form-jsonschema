@@ -3,7 +3,10 @@
   "compilerOptions": {
     "noEmitOnError": false,
     "typeRoots": ["node_modules/@types"],
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "declaration": true,
+    "declarationDir": "./output",
+    "outDir": "./output"
   },
   "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts"]
 }
