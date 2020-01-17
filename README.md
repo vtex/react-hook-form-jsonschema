@@ -315,14 +315,14 @@ function ObjectRenderer(props) {
   const inputMethods = useObject({ path: props.path, UISchema: props.UISchema })
 
   const objectForm = []
+
+  // Note that we also add error checking here and show a message in case there
+  // is one. Remember that you can also check for the type of error returned
+  // anb give a more specialized warning to the user.
   for (const obj of inputMethods) {
     objectForm.push(
       <div key={`${obj.type}${obj.path}`}>
         <SpecializedObject baseObject={obj} />
-        // This is the simplest way to check if there was an error, but
-        // remember that you can still check the error message to
-        // specialize the kind of information you give to your
-        // user.
         {obj.getError() && <p>This is an error!</p>}
       </div>
     )
