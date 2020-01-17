@@ -20,5 +20,5 @@ export default {
     },
   ],
   plugins: [resolve(), commonjs(), typescript(), PROD && terser()],
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'react-hook-form'],
 }
