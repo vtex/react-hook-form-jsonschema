@@ -169,7 +169,7 @@ Use this hook to build a generic input field in your form, with validation based
 Returns an object with the following fields, besides the common one's:
 
 - `getLabelProps()`: use this with the spread operator inside a `<label>` tag and get the benefit of having all the important fields of the label filled in for you and the associated input (the `for` property) with it.
-- `getInputProps()`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it
+- `getInputProps()`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it.
 
 ##### Example:
 
