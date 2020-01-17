@@ -14,10 +14,16 @@ export function useFormContext<T extends FieldValues>(): FormValuesWithSchema<
 }
 
 export const FormContext: FC<FormContextProps> = props => {
+  const {
+    mode = 'onSubmit',
+    revalidateMode = 'onChange',
+    submitFocusError = true,
+  } = props
+
   const methods = useForm({
-    mode: props.mode || 'onSubmit',
-    reValidateMode: props.revalidateMode || 'onChange',
-    submitFocusError: props.submitFocusError || true,
+    mode: mode,
+    reValidateMode: revalidateMode,
+    submitFocusError: submitFocusError,
   })
 
   const formProps: React.ComponentProps<'form'> = {}
