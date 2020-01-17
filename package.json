@@ -4,6 +4,10 @@
   "description": "Wrapper arround react-hook-form to create forms from a JSON schema.",
   "main": "output/index.cjs.js",
   "module": "output/index.esm.js",
+  "types": "output/index.d.ts",
+  "files": [
+    "output"
+  ],
   "author": "Helena Steck <helena.steck@vtex.com.br>",
   "license": "MIT",
   "devDependencies": {
