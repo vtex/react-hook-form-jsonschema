@@ -2,7 +2,6 @@ import React, { FC, createContext, useContext } from 'react'
 import { useForm, FieldValues } from 'react-hook-form'
 
 import { FormContextProps, FormValuesWithSchema } from './types'
-import { node } from 'prop-types'
 
 export const InternalFormContext = createContext<FormValuesWithSchema<
   FieldValues
