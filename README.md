@@ -74,6 +74,10 @@ yarn add react-hook-form-jsonschema
 
 #### props:
 
+##### Required:
+
+- `schema`: JSON Schema object which will be passed down by context for the inputs to use it for validation and the structure of the form itself.
+
 ##### Optional:
 
 - `mode`: String to indicate when to validate the input, default is `'onSubmit'`.
@@ -87,10 +91,6 @@ yarn add react-hook-form-jsonschema
 - `submitFocusError`: Boolean, when `true` focus on the first field with error after submit validates, if there is any. Defaults to `true`.
 - `onSubmit`: Callback function that the form values are passed to when submit is triggered
 - `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that react-hook-form-jsonschema does NOT yet implement validation form URIs and email addresses).
-
-##### Required:
-
-- `schema`: JSON Schema object which will be passed down by context for the inputs to use it for validation and the structure of the form itself.
 
 ## Hooks API
 
