@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added test to make sure schema is not modified
+
+### Changed
+
+- Fixed tons of typos on README
+- Made README more friendly
+- Refactored internal API to be more easily expandable
+- Removed complexity from big function bodies
+
 ## [0.1.2] - 2020-01-21
 
 ### Added
