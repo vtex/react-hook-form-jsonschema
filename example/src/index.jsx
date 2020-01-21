@@ -16,16 +16,19 @@ const personSchema = {
     firstName: {
       type: 'string',
       description: "The person's first name.",
+      title: 'First Name',
     },
     lastName: {
       type: 'string',
       description: "The person's last name.",
+      title: 'Last Name',
     },
     birthYear: {
       description: "The person's birth year.",
       type: 'integer',
       minimum: 1930,
       maximum: 2010,
+      title: 'Birth Year',
     },
   },
 }
@@ -36,7 +39,7 @@ function SpecializedObject(props) {
       return (
         <>
           <label {...props.baseObject.getLabelProps()}>
-            {props.baseObject.name}
+            {props.baseObject.getObject().title}
           </label>
           <input {...props.baseObject.getInputProps()} />
         </>
@@ -46,7 +49,7 @@ function SpecializedObject(props) {
       return (
         <>
           <label {...props.baseObject.getLabelProps()}>
-            {props.baseObject.name}
+            {props.baseObject.getObject().title}
           </label>
           {props.baseObject.getItems().map((value, index) => {
             return (
@@ -66,7 +69,7 @@ function SpecializedObject(props) {
       return (
         <>
           <label {...props.baseObject.getLabelProps()}>
-            {props.baseObject.name}
+            {props.baseObject.getObject().title}
           </label>
           <select {...props.baseObject.getSelectProps()}>
             {props.baseObject.getItems().map((value, index) => {
