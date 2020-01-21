@@ -2,6 +2,7 @@ import React, { FC, createContext, useContext } from 'react'
 import { useForm, FieldValues } from 'react-hook-form'
 
 import { FormContextProps, FormValuesWithSchema } from './types'
+import { getObjectFromForm } from '../JSONSchema'
 
 export const InternalFormContext = createContext<FormValuesWithSchema<
   FieldValues
@@ -27,9 +28,14 @@ export const FormContext: FC<FormContextProps> = props => {
   })
 
   const formProps: React.ComponentProps<'form'> = {}
-  if (props.onSubmit) {
-    formProps.onSubmit = methods.handleSubmit(props.onSubmit)
-  }
+
+  formProps.onSubmit = methods.handleSubmit((data, event) => {
+    if (props.onSubmit) {
+      props.onSubmit(getObjectFromForm(props.schema, data), event)
+    }
+    return
+  })
+
   if (props.noNativeValidate) {
     formProps.noValidate = props.noNativeValidate
   }
