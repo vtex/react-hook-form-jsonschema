@@ -19,9 +19,7 @@ export const getGenericInput = (
   pathInfo: [JSONSchemaType, boolean, string],
   path: string
 ): BasicInputReturnType => {
-  const currentObject = pathInfo[0]
-  const isRequired = pathInfo[1]
-  const currentName = pathInfo[2]
+  const [currentObject, isRequired, currentName] = pathInfo
 
   let minimum: number | undefined
   let maximum: number | undefined
