@@ -11,6 +11,7 @@ import {
   useObjectFromPath,
   concatFormPath,
   JSONSchemaPathInfo,
+  JSONSchemaType,
 } from '../JSONSchema'
 import { getGenericInput } from './useGenericInput'
 import { getInputCustomFields } from './useInput'
@@ -46,6 +47,43 @@ function getFromGeneric(
   return inputs
 }
 
+// Outside of this function
+function getChildProperties(
+  path: string,
+  schema: JSONSchemaType,
+  UISchema: UISchemaType | undefined,
+  formContext: FormContextValues
+) {
+  const requiredFields = schema.required
+
+  return (allInputs: UseObjectReturnType, key: string) => {
+    const isRequired = requiredFields
+      ? requiredFields.indexOf(key) !== -1
+      : false
+
+    const newUISchema =
+      UISchema && UISchema.properties ? UISchema.properties[key] : undefined
+
+    const currentPath = concatFormPath(path, key)
+
+    const currentPathInfo: JSONSchemaPathInfo = {
+      JSONSchema: schema.properties[key],
+      isRequired: isRequired,
+      objectName: key,
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    const newInput = getStructure(
+      formContext,
+      currentPathInfo,
+      currentPath,
+      newUISchema
+    )
+
+    return allInputs.concat(newInput)
+  }
+}
+
 function getStructure(
   formContext: FormContextValues,
   pathInfo: JSONSchemaPathInfo,
@@ -59,30 +97,11 @@ function getStructure(
 
   if (JSONSchema.type === 'object') {
     const objKeys = Object.keys(JSONSchema.properties)
-    const requiredFields: Array<string> | undefined = JSONSchema.required
-    for (const key of objKeys) {
-      const isRequired = requiredFields
-        ? requiredFields.indexOf(key) !== -1
-        : false
-
-      const currentPathInfo: JSONSchemaPathInfo = {
-        JSONSchema: JSONSchema.properties[key],
-        isRequired: isRequired,
-        objectName: key,
-      }
-
-      const currentPath = concatFormPath(path, key)
-
-      let newUISchema = undefined
-      if (UISchema && UISchema.properties) {
-        newUISchema = UISchema.properties[key]
-      }
-
-      inputs = inputs.concat(
-        getStructure(formContext, currentPathInfo, currentPath, newUISchema)
-      )
-    }
-    return inputs
+    const childInputs = objKeys.reduce(
+      getChildProperties(path, JSONSchema, UISchema, formContext),
+      []
+    )
+    return childInputs
   }
 
   if (!UISchema) {
