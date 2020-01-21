@@ -124,7 +124,7 @@ The following are the common fields returned in the object from every `use'SomeI
   - **`ErrorMessageValues`**, is the expected value to be met, it will be `true` for required, and the minimum value expected for `minValue` for example.
 - `getObject()`: Returns the data field in the schema that this input refers to
 
-**Please notice that in all of the examples bellow it is assumed that the components are already children of a FormContext component**
+**Please notice that in all of the following examples it is assumed the components are already children of a `FormContext` component**
 
 ### useHidden(path)
 
