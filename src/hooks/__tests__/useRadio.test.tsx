@@ -80,7 +80,6 @@ test('should have boolean true and false', () => {
 
 test('should raise error', async () => {
   const { getByText } = render(
-    // esling-disable-next-line no-console
     <FormContext
       schema={mockRadioSchema}
       onSubmit={() => {
