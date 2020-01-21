@@ -94,7 +94,7 @@ This component is the top-level component that creates the context with the sche
   - `'onSubmit'`: Validate when the submit is triggered.
 - `submitFocusError`: Boolean, when `true` focus on the first field with error after submit validates, if there is any. Defaults to `true`.
 - `onSubmit`: Callback function that the form values are passed to when submit is triggered.
-- `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that react-hook-form-jsonschema does NOT yet implement validation form URIs and email addresses).
+- `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that `react-hook-form-jsonschema` does NOT yet implement validation for URIs and email addresses).
 
 ## Hooks API
 
@@ -108,14 +108,14 @@ The following are the common fields returned in the object from every `use'SomeI
   - `textArea`: Type used for `<textarea>`
 - `path`: Path in the jsonschema this input is validated against. The path is always in the form: `#/some/child/data/field/here` where `#` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
 - `name`: The last object/data field name in the tree. In the case of `#/some/child/data/field/here` the name value will be `here`.
-- `isRequired`: indicates wether the field is required or not.
+- `isRequired`: indicates whether the field is required or not.
 - `formContext`: If you want to access internal react-hook-form context use this
 - `getError()`: Returns an `ErrorMessage`, which has the following format:
   - `{message: ErrorTypes, expected: ErrorMessageValues}`
   - **`ErrorTypes`**, is an enum, with the following values:
     - `required`: the field is required to be filled
-    - `maxLength`: maximum lenght of string input was surpassed
-    - `minLength`: minimum lenght of string input was not met
+    - `maxLength`: maximum length of string input was surpassed
+    - `minLength`: minimum length of string input was not met
     - `maxValue`: maximum value of number input was surpassed
     - `minValue`: minimum value of number input was not met
     - `pattern`: the pattern or type defined in the schema was not met
