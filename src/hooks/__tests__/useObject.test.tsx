@@ -80,17 +80,16 @@ const SpecializedObject: FC<{ baseObject: InputReturnTypes }> = props => {
 const MockObject: FC<{ path: string; UISchema?: UISchemaType }> = props => {
   const methods = useObject({ path: props.path, UISchema: props.UISchema })
 
-  const objectForm = []
-  for (const obj of methods) {
-    objectForm.push(
-      <div key={`${obj.type}${obj.path}`}>
-        <SpecializedObject baseObject={obj} />
-        {obj.getError() && <p>This is an error!</p>}
-      </div>
-    )
-  }
-
-  return <>{objectForm}</>
+  return (
+    <>
+      {methods.map(obj => (
+        <div key={`${obj.type}${obj.path}`}>
+          <SpecializedObject baseObject={obj} />
+          {obj.getError() && <p>This is an error!</p>}
+        </div>
+      ))}
+    </>
+  )
 }
 
 test('should render all child properties of the schema', () => {
