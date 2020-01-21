@@ -1,2 +1,6 @@
 export * from './types'
-export * from './path-handler'
+export {
+  useObjectFromForm,
+  concatFormPath,
+  useObjectFromPath,
+} from './path-handler'

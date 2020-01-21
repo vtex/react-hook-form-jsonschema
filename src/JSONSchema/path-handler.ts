@@ -47,8 +47,10 @@ const useObjectFromPath = (path: string): JSONSchemaPathInfo => {
   return [currentOriginal, isRequired, objectName]
 }
 
-const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
-  const originalSchema = useFormContext().schema
+const getObjectFromForm = (
+  originalSchema: JSONSchemaType,
+  data: JSONSchemaType
+): JSONSchemaType => {
   const orderedSchemaKeys = Object.keys(data).sort()
   const objectFromData: JSONSchemaType = {}
 
@@ -104,4 +106,13 @@ const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
   return objectFromData
 }
 
-export { useObjectFromForm, concatFormPath, useObjectFromPath }
+const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
+  return getObjectFromForm(useFormContext().schema, data)
+}
+
+export {
+  useObjectFromForm,
+  concatFormPath,
+  useObjectFromPath,
+  getObjectFromForm,
+}
