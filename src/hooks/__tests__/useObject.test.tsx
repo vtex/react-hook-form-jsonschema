@@ -12,12 +12,7 @@ import {
   UISchemaType,
   UITypes,
 } from '../types'
-import mockObjectSchema from '../__mocks__/mockSchema'
-
-const toFixed = (value: number, precision: number): string => {
-  const power = Math.pow(10, precision || 0)
-  return String(Math.round(value * power) / power)
-}
+import mockObjectSchema, { toFixed } from '../__mocks__/mockSchema'
 
 const mockUISchema: UISchemaType = {
   type: UITypes.default,
