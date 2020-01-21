@@ -4,7 +4,7 @@ import { JSONSchemaType } from '../../JSONSchema'
 import { ErrorTypes } from './types'
 
 // Used for exclusiveMinimum and exclusiveMaximum values
-const epsilon = 0.0001
+const EPSILON = 0.0001
 
 export const toFixed = (value: number, precision: number): string => {
   const power = Math.pow(10, precision || 0)
@@ -53,7 +53,7 @@ export const getNumberMinimum = (
     if (step && step != 'any') {
       minimum += step
     } else {
-      minimum += epsilon
+      minimum += EPSILON
     }
   }
   return minimum
@@ -75,7 +75,7 @@ export const getNumberMaximum = (
     if (step && step != 'any') {
       maximum -= step
     } else {
-      maximum -= epsilon
+      maximum -= EPSILON
     }
   }
 
