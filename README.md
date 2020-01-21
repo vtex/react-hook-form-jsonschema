@@ -2,7 +2,7 @@
 
 > Small project based on [react-hook-form](https://github.com/react-hook-form/react-hook-form) that exposes an API for easily creating customizable forms based on a [JSON Schema](https://json-schema.org/understanding-json-schema/index.html) with built-in validation.
 
-react-hook-form-jsonschema is a React hooks library that manages all the stateful logic needed to make a form, based on a JSON Schema, functional. It returns a set of props that are meant to be called and their results destructured on the input field desired.
+`react-hook-form-jsonschema` is a React hooks library that manages all the stateful logic needed to make a functional form based on a JSON Schema. It returns a set of props that are meant to be called and their results destructured on the desired input field.
 
 ## Table of Contents
 
