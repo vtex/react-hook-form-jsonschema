@@ -81,3 +81,5 @@ export interface BooleanJSONSchemaType extends BasicJSONSchemaType {
 export interface NullJSONSchemaType extends BasicJSONSchemaType {
   type?: 'null'
 }
+
+export type JSONSchemaPathInfo = [JSONSchemaType, boolean, string]
