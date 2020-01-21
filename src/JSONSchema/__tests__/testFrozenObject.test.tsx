@@ -24,18 +24,18 @@ const mockUISchema: UISchemaType = {
 }
 
 function deepFreeze(obj) {
-  // Recuperar os nomes de propriedade definidos em obj
+  // Gets all properties names to freeze
   const propNames = Object.getOwnPropertyNames(obj)
 
-  // Congelar as propriedades antes de congelar-se
+  // Freezes each property before freezing the object itself
   propNames.forEach(function(name) {
     const prop = obj[name]
 
-    // Congele prop se for um objeto
+    // Freezes prop if it is an object
     if (typeof prop == 'object' && prop !== null) deepFreeze(prop)
   })
 
-  // Congele-se (não faz nada se já estiver congelado)
+  // Freezes itself
   return Object.freeze(obj)
 }
 const frozenSchema = deepFreeze(mockObjectSchema)
