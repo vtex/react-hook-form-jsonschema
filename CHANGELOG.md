@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Typings for JSON Schema object
+- Removed unused mock
+
+### Changed
+
+- Add typings for JSON Schema object
+- Build process is cleaner
+- React hook form is now an external dependency, not bundled with the code anymore
+
 ## [0.1.1] - 2020-01-17
 
 ### Added
