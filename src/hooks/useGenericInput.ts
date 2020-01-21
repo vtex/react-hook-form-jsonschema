@@ -19,22 +19,22 @@ export const getGenericInput = (
   pathInfo: JSONSchemaPathInfo,
   path: string
 ): BasicInputReturnType => {
-  const [currentObject, isRequired, currentName] = pathInfo
+  const { JSONSchema, isRequired, objectName } = pathInfo
 
   let minimum: number | undefined
   let maximum: number | undefined
   let step: number | 'any'
 
-  if (currentObject.type === 'number' || currentObject.type === 'integer') {
-    const stepAndDecimalPlaces = getNumberStep(currentObject)
+  if (JSONSchema.type === 'number' || JSONSchema.type === 'integer') {
+    const stepAndDecimalPlaces = getNumberStep(JSONSchema)
     step = stepAndDecimalPlaces[0]
 
-    minimum = getNumberMinimum(currentObject)
-    maximum = getNumberMaximum(currentObject)
+    minimum = getNumberMinimum(JSONSchema)
+    maximum = getNumberMaximum(JSONSchema)
   }
 
   return {
-    name: currentName,
+    name: objectName,
     path: path,
     isRequired: isRequired,
     formContext: formContext,
@@ -44,13 +44,13 @@ export const getGenericInput = (
         formContext.errors[path]
           ? (formContext.errors[path] as FieldError)
           : undefined,
-        currentObject,
+        JSONSchema,
         isRequired,
         minimum,
         maximum,
         step
       ),
-    getObject: () => currentObject,
+    getObject: () => JSONSchema,
   }
 }
 

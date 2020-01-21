@@ -22,19 +22,19 @@ const getSplitPath = (path: string): Array<string> => {
 
 const useObjectFromPath = (path: string): JSONSchemaPathInfo => {
   const splitPath = getSplitPath(path)
-  let currentOriginal = useFormContext().schema
+  let currentJSONNode = useFormContext().schema
   let isRequired = false
   let objectName = ''
 
   for (let node = 0; node < splitPath.length; node++) {
     if (
-      currentOriginal &&
-      currentOriginal.type &&
-      currentOriginal.type === 'object'
+      currentJSONNode &&
+      currentJSONNode.type &&
+      currentJSONNode.type === 'object'
     ) {
       if (
-        currentOriginal.required &&
-        (currentOriginal.required as Array<string>).indexOf(splitPath[node]) >
+        currentJSONNode.required &&
+        (currentJSONNode.required as Array<string>).indexOf(splitPath[node]) >
           -1
       ) {
         isRequired = true
@@ -42,13 +42,17 @@ const useObjectFromPath = (path: string): JSONSchemaPathInfo => {
         isRequired = false
       }
       objectName = splitPath[node]
-      currentOriginal = currentOriginal.properties[splitPath[node]]
+      currentJSONNode = currentJSONNode.properties[splitPath[node]]
     } else {
-      currentOriginal = {}
+      currentJSONNode = {}
       break
     }
   }
-  return [currentOriginal, isRequired, objectName]
+  return {
+    JSONSchema: currentJSONNode,
+    isRequired: isRequired,
+    objectName: objectName,
+  }
 }
 
 const getObjectFromForm = (

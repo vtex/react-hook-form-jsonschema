@@ -53,23 +53,23 @@ function getStructure(
   UISchema: UISchemaType | undefined
 ): UseObjectReturnType {
   let inputs: UseObjectReturnType = []
-  const currentObject = pathInfo[0]
+  const { JSONSchema } = pathInfo
 
   const genericInput = getGenericInput(formContext, pathInfo, path)
 
-  if (currentObject.type === 'object') {
-    const objKeys = Object.keys(currentObject.properties)
-    const requiredFields: Array<string> | undefined = currentObject.required
+  if (JSONSchema.type === 'object') {
+    const objKeys = Object.keys(JSONSchema.properties)
+    const requiredFields: Array<string> | undefined = JSONSchema.required
     for (const key of objKeys) {
       const isRequired = requiredFields
         ? requiredFields.indexOf(key) !== -1
         : false
 
-      const currentPathInfo: JSONSchemaPathInfo = [
-        currentObject.properties[key],
-        isRequired,
-        key,
-      ]
+      const currentPathInfo: JSONSchemaPathInfo = {
+        JSONSchema: JSONSchema.properties[key],
+        isRequired: isRequired,
+        objectName: key,
+      }
 
       const currentPath = concatFormPath(path, key)
 
