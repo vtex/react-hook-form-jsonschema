@@ -109,7 +109,7 @@ The following are the common fields returned in the object from every `use'SomeI
 - `path`: Path in the jsonschema this input is validated against. The path is always in the form: `#/some/child/data/field/here` where `#` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
 - `name`: The last object/data field name in the tree. In the case of `#/some/child/data/field/here` the name value will be `here`.
 - `isRequired`: indicates whether the field is required or not.
-- `formContext`: If you want to access internal react-hook-form context use this
+- `formContext`: If you want to access internal `react-hook-form` context use this
 - `getError()`: Returns an `ErrorMessage`, which has the following format:
   - `{message: ErrorTypes, expected: ErrorMessageValues}`
   - **`ErrorTypes`**, is an enum, with the following values:
