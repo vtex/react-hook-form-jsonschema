@@ -85,15 +85,15 @@ This component is the top-level component that creates the context with the sche
 ##### Optional:
 
 - `mode`: String to indicate when to validate the input, default is `'onSubmit'`.
-  - `'onBlur'`: Validate when an input field is blurred
-  - `'onChange'`: Validate when an input field value changes
-  - `'onSubmit'`: Validate when the submit is triggered
+  - `'onBlur'`: Validate when an input field is blurred.
+  - `'onChange'`: Validate when an input field value changes.
+  - `'onSubmit'`: Validate when the submit is triggered.
 - `revalidateMode`: String to indicate when inputs with errors get re-validated, default is `'onChange'`.
-  - `'onblur'`: Validate when an input field is blurred
-  - `'onChange'`: Validate when an input field value changes
-  - `'onSubmit'`: Validate when the submit is triggered
+  - `'onblur'`: Validate when an input field is blurred.
+  - `'onChange'`: Validate when an input field value changes.
+  - `'onSubmit'`: Validate when the submit is triggered.
 - `submitFocusError`: Boolean, when `true` focus on the first field with error after submit validates, if there is any. Defaults to `true`.
-- `onSubmit`: Callback function that the form values are passed to when submit is triggered
+- `onSubmit`: Callback function that the form values are passed to when submit is triggered.
 - `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that react-hook-form-jsonschema does NOT yet implement validation form URIs and email addresses).
 
 ## Hooks API
