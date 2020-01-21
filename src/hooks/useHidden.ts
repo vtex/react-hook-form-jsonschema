@@ -11,13 +11,11 @@ const noop = () => ({})
 export const getHiddenCustomFields = (
   baseObject: BasicInputReturnType
 ): UseRawInputReturnType => {
-  baseObject.isRequired = false
-
-  const returnObject = getRawInputCustomFields(baseObject, 'hidden')
-
-  returnObject.getLabelProps = noop
-
-  return returnObject
+  return {
+    ...getRawInputCustomFields(baseObject, 'hidden'),
+    isRequired: false,
+    getLabelProps: noop,
+  }
 }
 
 export const useHidden: UseInputParameters = path => {
