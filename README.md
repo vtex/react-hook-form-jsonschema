@@ -405,7 +405,7 @@ Use this hook to build a radio field in your form.
 
 Returns an object with the following fields, besides the common one's:
 
-- `getItems()`: use this to get all the values that are possible to be in the radio buttons
+- `getItems()`: use this to get which values should be listed inside the radio input fields. This function derives the items by the defined type and properties inside the JSON Schema and returns all the required items to comply with the definition.
 - `getItemInputProps(index)`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it for the item in the specified index from `getItems()`
 - `getItemLabelProps(index)`: the label props related to the input at the specified index from `getItems()`
 
