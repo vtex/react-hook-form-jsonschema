@@ -57,7 +57,7 @@ export const getSelectCustomFields = (
 
     if (minimum !== undefined && maximum !== undefined && step != 'any') {
       validator = getNumberValidator(currentObject, baseObject.isRequired)
-      for (let i = minimum; i < maximum; i += step) {
+      for (let i = minimum; i <= maximum; i += step) {
         items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
       }
     }
