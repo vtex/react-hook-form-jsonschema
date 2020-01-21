@@ -35,7 +35,7 @@
     ]
   },
   "scripts": {
-    "build": "rm -r output && rollup -c",
+    "build": "rm -rf output && rollup -c",
     "build:watch": "rollup -cw",
     "test": "vtex-test-tools test",
     "test:watch": "vtex-test-tools test --watch"
