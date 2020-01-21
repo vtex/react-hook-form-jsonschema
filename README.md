@@ -72,7 +72,9 @@ yarn add react-hook-form-jsonschema
 
 ## Components API
 
-### FormContext component
+### FormContext component API
+
+This component is the top-level component that creates the context with the schema and options all the hooks will need to be usable. So bear in mind that you **need** to define all the other components as children of this.
 
 #### props:
 
@@ -122,6 +124,8 @@ The following are the common fields returned in the object from every `use'SomeI
   - **`ErrorMessageValues`**, is the expected value to be met, it will be `true` for required, and the minimum value expected for `minValue` for example.
 - `getObject()`: Returns the data field in the schema that this input refers to
 
+**Please notice that in all of the examples bellow it is assumed that the components are already children of a FormContext component**
+
 ### useHidden(path)
 
 ##### Description
@@ -146,12 +150,12 @@ function HiddenField(props) {
   const inputMethods = useHidden('#/some/child/you/want/hidden');
 
   return (
-    <FormContext schema={personSchema}>
+    <React.Fragment>
       <label {...inputMethods.getLabelProps()}>
         {inputMethods.name}
       </label>
       <input {...inputMethods.getInputProps()} />
-    </FormContext>
+    </React.Fragment>
   )
 }
 ```
@@ -180,12 +184,12 @@ function InputField(props) {
   const inputMethods = useInput('#/some/child/you/want/as/input');
 
   return (
-    <FormContext schema={personSchema}>
+    <React.Fragment>
       <label {...inputMethods.getLabelProps()}>
         {inputMethods.name}
       </label>
       <input {...inputMethods.getInputProps()} />
-    </FormContext>
+    </React.Fragment>
   )
 }
 ```
@@ -260,17 +264,17 @@ function SpecializedObject(props) {
   switch (props.baseObject.type) {
     case InputTypes.input: {
       return (
-        <>
+        <React.Fragment>
           <label {...props.baseObject.getLabelProps()}>
             {props.baseObject.name}
           </label>
           <input {...props.baseObject.getInputProps()} />
-        </>
+        </React.Fragment>
       )
     }
     case InputTypes.radio: {
       return (
-        <>
+        <React.Fragment>
           <label {...props.baseObject.getLabelProps()}>
             {props.baseObject.name}
           </label>
@@ -285,12 +289,12 @@ function SpecializedObject(props) {
               </label>
             )
           })}
-        </>
+        </React.Fragment>
       )
     }
     case InputTypes.select: {
       return (
-        <>
+        <React.Fragment>
           <label {...props.baseObject.getLabelProps()}>
             {props.baseObject.name}
           </label>
@@ -306,11 +310,11 @@ function SpecializedObject(props) {
               )
             })}
           </select>
-        </>
+        </React.Fragment>
       )
     }
   }
-  return <></>
+  return <React.Fragment></React.Fragment>
 }
 
 function ObjectRenderer(props) {
@@ -330,7 +334,7 @@ function ObjectRenderer(props) {
     )
   }
 
-  return <>{objectForm}</>
+  return <React.Fragment>{objectForm}</React.Fragment>
 }
 
 function RenderMyJSONSchema() {
@@ -381,12 +385,12 @@ function PasswordField(props) {
   const inputMethods = usePassword('#/some/child/you/want/as/input');
 
   return (
-    <FormContext schema={personSchema}>
+    <React.Fragment>
       <label {...inputMethods.getLabelProps()}>
         {inputMethods.name}
       </label>
       <input {...inputMethods.getInputProps()} />
-    </FormContext>
+    </React.Fragment>
   )
 }
 ```
@@ -416,7 +420,7 @@ function InputField(props) {
   const inputMethods = useRadio('#/some/child/with/limited/possible/values');
 
   return (
-    <FormContext schema={personSchema}>
+    <React.Fragment>
       {inputMethods.getItems().map((value, index) => {
         return (
           <label {...inputMethods.getItemLabelProps(index)} key={`${value}${index}`}>
@@ -426,7 +430,7 @@ function InputField(props) {
         )
       })}
       {inputMethods.getError() && <p>This is an error!</p>}
-    </FormContext>
+    </React.Fragment>
   )
 }
 ```
@@ -457,7 +461,7 @@ function InputField(props) {
   const inputMethods = useSelect('#/some/child/with/limited/possible/values');
 
   return (
-    <FormContext schema={personSchema}>
+    <React.Fragment>
       <label {...inputMethods.getLabelProps()}>{inputMethods.name}</label>
       <select {...inputMethods.getSelectProps()}>
         {inputMethods.getItems().map((value, index) => {
@@ -472,7 +476,7 @@ function InputField(props) {
         })}
       </select>
       {inputMethods.getError() && <p>This is an error!</p>}
-    </FormContext>
+    </React.Fragment>
   )
 }
 ```
@@ -501,12 +505,12 @@ function HiddenField(props) {
   const inputMethods = useTextArea('#/some/child/you/want/as/TextArea');
 
   return (
-    <FormContext schema={personSchema}>
+    <React.Fragment>
       <label {...inputMethods.getLabelProps()}>
         {inputMethods.name}
       </label>
       <textarea {...inputMethods.getTextAreaProps()} />
-    </FormContext>
+    </React.Fragment>
   )
 }
 ```
