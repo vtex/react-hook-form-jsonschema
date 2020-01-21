@@ -1,4 +1,4 @@
-import { JSONSchemaType } from './types'
+import { JSONSchemaType, JSONSchemaPathInfo } from './types'
 import { useFormContext } from '../components'
 
 const concatFormPath = (path: string, newNode: string): string => {
@@ -16,7 +16,7 @@ const getSplitPath = (path: string): Array<string> => {
   return split
 }
 
-const useObjectFromPath = (path: string): [JSONSchemaType, boolean, string] => {
+const useObjectFromPath = (path: string): JSONSchemaPathInfo => {
   const splitPath = getSplitPath(path)
   let currentOriginal = useFormContext().schema
   let isRequired = false

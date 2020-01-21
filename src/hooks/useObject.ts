@@ -11,6 +11,7 @@ import {
   JSONSchemaType,
   useObjectFromPath,
   concatFormPath,
+  JSONSchemaPathInfo,
 } from '../JSONSchema'
 import { getGenericInput } from './useGenericInput'
 import { getInputCustomFields } from './useInput'
@@ -48,7 +49,7 @@ function getFromGeneric(
 
 function getStructure(
   formContext: FormContextValues,
-  pathInfo: [JSONSchemaType, boolean, string],
+  pathInfo: JSONSchemaPathInfo,
   path: string,
   UISchema: UISchemaType | undefined
 ): UseObjectReturnType {
@@ -65,7 +66,7 @@ function getStructure(
         ? requiredFields.indexOf(key) !== -1
         : false
 
-      const currentPathInfo: [JSONSchemaType, boolean, string] = [
+      const currentPathInfo: JSONSchemaPathInfo = [
         currentObject.properties[key],
         isRequired,
         key,

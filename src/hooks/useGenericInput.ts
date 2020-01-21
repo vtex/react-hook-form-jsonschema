@@ -6,7 +6,7 @@ import {
   InputTypes,
 } from './types'
 import { useFormContext } from '../components'
-import { useObjectFromPath, JSONSchemaType } from '../JSONSchema'
+import { useObjectFromPath, JSONSchemaPathInfo } from '../JSONSchema'
 import {
   getError,
   getNumberMaximum,
@@ -16,7 +16,7 @@ import {
 
 export const getGenericInput = (
   formContext: FormContextValues,
-  pathInfo: [JSONSchemaType, boolean, string],
+  pathInfo: JSONSchemaPathInfo,
   path: string
 ): BasicInputReturnType => {
   const [currentObject, isRequired, currentName] = pathInfo
