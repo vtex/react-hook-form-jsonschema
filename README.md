@@ -235,7 +235,7 @@ const UISchema = {
 
 **Return:**
 
-Returns an array, with each element being the return of a different call to a hook for each child of the object that was passed in the path
+Returns an array, with each element being the return of a different call to a hook for each child of the object that was passed in the path.
 
 **Example:**
 
