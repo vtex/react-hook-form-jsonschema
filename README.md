@@ -74,7 +74,7 @@ yarn add react-hook-form-jsonschema
 
 ### FormContext component API
 
-This component is the top-level component that creates the context with the schema and options all the hooks will need to be usable. So bear in mind that you **need** to define all the other components as children of this.
+This component is the top-level component that creates the context with the schema and options all the hooks will need to be usable. So bear in mind that you **need** to define all the other components as children of `FormContext`.
 
 #### props:
 
