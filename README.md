@@ -207,7 +207,8 @@ This hook works a little differently than the others. This hook will return an a
 
 ```js
 const UISchema = {
-  /* This is the type that will be used to choose what type of input will be
+  /*
+   *  This is the type that will be used to choose what type of input will be
    *  used to build the specified field. Please note that the type of a node
    *  that is an object will be ignored, as there would make no sense to render
    *  an object without it's children inside a form.
