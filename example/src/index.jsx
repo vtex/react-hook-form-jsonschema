@@ -90,17 +90,16 @@ function SpecializedObject(props) {
 function ObjectRenderer(props) {
   const methods = useObject({ path: props.path, UISchema: props.UISchema })
 
-  const objectForm = []
-  for (const obj of methods) {
-    objectForm.push(
-      <div key={`${obj.type}${obj.path}`}>
-        <SpecializedObject baseObject={obj} />
-        {obj.getError() && <p>This is an error!</p>}
-      </div>
-    )
-  }
-
-  return <>{objectForm}</>
+  return (
+    <>
+      {methods.map(obj => (
+        <div key={`${obj.type}${obj.path}`}>
+          <SpecializedObject baseObject={obj} />
+          {obj.getError() && <p>This is an error!</p>}
+        </div>
+      ))}
+    </>
+  )
 }
 
 function RenderMyJSONSchema() {
