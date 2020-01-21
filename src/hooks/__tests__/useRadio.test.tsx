@@ -3,12 +3,7 @@ import { render, wait } from '@vtex/test-tools/react'
 
 import { useRadio } from '../useRadio'
 import { FormContext } from '../../components'
-import mockRadioSchema from '../__mocks__/mockSchema'
-
-const toFixed = (value: number, precision: number): string => {
-  const power = Math.pow(10, precision || 0)
-  return String(Math.round(value * power) / power)
-}
+import mockRadioSchema, { toFixed } from '../__mocks__/mockSchema'
 
 const MockRadio: FC<{ path: string }> = props => {
   const methods = useRadio(props.path)

@@ -1,3 +1,8 @@
+export const toFixed = (value: number, precision: number): string => {
+  const power = Math.pow(10, precision || 0)
+  return String(Math.round(value * power) / power)
+}
+
 const mockSchema = {
   type: 'object',
   required: ['errorTest'],
