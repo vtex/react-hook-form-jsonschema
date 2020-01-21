@@ -23,6 +23,23 @@ const mockUISchema: UISchemaType = {
   },
 }
 
+function deepFreeze(obj) {
+  // Recuperar os nomes de propriedade definidos em obj
+  const propNames = Object.getOwnPropertyNames(obj)
+
+  // Congelar as propriedades antes de congelar-se
+  propNames.forEach(function(name) {
+    const prop = obj[name]
+
+    // Congele prop se for um objeto
+    if (typeof prop == 'object' && prop !== null) deepFreeze(prop)
+  })
+
+  // Congele-se (não faz nada se já estiver congelado)
+  return Object.freeze(obj)
+}
+const frozenSchema = deepFreeze(mockObjectSchema)
+
 const SpecializedObject: FC<{ baseObject: InputReturnTypes }> = props => {
   switch (props.baseObject.type) {
     case InputTypes.input: {
@@ -95,7 +112,7 @@ const MockObject: FC<{ path: string; UISchema?: UISchemaType }> = props => {
 
 test('should render all child properties of the schema', () => {
   const { getByText } = render(
-    <FormContext schema={Object.freeze(mockObjectSchema)}>
+    <FormContext schema={frozenSchema}>
       <MockObject path="#" />
     </FormContext>
   )
@@ -109,7 +126,7 @@ test('should raise error', async () => {
   const { getByText } = render(
     // esling-disable-next-line no-console
     <FormContext
-      schema={Object.freeze(mockObjectSchema)}
+      schema={frozenSchema}
       onSubmit={() => {
         return
       }}
@@ -126,7 +143,7 @@ test('should raise error', async () => {
 
 test('ui schema should render number and input as select', async () => {
   const { getByText } = render(
-    <FormContext schema={Object.freeze(mockObjectSchema)}>
+    <FormContext schema={frozenSchema}>
       <MockObject path="#" UISchema={mockUISchema} />
     </FormContext>
   )
