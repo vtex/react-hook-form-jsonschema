@@ -9,30 +9,30 @@ const mockSchema = {
   properties: {
     stringTest: {
       type: 'string',
-      name: 'test-useSelectString',
+      title: 'test-useSelectString',
       enum: ['this', 'tests', 'the', 'useSelect', 'hook'],
     },
     integerTest: {
       type: 'integer',
-      name: 'test-useSelectInteger',
+      title: 'test-useSelectInteger',
       minimum: 0,
-      maximum: 10,
-      multipleOf: 1,
+      maximum: 6,
+      multipleOf: 2,
     },
     numberTest: {
       type: 'number',
-      name: 'test-useSelectNumber',
+      title: 'test-useSelectNumber',
       minimum: 0,
-      maximum: 10,
+      maximum: 0.5,
       multipleOf: 0.1,
     },
     booleanTest: {
       type: 'boolean',
-      name: 'test-useSelectBoolean',
+      title: 'test-useSelectBoolean',
     },
     errorTest: {
       type: 'string',
-      name: 'test-showError',
+      title: 'test-showError',
       enum: ['should', 'show', 'error', 'when', 'submitted'],
     },
   },
