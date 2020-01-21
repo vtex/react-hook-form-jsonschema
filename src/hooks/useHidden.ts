@@ -6,6 +6,8 @@ import {
 import { useGenericInput } from './useGenericInput'
 import { getRawInputCustomFields } from './useRawInput'
 
+const noop = () => ({})
+
 export const getHiddenCustomFields = (
   baseObject: BasicInputReturnType
 ): UseRawInputReturnType => {
@@ -13,9 +15,7 @@ export const getHiddenCustomFields = (
 
   const returnObject = getRawInputCustomFields(baseObject, 'hidden')
 
-  returnObject.getLabelProps = () => {
-    return {}
-  }
+  returnObject.getLabelProps = noop
 
   return returnObject
 }
