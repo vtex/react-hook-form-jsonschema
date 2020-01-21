@@ -8,7 +8,6 @@ import {
   UITypes,
 } from './types'
 import {
-  JSONSchemaType,
   useObjectFromPath,
   concatFormPath,
   JSONSchemaPathInfo,
