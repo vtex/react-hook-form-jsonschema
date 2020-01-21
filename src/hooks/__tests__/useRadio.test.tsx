@@ -3,45 +3,11 @@ import { render, wait } from '@vtex/test-tools/react'
 
 import { useRadio } from '../useRadio'
 import { FormContext } from '../../components'
+import mockRadioSchema from '../__mocks__/mockSchema'
 
 const toFixed = (value: number, precision: number): string => {
   const power = Math.pow(10, precision || 0)
   return String(Math.round(value * power) / power)
-}
-
-const mockRadioSchema = {
-  type: 'object',
-  required: ['errorTest'],
-  properties: {
-    stringTest: {
-      type: 'string',
-      name: 'test-useRadioString',
-      enum: ['this', 'tests', 'the', 'useRadio', 'hook'],
-    },
-    integerTest: {
-      type: 'integer',
-      name: 'test-useRadioInteger',
-      minimum: 0,
-      maximum: 10,
-      multipleOf: 1,
-    },
-    numberTest: {
-      type: 'number',
-      name: 'test-useRadioNumber',
-      minimum: 0,
-      maximum: 10,
-      multipleOf: 0.1,
-    },
-    booleanTest: {
-      type: 'boolean',
-      name: 'test-useRadioBoolean',
-    },
-    errorTest: {
-      type: 'string',
-      name: 'test-showError',
-      enum: ['should', 'show', 'error', 'when', 'submitted'],
-    },
-  },
 }
 
 const MockRadio: FC<{ path: string }> = props => {

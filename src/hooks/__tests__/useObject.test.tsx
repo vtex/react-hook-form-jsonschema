@@ -12,45 +12,11 @@ import {
   UISchemaType,
   UITypes,
 } from '../types'
+import mockObjectSchema from '../__mocks__/mockSchema'
 
 const toFixed = (value: number, precision: number): string => {
   const power = Math.pow(10, precision || 0)
   return String(Math.round(value * power) / power)
-}
-
-const mockObjectSchema = {
-  type: 'object',
-  required: ['errorTest'],
-  properties: {
-    stringTest: {
-      type: 'string',
-      name: 'test-useObjectString',
-      enum: ['this', 'tests', 'the', 'useObject', 'hook'],
-    },
-    integerTest: {
-      type: 'integer',
-      name: 'test-useObjectInteger',
-      minimum: 0,
-      maximum: 10,
-      multipleOf: 1,
-    },
-    numberTest: {
-      type: 'number',
-      name: 'test-useObjectNumber',
-      minimum: 0,
-      maximum: 10,
-      multipleOf: 0.1,
-    },
-    booleanTest: {
-      type: 'boolean',
-      name: 'test-useObjectBoolean',
-    },
-    errorTest: {
-      type: 'string',
-      name: 'test-showError',
-      enum: ['should', 'show', 'error', 'when', 'submitted'],
-    },
-  },
 }
 
 const mockUISchema: UISchemaType = {
