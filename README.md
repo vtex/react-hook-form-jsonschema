@@ -39,7 +39,7 @@ const personSchema = {
 }
 ```
 
-And suppose you want to create a form field for the firstName field, simply use the useInput() hook for this and then render the form using react
+And suppose you want to create a form field for the `firstName` field, simply use the `useInput()` hook and render the form using react:
 
 ```JSX
 function FirstNameField(props) {
