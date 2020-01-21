@@ -42,7 +42,7 @@ export const getNumberMinimum = (
 ): number | undefined => {
   const [step] = getNumberStep(currentObject)
 
-  // Calculates wether there is a minimum or exclusiveMinimum value defined somewhere
+  // Calculates whether there is a minimum or exclusiveMinimum value defined somewhere
   let minimum =
     currentObject.exclusiveMinimum !== undefined
       ? currentObject.exclusiveMinimum
