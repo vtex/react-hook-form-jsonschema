@@ -128,22 +128,22 @@ The following are the common fields returned in the object from every `use'SomeI
 
 ### useHidden(path)
 
-##### Description
+**Description**
 
 Use this hook to build a hidden field in the form, the user will not be able to change it or see it, but it will be there when submitted.
 
-##### Parameters:
+**Parameters:**
 
 - `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
 
-##### Return:
+**Return:**
 
 Returns an object with the following fields, besides the common one's:
 
 - `getLabelProps()`: use this with the spread operator inside a `<label>` tag and get the benefit of having all the important fields of the label filled in for you and the associated input (the `for` property) with it.
 - `getInputProps()`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it
 
-##### Example:
+**Example:**
 
 ```JSX
 function HiddenField(props) {
@@ -162,22 +162,22 @@ function HiddenField(props) {
 
 ### useInput(path)
 
-##### Description
+**Description**
 
 Use this hook to build a generic input field in your form, with validation based on the type of input the JSON Schema requires.
 
-##### Parameters:
+**Parameters:**
 
 - `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
 
-##### Return:
+**Return:**
 
 Returns an object with the following fields, besides the common one's:
 
 - `getLabelProps()`: use this with the spread operator inside a `<label>` tag and get the benefit of having all the important fields of the label filled in for you and the associated input (the `for` property) with it.
 - `getInputProps()`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it.
 
-##### Example:
+**Example:**
 
 ```JSX
 function InputField(props) {
@@ -196,11 +196,11 @@ function InputField(props) {
 
 ### useObject(path, UISchema)
 
-##### Description
+**Description**
 
 This hook works a little differently than the others. This hook will return an array of which each of its elements corresponds to the return type of one of the other hooks.
 
-##### Parameters:
+**Parameters:**
 
 - `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
 - `UISchema` (Optional): This UISchema is a modified schema type, relative to the object passed in the `path` prop, the format of the UISchema is the following:
@@ -232,11 +232,11 @@ const UISchema = {
   - `password`: input will be of the password type, just as returned by the `usePassword` hook
   - `textArea`: input will be of the textarea type, just as returned by the `useTextArea` hook
 
-##### Return:
+**Return:**
 
 Returns an array, with each element being the return of a different call to a hook for each child of the object that was passed in the path
 
-##### Example:
+**Example:**
 
 ```JSX
 const personSchema = {
@@ -363,22 +363,22 @@ This is the result of this example:
 
 ### usePassword(path)
 
-##### Description
+**Description**
 
 Use this hook to build a password input field in your form, with validation based on the type of input the JSON Schema requires.
 
-##### Parameters:
+**Parameters:**
 
 - `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
 
-##### Return:
+**Return:**
 
 Returns an object with the following fields, besides the common one's:
 
 - `getLabelProps()`: use this with the spread operator inside a `<label>` tag and get the benefit of having all the important fields of the label filled in for you and the associated input (the `for` property) with it.
 - `getInputProps()`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it
 
-##### Example:
+**Example:**
 
 ```JSX
 function PasswordField(props) {
@@ -397,15 +397,15 @@ function PasswordField(props) {
 
 ### useRadio(path)
 
-##### Description
+**Description**
 
 Use this hook to build a radio field in your form.
 
-##### Parameters:
+**Parameters:**
 
 - `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
 
-##### Return:
+**Return:**
 
 Returns an object with the following fields, besides the common one's:
 
@@ -413,7 +413,7 @@ Returns an object with the following fields, besides the common one's:
 - `getItemInputProps(index)`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it for the item in the specified index from `getItems()`
 - `getItemLabelProps(index)`: the label props related to the input at the specified index from `getItems()`
 
-##### Example:
+**Example:**
 
 ```JSX
 function InputField(props) {
@@ -437,15 +437,15 @@ function InputField(props) {
 
 ### useSelect(path)
 
-##### Description
+**Description**
 
 Use this hook to build a select field in your form.
 
-##### Parameters:
+**Parameters:**
 
 - `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
 
-##### Return:
+**Return:**
 
 Returns an object with the following fields, besides the common one's:
 
@@ -454,7 +454,7 @@ Returns an object with the following fields, besides the common one's:
 - `getItemOptionProps(index)`: use this with the spread operator inside an `<option>` tag and get the benefit of the validator, id field and name for the item in the specified index from `getItems()`
 - `getSelectProps()`: use this with the spread operator inside a `<select>` tag to get validation and register it with the react-hook-form-jsonschema.
 
-##### Example:
+**Example:**
 
 ```JSX
 function InputField(props) {
@@ -483,22 +483,22 @@ function InputField(props) {
 
 ### useTextArea(path)
 
-##### Description
+**Description**
 
 Use this hook to build a textarea field in the form.
 
-##### Parameters:
+**Parameters:**
 
 - `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
 
-##### Return:
+**Return:**
 
 Returns an object with the following fields, besides the common one's:
 
 - `getLabelProps()`: use this with the spread operator inside a `<label>` tag and get the benefit of having all the important fields of the label filled in for you and the associated input (the `for` property) with it.
 - `getTextAreaProps()`: use this with the spread operator inside an `<textarea>` tag and get the benefit of the validator, id field, name and an associated label with it
 
-##### Example:
+**Example:**
 
 ```JSX
 function HiddenField(props) {
