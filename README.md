@@ -198,7 +198,7 @@ function InputField(props) {
 
 **Description**
 
-This hook works a little differently than the others. This hook will return an array of which each of its elements corresponds to the return type of one of the other hooks.
+This hook works a little differently than the others. `useObject` returns an array of which each of its elements corresponds to the return type of one of the other hooks.
 
 **Parameters:**
 
