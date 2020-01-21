@@ -3,7 +3,7 @@ import { ValidationOptions } from 'react-hook-form'
 import { JSONSchemaType } from '../../JSONSchema'
 import { ErrorTypes } from './types'
 
-// Used for exclusiveMinimum and exlusiveMaximum values
+// Used for exclusiveMinimum and exclusiveMaximum values
 const epsilon = 0.0001
 
 export const toFixed = (value: number, precision: number): string => {
@@ -44,12 +44,12 @@ export const getNumberMinimum = (
 
   // Calculates wether there is a minimum or exclusiveMinimum value defined somewhere
   let minimum =
-    currentObject.exlusiveMinimum !== undefined
-      ? currentObject.exlusiveMinimum
+    currentObject.exclusiveMinimum !== undefined
+      ? currentObject.exclusiveMinimum
       : currentObject.minimum !== undefined
       ? currentObject.minimum
       : undefined
-  if (minimum !== undefined && currentObject.exlusiveMinimum !== undefined) {
+  if (minimum !== undefined && currentObject.exclusiveMinimum !== undefined) {
     if (step && step != 'any') {
       minimum += step
     } else {
@@ -66,12 +66,12 @@ export const getNumberMaximum = (
 
   // Calculates wether there is a maximum or exclusiveMaximum value defined somewhere
   let maximum =
-    currentObject.exlusiveMaximum !== undefined
-      ? parseFloat(currentObject.exlusiveMaximum)
+    currentObject.exclusiveMaximum !== undefined
+      ? parseFloat(currentObject.exclusiveMaximum)
       : currentObject.maximum !== undefined
       ? parseFloat(currentObject.maximum)
       : undefined
-  if (maximum !== undefined && currentObject.exlusiveMaximum !== undefined) {
+  if (maximum !== undefined && currentObject.exclusiveMaximum !== undefined) {
     if (step && step != 'any') {
       maximum -= step
     } else {
