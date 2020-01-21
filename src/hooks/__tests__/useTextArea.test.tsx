@@ -3,38 +3,7 @@ import { render, wait, fireEvent } from '@vtex/test-tools/react'
 
 import { useTextArea } from '../useTextArea'
 import { FormContext } from '../../components'
-
-const mockTextAreaSchema = {
-  type: 'object',
-  required: ['errorTest'],
-  properties: {
-    stringTest: {
-      type: 'string',
-      name: 'test-useTextAreaString',
-      minLength: 2,
-      maxLength: 3,
-    },
-    integerTest: {
-      type: 'integer',
-      name: 'test-useTextAreaInteger',
-      minimum: 0,
-      maximum: 10,
-      multipleOf: 1,
-    },
-    numberTest: {
-      type: 'number',
-      name: 'test-useTextAreaNumber',
-      minimum: 0,
-      maximum: 10,
-      multipleOf: 0.1,
-    },
-    errorTest: {
-      type: 'string',
-      name: 'test-showError',
-      minLength: 10,
-    },
-  },
-}
+import mockTextAreaSchema from '../__mocks__/mockTextSchema'
 
 const MockTextArea: FC<{ path: string }> = props => {
   const methods = useTextArea(props.path)
