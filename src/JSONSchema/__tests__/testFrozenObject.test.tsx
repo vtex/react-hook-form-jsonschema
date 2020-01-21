@@ -110,16 +110,26 @@ const MockObject: FC<{ path: string; UISchema?: UISchemaType }> = props => {
   return <>{objectForm}</>
 }
 
-test('should render all child properties of the schema', () => {
+test('should render all child properties of the schema', async () => {
   const { getByText } = render(
-    <FormContext schema={frozenSchema}>
+    <FormContext
+      schema={frozenSchema}
+      onSubmit={() => {
+        return
+      }}
+    >
       <MockObject path="#" />
+      <input type="submit" value="Submit" />
     </FormContext>
   )
 
-  for (const item of Object.keys(mockObjectSchema.properties)) {
+  for (const item of Object.keys(frozenSchema.properties)) {
     expect(getByText(item)).toBeDefined()
   }
+
+  getByText('Submit').click()
+
+  await wait(() => expect(getByText('This is an error!')).toBeDefined())
 })
 
 test('should raise error', async () => {
@@ -149,9 +159,9 @@ test('ui schema should render number and input as select', async () => {
   )
 
   for (
-    let i = mockObjectSchema.properties.numberTest.minimum;
-    i < mockObjectSchema.properties.numberTest.maximum;
-    i += mockObjectSchema.properties.numberTest.multipleOf
+    let i = frozenSchema.properties.numberTest.minimum;
+    i < frozenSchema.properties.numberTest.maximum;
+    i += frozenSchema.properties.numberTest.multipleOf
   ) {
     expect(getByText(toFixed(i, 1))).toBeDefined()
   }
