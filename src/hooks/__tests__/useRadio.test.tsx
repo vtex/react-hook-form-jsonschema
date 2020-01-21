@@ -42,13 +42,10 @@ test('should have all integers in interval', () => {
     </FormContext>
   )
 
-  for (
-    let i = mockRadioSchema.properties.integerTest.minimum;
-    i < mockRadioSchema.properties.integerTest.maximum;
-    i += 1
-  ) {
-    expect(getByText(i.toString())).toBeDefined()
-  }
+  expect(getByText('0')).toBeDefined()
+  expect(getByText('2')).toBeDefined()
+  expect(getByText('4')).toBeDefined()
+  expect(getByText('6')).toBeDefined()
 })
 
 test('should have all floats in interval, separated by step', () => {
@@ -58,13 +55,12 @@ test('should have all floats in interval, separated by step', () => {
     </FormContext>
   )
 
-  for (
-    let i = mockRadioSchema.properties.numberTest.minimum;
-    i < mockRadioSchema.properties.numberTest.maximum;
-    i += mockRadioSchema.properties.numberTest.multipleOf
-  ) {
-    expect(getByText(toFixed(i, 1))).toBeDefined()
-  }
+  expect(getByText('0')).toBeDefined()
+  expect(getByText('0.1')).toBeDefined()
+  expect(getByText('0.2')).toBeDefined()
+  expect(getByText('0.3')).toBeDefined()
+  expect(getByText('0.4')).toBeDefined()
+  expect(getByText('0.5')).toBeDefined()
 })
 
 test('should have boolean true and false', () => {

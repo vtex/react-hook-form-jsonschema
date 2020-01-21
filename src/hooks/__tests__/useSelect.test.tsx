@@ -47,13 +47,10 @@ test('should have all integers in interval', () => {
     </FormContext>
   )
 
-  for (
-    let i = mockSelectSchema.properties.integerTest.minimum;
-    i < mockSelectSchema.properties.integerTest.maximum;
-    i += 1
-  ) {
-    expect(getByText(i.toString())).toBeDefined()
-  }
+  expect(getByText('0')).toBeDefined()
+  expect(getByText('2')).toBeDefined()
+  expect(getByText('4')).toBeDefined()
+  expect(getByText('6')).toBeDefined()
 })
 
 test('should have all floats in interval, separated by step', () => {
@@ -63,13 +60,12 @@ test('should have all floats in interval, separated by step', () => {
     </FormContext>
   )
 
-  for (
-    let i = mockSelectSchema.properties.numberTest.minimum;
-    i < mockSelectSchema.properties.numberTest.maximum;
-    i += mockSelectSchema.properties.numberTest.multipleOf
-  ) {
-    expect(getByText(toFixed(i, 1))).toBeDefined()
-  }
+  expect(getByText('0')).toBeDefined()
+  expect(getByText('0.1')).toBeDefined()
+  expect(getByText('0.2')).toBeDefined()
+  expect(getByText('0.3')).toBeDefined()
+  expect(getByText('0.4')).toBeDefined()
+  expect(getByText('0.5')).toBeDefined()
 })
 
 test('should have boolean true and false', () => {
