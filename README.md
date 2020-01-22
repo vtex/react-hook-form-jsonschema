@@ -9,6 +9,7 @@
 - [react-hook-form-jsonschema](#react-hook-form-jsonschema)
   - [Simple Usage](#simple-usage)
   - [Installation](#installation)
+  - [API](#api)
   - [Components API](#components-api)
     - [FormContext component](#formcontext-component)
   - [Hooks API](#hooks-api)
@@ -69,6 +70,10 @@ Or with yarn:
 ```
 yarn add react-hook-form-jsonschema
 ```
+
+## API
+
+This is the API documentation, `react-hook-form-jsonschema` also re-exports all the [`react-hook-form`](https://github.com/react-hook-form/react-hook-form) functionalities, except for the Components and/or functions with the same name as in the `react-hook-form` API in this case they are just wrappers around the original library ones.
 
 ## Components API
 
