@@ -123,9 +123,11 @@ test('should render all child properties of the schema', async () => {
     </FormContext>
   )
 
-  for (const item of Object.keys(frozenSchema.properties)) {
-    expect(getByText(item)).toBeDefined()
-  }
+  expect(getByText('stringTest')).toBeDefined()
+  expect(getByText('integerTest')).toBeDefined()
+  expect(getByText('numberTest')).toBeDefined()
+  expect(getByText('booleanTest')).toBeDefined()
+  expect(getByText('errorTest')).toBeDefined()
 
   getByText('Submit').click()
 
@@ -158,11 +160,10 @@ test('ui schema should render number and input as select', async () => {
     </FormContext>
   )
 
-  for (
-    let i = frozenSchema.properties.numberTest.minimum;
-    i < frozenSchema.properties.numberTest.maximum;
-    i += frozenSchema.properties.numberTest.multipleOf
-  ) {
-    expect(getByText(toFixed(i, 1))).toBeDefined()
-  }
+  expect(getByText('0')).toBeDefined()
+  expect(getByText('0.1')).toBeDefined()
+  expect(getByText('0.2')).toBeDefined()
+  expect(getByText('0.3')).toBeDefined()
+  expect(getByText('0.4')).toBeDefined()
+  expect(getByText('0.5')).toBeDefined()
 })
