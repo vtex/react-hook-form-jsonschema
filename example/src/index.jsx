@@ -1,3 +1,9 @@
+/**
+ *  This is just a working example code of how to use the
+ *  `react-hook-form-jsonschema`. For the full API read the readme in the root
+ *  of the project.
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
