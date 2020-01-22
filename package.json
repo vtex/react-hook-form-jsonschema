@@ -46,8 +46,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint",
-      "pre-push": "lint"
+      "pre-commit": "run-s lint",
+      "pre-push": "run-s lint"
     }
   },
   "dependencies": {
