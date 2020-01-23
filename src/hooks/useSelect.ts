@@ -69,6 +69,7 @@ export const getSelectCustomFields = (
   return {
     ...baseObject,
     type: InputTypes.select,
+    validator: validator,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}
       labelProps.id = baseObject.path + '-label'

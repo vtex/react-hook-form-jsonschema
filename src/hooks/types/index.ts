@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormContextValues } from 'react-hook-form'
+import { FormContextValues, ValidationOptions } from 'react-hook-form'
 
 import { ErrorMessage } from '../validators'
 import { JSONSchemaType } from '../../JSONSchema'
@@ -30,6 +30,7 @@ export interface BasicInputReturnType {
   name: string
   path: string
   type: InputTypes
+  validator: ValidationOptions
 }
 
 export interface GenericInputParameters {

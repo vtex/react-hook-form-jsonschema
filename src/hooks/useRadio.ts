@@ -73,6 +73,7 @@ export const getRadioCustomFields = (
 
   return {
     ...baseObject,
+    validator: validator,
     type: InputTypes.radio,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}

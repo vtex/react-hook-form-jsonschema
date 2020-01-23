@@ -39,6 +39,7 @@ export const getGenericInput = (
     isRequired: isRequired,
     formContext: formContext,
     type: InputTypes.generic,
+    validator: {},
     getError: () =>
       getError(
         formContext.errors[path]
