@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed `'mode'` prop on FormContext to `'validationMode'`
+
 ## [0.2.0-beta] - 2020-01-22
 
 ### Added
