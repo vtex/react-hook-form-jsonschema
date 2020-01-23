@@ -27,10 +27,10 @@ test('should return an object that matches the schema', () => {
     },
   }
   const mockData = {
-    '#/firstName': 'Helena',
-    '#/lastName': 'Steck',
+    '#/firstName': 'Jane',
+    '#/lastName': 'Doe',
     '#/address/city': 'RJ',
-    '#/address/street': 'Uma rua ae',
+    '#/address/street': 'Praia de Botafogo',
     '#/address/streetNumber': 300,
   }
 
@@ -38,11 +38,11 @@ test('should return an object that matches the schema', () => {
 
   expect(testResult).toEqual(
     expect.objectContaining({
-      firstName: 'Helena',
-      lastName: 'Steck',
+      firstName: 'Jane',
+      lastName: 'Doe',
       address: expect.objectContaining({
         city: 'RJ',
-        street: 'Uma rua ae',
+        street: 'Praia de Botafogo',
         streetNumber: 300,
       }),
     })
