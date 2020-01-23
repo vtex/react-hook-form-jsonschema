@@ -89,7 +89,7 @@ This component is the top-level component that creates the context with the sche
 
 ##### Optional:
 
-- `mode`: String to indicate when to validate the input, default is `'onSubmit'`.
+- `validationMode`: String to indicate when to validate the input, default is `'onSubmit'`.
   - `'onBlur'`: Validate when an input field is blurred.
   - `'onChange'`: Validate when an input field value changes.
   - `'onSubmit'`: Validate when the submit is triggered.
