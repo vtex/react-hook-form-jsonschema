@@ -2,10 +2,6 @@
 
 <!--- What is the motivation and context for this change? -->
 
-#### How should this be manually tested?
-
-[Workspace](url)
-
 #### Checklist/Reminders
 
 - [ ] Updated `README.md`.
@@ -14,7 +10,7 @@
 - [ ] Updated/created tests (important for bug fixes).
 - [ ] Deleted the workspace after merging this PR (if applicable).
 
-#### Screenshots or example usage
+#### Example usage
 
 #### Type of changes
 
