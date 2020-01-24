@@ -13,7 +13,7 @@ export type OnSubmitType = (
 ) => void | Promise<void>
 
 export type FormContextProps = {
-  mode?: Mode
+  validationMode?: Mode
   revalidateMode?: Mode
   submitFocusError?: boolean
   onSubmit?: OnSubmitType
