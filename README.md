@@ -132,6 +132,47 @@ The following are the common fields returned in the object from every `use'SomeI
 
 **Please notice that in all of the following examples it is assumed the components are already children of a `FormContext` component**
 
+### useCheckbox(path)
+
+**Description**
+
+Use this hook to build a single or multiple checkbox field in your form.
+
+**Parameters:**
+
+- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+
+**Return:**
+
+Returns an object with the following fields, besides the common one's:
+
+- `isSingle`: indicates whether there is just a single option inside the checkbox
+- `getItems()`: use this to get which values should be listed inside the radio input fields. This function derives the items by the defined type and properties inside the JSON Schema and returns all the required items to comply with the definition.
+- `getItemInputProps(index)`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it for the item in the specified index from `getItems()`
+- `getItemLabelProps(index)`: the label props related to the input at the specified index from `getItems()`
+
+**Example:**
+
+```JSX
+function InputField(props) {
+  const inputMethods = useCheckbox(props.path)
+
+  return (
+    <React.Fragment>
+      {inputMethods.getItems().map((value, index) => {
+        return (
+          <label {...inputMethods.getItemLabelProps(index)} key={`${value}${index}`}>
+            {inputMethods.isSingle ? inputMethods.getObject().title : value}
+            <input {...inputMethods.getItemInputProps(index)} />
+          </label>
+        )
+      })}
+      {inputMethods.getError() && <p>This is an error!</p>}
+    </React.Fragment>
+  )
+}
+```
+
 ### useHidden(path)
 
 **Description**

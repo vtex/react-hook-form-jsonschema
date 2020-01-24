@@ -10,6 +10,7 @@ export enum InputTypes {
   select = '__input_type_select__',
   input = '__input_type_input__',
   textArea = '__input_type_textArea__',
+  checkbox = '__input_type_checkbox__',
 }
 
 export enum UITypes {
@@ -20,6 +21,7 @@ export enum UITypes {
   hidden = '__input_type_hidden__',
   password = '__input_type_password__',
   textArea = '__input_type_textArea__',
+  checkbox = '__input_type_checkbox__',
 }
 
 export interface BasicInputReturnType {
@@ -46,6 +48,17 @@ export interface UseRadioReturnType extends BasicInputReturnType {
 
 export interface UseRadioParameters {
   (path: string): UseRadioReturnType
+}
+
+export interface UseCheckboxReturnType extends BasicInputReturnType {
+  getItems(): Array<string>
+  getItemInputProps(index: number): React.ComponentProps<'input'>
+  getItemLabelProps(index: number): React.ComponentProps<'label'>
+  isSingle: boolean
+}
+
+export interface UseCheckboxParameters {
+  (path: string): UseCheckboxReturnType
 }
 
 export interface UseSelectReturnType extends BasicInputReturnType {
@@ -87,6 +100,7 @@ export type InputReturnTypes =
   | UseTextAreaReturnType
   | UseSelectReturnType
   | UseRadioReturnType
+  | UseCheckboxReturnType
 
 export type UseObjectReturnType = Array<InputReturnTypes>
 

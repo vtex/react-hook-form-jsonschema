@@ -47,6 +47,8 @@ export const getGenericInput = (
           : undefined,
         JSONSchema,
         isRequired,
+        formContext,
+        path,
         minimum,
         maximum,
         step

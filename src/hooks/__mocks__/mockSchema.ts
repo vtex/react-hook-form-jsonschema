@@ -5,7 +5,7 @@ export const toFixed = (value: number, precision: number): string => {
 
 const mockSchema = {
   type: 'object',
-  required: ['errorTest'],
+  required: ['errorTest', 'arrayErrorTest'],
   properties: {
     stringTest: {
       type: 'string',
@@ -34,6 +34,13 @@ const mockSchema = {
       type: 'string',
       title: 'test-showError',
       enum: ['should', 'show', 'error', 'when', 'submitted'],
+    },
+    arrayErrorTest: {
+      type: 'array',
+      items: {
+        enum: ['should', 'show', 'error', 'when', 'submitted'],
+      },
+      minItems: 1,
     },
   },
 }
