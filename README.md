@@ -13,6 +13,7 @@
   - [Components API](#components-api)
     - [FormContext component](#formcontext-component)
   - [Hooks API](#hooks-api)
+    - [useCheckbox(path)](#usecheckboxpath)
     - [useHidden(path)](#usehiddenpath)
     - [useInput(path)](#useinputpath)
     - [useObject(path, UISchema)](#useobjectpath-uischema)
@@ -111,6 +112,7 @@ The following are the common fields returned in the object from every `use'SomeI
   - `select`: Type used for `<select>`
   - `input`: Type used for generic `<input \>`
   - `textArea`: Type used for `<textarea>`
+  - `checkbox`: Type used for `<input type='checkbox' \>`
 - `path`: Path in the jsonschema this input is validated against. The path is always in the form: `#/some/child/data/field/here` where `#` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
 - `name`: The last object/data field name in the tree. In the case of `#/some/child/data/field/here` the name value will be `here`.
 - `isRequired`: indicates whether the field is required or not.
@@ -279,6 +281,7 @@ const UISchema = {
   - `hidden`: input will be of the hidden type, just as returned by the `useHidden` hook
   - `password`: input will be of the password type, just as returned by the `usePassword` hook
   - `textArea`: input will be of the textarea type, just as returned by the `useTextArea` hook
+  - `checkbox`: input will be of the checkbox type, just as returned by the `useCheckbox` hook
 
 **Return:**
 
