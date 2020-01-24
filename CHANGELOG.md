@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed the BasicInputReturnType to also return a reference to the validator used
+- **BREAKING**: The `useObject` hook now automatically associates a boolean to a checkbox
 
 ### Fixed
 
