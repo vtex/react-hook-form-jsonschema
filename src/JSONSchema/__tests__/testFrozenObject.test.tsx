@@ -1,18 +1,10 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { render, wait } from '@vtex/test-tools/react'
 
 import { FormContext } from '../../components'
-import {
-  UseRawInputReturnType,
-  InputReturnTypes,
-  InputTypes,
-  UseRadioReturnType,
-  UseSelectReturnType,
-  useObject,
-  UISchemaType,
-  UITypes,
-} from '../../hooks'
-import mockObjectSchema, { toFixed } from '../../hooks/__mocks__/mockSchema'
+import { UISchemaType, UITypes } from '../../hooks'
+import mockObjectSchema from '../../hooks/__mocks__/mockSchema'
+import { MockObject } from '../../__mocks__/mockObjectComponent'
 
 const mockUISchema: UISchemaType = {
   type: UITypes.default,
@@ -39,77 +31,6 @@ function deepFreeze(obj) {
   return Object.freeze(obj)
 }
 const frozenSchema = deepFreeze(mockObjectSchema)
-
-const SpecializedObject: FC<{ baseObject: InputReturnTypes }> = props => {
-  switch (props.baseObject.type) {
-    case InputTypes.input: {
-      const inputObject = props.baseObject as UseRawInputReturnType
-      return (
-        <>
-          <label {...inputObject.getLabelProps()}>{inputObject.name}</label>
-          <input {...inputObject.getInputProps()} />
-        </>
-      )
-    }
-    case InputTypes.radio: {
-      const radioObject = props.baseObject as UseRadioReturnType
-      return (
-        <>
-          <label {...radioObject.getLabelProps()}>{radioObject.name}</label>
-          {radioObject.getItems().map((value, index) => {
-            return (
-              <label
-                {...radioObject.getItemLabelProps(index)}
-                key={`${value}${index}`}
-              >
-                {value}
-                <input {...radioObject.getItemInputProps(index)} />
-              </label>
-            )
-          })}
-        </>
-      )
-    }
-    case InputTypes.select: {
-      const selectObject = props.baseObject as UseSelectReturnType
-      return (
-        <>
-          <label {...selectObject.getLabelProps()}>{selectObject.name}</label>
-          <select {...selectObject.getSelectProps()}>
-            {selectObject.getItems().map((value, index) => {
-              return (
-                <option
-                  {...selectObject.getItemOptionProps(index)}
-                  key={`${value}${index}`}
-                >
-                  {value}
-                </option>
-              )
-            })}
-          </select>
-        </>
-      )
-    }
-  }
-  return <></>
-}
-
-const MockObject: FC<{ path: string; UISchema?: UISchemaType }> = props => {
-  const methods = useObject({ path: props.path, UISchema: props.UISchema })
-
-  const objectForm = []
-  for (const obj of methods) {
-    objectForm.push(
-      <div key={`${obj.type}${obj.path}`}>
-        <SpecializedObject baseObject={obj} />
-        {obj.getError() && <p>This is an error!</p>}
-      </div>
-    )
-  }
-
-  return <>{objectForm}</>
-}
-
 test('should render all child properties of the schema', async () => {
   const { getByText } = render(
     <FormContext
