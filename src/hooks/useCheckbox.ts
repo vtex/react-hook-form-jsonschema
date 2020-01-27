@@ -66,7 +66,7 @@ export const getCheckboxCustomFields = (
       if (minimum !== undefined && maximum !== undefined && step != 'any') {
         validator = getNumberValidator(currentObject, baseObject.isRequired)
         for (let i = minimum; i <= maximum; i += step) {
-          items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
+          items.push(toFixed(i, decimalPlaces || 0))
         }
       }
     }
