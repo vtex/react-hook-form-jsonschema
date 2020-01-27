@@ -81,7 +81,7 @@ export const getCheckboxCustomFields = (
 
   return {
     ...baseObject,
-    validator: validator,
+    validator,
     type: InputTypes.checkbox,
     isSingle: currentObject.type === 'boolean',
     getItemInputProps: index => {

@@ -41,7 +41,7 @@ export const getTextAreaCustomFields = (
   return {
     ...baseObject,
     type: InputTypes.textArea,
-    validator: validator,
+    validator,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
       itemProps.id = getLabelId(baseObject.path)
