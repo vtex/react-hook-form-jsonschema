@@ -92,7 +92,7 @@ export const getNumberValidator = (
   const validator: ValidationOptions = {
     validate: {
       multipleOf: (value: string) => {
-        if (currentObject.type === 'integer') {
+        if (currentObject.type === 'integer' && value) {
           return (
             currentObject.multipleOf &&
             (parseInt(value) % parseInt(currentObject.multipleOf) === 0 ||
