@@ -49,16 +49,19 @@ export const getObjectFromForm = (
       if (node === splitPath.length - 1) {
         if (
           currentOriginal[splitPath[node]] &&
-          currentOriginal[splitPath[node]].type &&
           currentOriginal[splitPath[node]].type === 'integer'
         ) {
           current[splitPath[node]] = parseInt(data[key])
         } else if (
           currentOriginal[splitPath[node]] &&
-          currentOriginal[splitPath[node]].type &&
           currentOriginal[splitPath[node]].type === 'number'
         ) {
           current[splitPath[node]] = parseFloat(data[key])
+        } else if (
+          currentOriginal[splitPath[node]] &&
+          currentOriginal[splitPath[node]].type === 'boolean'
+        ) {
+          current[splitPath[node]] = data[key] === 'true' ? true : false
         } else {
           current[splitPath[node]] = data[key]
         }

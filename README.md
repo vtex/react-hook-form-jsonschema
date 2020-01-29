@@ -13,6 +13,7 @@
   - [Components API](#components-api)
     - [FormContext component](#formcontext-component)
   - [Hooks API](#hooks-api)
+    - [useCheckbox(path)](#usecheckboxpath)
     - [useHidden(path)](#usehiddenpath)
     - [useInput(path)](#useinputpath)
     - [useObject(path, UISchema)](#useobjectpath-uischema)
@@ -111,9 +112,11 @@ The following are the common fields returned in the object from every `use'SomeI
   - `select`: Type used for `<select>`
   - `input`: Type used for generic `<input \>`
   - `textArea`: Type used for `<textarea>`
+  - `checkbox`: Type used for `<input type='checkbox' \>`
 - `path`: Path in the jsonschema this input is validated against. The path is always in the form: `#/some/child/data/field/here` where `#` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
 - `name`: The last object/data field name in the tree. In the case of `#/some/child/data/field/here` the name value will be `here`.
 - `isRequired`: indicates whether the field is required or not.
+- `validator`: is the object passed to `react-hook-form` to validate the form. See the [`react-hook-form`](https://github.com/react-hook-form/react-hook-form) for more information
 - `formContext`: If you want to access internal `react-hook-form` context use this
 - `getError()`: Returns an `ErrorMessage`, which has the following format:
   - `{message: ErrorTypes, expected: ErrorMessageValues}`
@@ -130,6 +133,47 @@ The following are the common fields returned in the object from every `use'SomeI
 - `getObject()`: Returns the data field in the schema that this input refers to
 
 **Please notice that in all of the following examples it is assumed the components are already children of a `FormContext` component**
+
+### useCheckbox(path)
+
+**Description**
+
+Use this hook to build a single or multiple checkbox field in your form.
+
+**Parameters:**
+
+- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+
+**Return:**
+
+Returns an object with the following fields, besides the common one's:
+
+- `isSingle`: indicates whether there is just a single option inside the checkbox
+- `getItems()`: use this to get which values should be listed inside the radio input fields. This function derives the items by the defined type and properties inside the JSON Schema and returns all the required items to comply with the definition.
+- `getItemInputProps(index)`: use this with the spread operator inside an `<input>` tag and get the benefit of the validator, id field, name and an associated label with it for the item in the specified index from `getItems()`
+- `getItemLabelProps(index)`: the label props related to the input at the specified index from `getItems()`
+
+**Example:**
+
+```JSX
+function InputField(props) {
+  const inputMethods = useCheckbox(props.path)
+
+  return (
+    <React.Fragment>
+      {inputMethods.getItems().map((value, index) => {
+        return (
+          <label {...inputMethods.getItemLabelProps(index)} key={`${value}${index}`}>
+            {inputMethods.isSingle ? inputMethods.getObject().title : value}
+            <input {...inputMethods.getItemInputProps(index)} />
+          </label>
+        )
+      })}
+      {inputMethods.getError() && <p>This is an error!</p>}
+    </React.Fragment>
+  )
+}
+```
 
 ### useHidden(path)
 
@@ -237,6 +281,7 @@ const UISchema = {
   - `hidden`: input will be of the hidden type, just as returned by the `useHidden` hook
   - `password`: input will be of the password type, just as returned by the `usePassword` hook
   - `textArea`: input will be of the textarea type, just as returned by the `useTextArea` hook
+  - `checkbox`: input will be of the checkbox type, just as returned by the `useCheckbox` hook
 
 **Return:**
 

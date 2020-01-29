@@ -39,6 +39,7 @@ export const getGenericInput = (
     isRequired: isRequired,
     formContext: formContext,
     type: InputTypes.generic,
+    validator: {},
     getError: () =>
       getError(
         formContext.errors[path]
@@ -46,6 +47,8 @@ export const getGenericInput = (
           : undefined,
         JSONSchema,
         isRequired,
+        formContext,
+        path,
         minimum,
         maximum,
         step

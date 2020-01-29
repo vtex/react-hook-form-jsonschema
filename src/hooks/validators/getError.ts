@@ -1,4 +1,4 @@
-import { FieldError } from 'react-hook-form'
+import { FieldError, FormContextValues } from 'react-hook-form'
 
 import { ErrorTypes, ErrorMessage } from './types'
 import { JSONSchemaType } from '../../JSONSchema'
@@ -7,10 +7,39 @@ export const getError = (
   errors: FieldError | undefined,
   currentObject: JSONSchemaType,
   isRequired: boolean,
+  formContext: FormContextValues,
+  path: string,
   minimum?: number,
   maximum?: number,
   step?: number | 'any'
-) => {
+): ErrorMessage => {
+  // This is a special element to check errors against
+  if (currentObject.type === 'array') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const currentValues: Array<any> | undefined = formContext.getValues({
+      nest: true,
+    })[path]
+
+    if (currentValues) {
+      const numberOfSelected =
+        currentValues.filter(x => x !== false).length || 0
+      if (currentObject.minItems && numberOfSelected < currentObject.minItems) {
+        return {
+          message: ErrorTypes.minLength,
+          expected: currentObject.minItems,
+        }
+      } else if (
+        currentObject.maxItems &&
+        numberOfSelected > currentObject.maxItems
+      ) {
+        return {
+          message: ErrorTypes.maxLength,
+          expected: currentObject.maxItems,
+        }
+      }
+    }
+  }
+
   if (!errors) {
     return undefined
   }

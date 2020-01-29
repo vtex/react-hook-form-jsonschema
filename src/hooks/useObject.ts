@@ -21,6 +21,7 @@ import { getSelectCustomFields } from './useSelect'
 import { getHiddenCustomFields } from './useHidden'
 import { getPasswordCustomFields } from './usePassword'
 import { getTextAreaCustomFields } from './useTextArea'
+import { getCheckboxCustomFields } from './useCheckbox'
 
 function getFromGeneric(
   genericInput: BasicInputReturnType
@@ -40,8 +41,9 @@ function getFromGeneric(
     case 'number':
       inputs.push(getInputCustomFields(genericInput))
       break
+    case 'array':
     case 'boolean':
-      inputs.push(getRadioCustomFields(genericInput))
+      inputs.push(getCheckboxCustomFields(genericInput))
       break
   }
   return inputs
@@ -111,6 +113,9 @@ function getStructure(
   switch (UISchema.type) {
     case UITypes.default:
       inputs = inputs.concat(getFromGeneric(genericInput))
+      break
+    case UITypes.checkbox:
+      inputs.push(getCheckboxCustomFields(genericInput))
       break
     case UITypes.hidden:
       inputs.push(getHiddenCustomFields(genericInput))

@@ -65,6 +65,7 @@ export const getRawInputCustomFields = (
 
   return {
     ...baseFields,
+    validator,
     type: InputTypes.input,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
