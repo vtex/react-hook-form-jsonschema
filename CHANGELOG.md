@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `InputTypes` and `UITypes` enum values to reflect their enum names and what was documented in the `README`
+
 ## [0.2.0-beta.2] - 2020-01-30
 
 ### Fixed
