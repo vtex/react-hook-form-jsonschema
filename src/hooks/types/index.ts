@@ -5,23 +5,23 @@ import { ErrorMessage } from '../validators'
 import { JSONSchemaType } from '../../JSONSchema'
 
 export enum InputTypes {
-  generic = '__input_type_generic__',
-  radio = '__input_type_radio__',
-  select = '__input_type_select__',
-  input = '__input_type_input__',
-  textArea = '__input_type_textArea__',
-  checkbox = '__input_type_checkbox__',
+  generic = 'generic',
+  radio = 'radio',
+  select = 'select',
+  input = 'input',
+  textArea = 'textArea',
+  checkbox = 'checkbox',
 }
 
 export enum UITypes {
-  default = '__input_type_default__',
-  radio = '__input_type_radio__',
-  select = '__input_type_select__',
-  input = '__input_type_input__',
-  hidden = '__input_type_hidden__',
-  password = '__input_type_password__',
-  textArea = '__input_type_textArea__',
-  checkbox = '__input_type_checkbox__',
+  default = 'default',
+  radio = 'radio',
+  select = 'select',
+  input = 'input',
+  hidden = 'hidden',
+  password = 'password',
+  textArea = 'textArea',
+  checkbox = 'checkbox',
 }
 
 export interface BasicInputReturnType {
