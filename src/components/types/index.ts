@@ -9,7 +9,7 @@ export interface FormValuesWithSchema<T> extends FormContextValues<T> {
 
 export type OnSubmitType = (
   data: JSONSchemaType,
-  event: React.BaseSyntheticEvent
+  event: React.BaseSyntheticEvent | undefined
 ) => void | Promise<void>
 
 export type FormContextProps = {
