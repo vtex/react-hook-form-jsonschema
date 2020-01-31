@@ -57,8 +57,8 @@ export const getRawInputCustomFields = (
 
     validator = getNumberValidator(currentObject, baseFields.isRequired)
 
-    itemProps.min = minimum
-    itemProps.max = maximum
+    itemProps.min = `${minimum}`
+    itemProps.max = `${maximum}`
     itemProps.step =
       step === 'any' ? 'any' : toFixed(step, decimalPlaces ? decimalPlaces : 0)
   }

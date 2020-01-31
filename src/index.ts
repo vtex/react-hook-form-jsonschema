@@ -1,4 +1,5 @@
-export * from 'react-hook-form'
+export { Controller } from 'react-hook-form'
+export * from 'react-hook-form/dist/types'
 
 export { FormContext, FormContextProps } from './components'
 export * from './hooks'
