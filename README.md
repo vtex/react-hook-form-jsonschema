@@ -74,7 +74,7 @@ yarn add react-hook-form-jsonschema
 
 ## API
 
-This is the API documentation, `react-hook-form-jsonschema` also re-exports all the [`react-hook-form`](https://github.com/react-hook-form/react-hook-form) functionalities, except for the Components and/or functions with the same name as in the `react-hook-form` API in this case they are just wrappers around the original library ones.
+This is the API documentation, `react-hook-form-jsonschema` also re-exports all the [`react-hook-form`](https://github.com/react-hook-form/react-hook-form) types and the `Controller` component. All of the other functionalities are abstracted by this library.
 
 ## Components API
 
