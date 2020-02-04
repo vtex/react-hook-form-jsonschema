@@ -24,7 +24,7 @@ export const getObjectFromForm = (
 
   for (const key of orderedSchemaKeys) {
     const splitPath = getSplitPath(key)
-    if (!splitPath) {
+    if (!splitPath && data[key]) {
       continue
     }
 
@@ -39,31 +39,23 @@ export const getObjectFromForm = (
       if (currentOriginalPath.type && currentOriginalPath.type === 'object') {
         currentOriginalPath = currentOriginalPath.properties
         currentOriginalPath = currentOriginalPath[splitPath[node]]
-      } else if (
-        !currentOriginalPath.type &&
-        currentOriginalPath[splitPath[node]] &&
-        currentOriginalPath[splitPath[node]].type === 'object'
-      ) {
-        currentOriginalPath = currentOriginalPath[splitPath[node]]
       }
 
-      if (node === splitPath.length - 1 && data[key]) {
-        if (currentOriginalPath && currentOriginalPath.type === 'integer') {
+      if (node === splitPath.length - 1) {
+        if (!currentOriginalPath) {
+          break
+        }
+
+        if (currentOriginalPath.type === 'integer') {
           currentPath[splitPath[node]] = parseInt(data[key])
-        } else if (
-          currentOriginalPath &&
-          currentOriginalPath.type === 'number'
-        ) {
+        } else if (currentOriginalPath.type === 'number') {
           currentPath[splitPath[node]] = parseFloat(data[key])
-        } else if (
-          currentOriginalPath &&
-          currentOriginalPath.type === 'boolean'
-        ) {
+        } else if (currentOriginalPath.type === 'boolean') {
           currentPath[splitPath[node]] = data[key] === 'true' ? true : false
-        } else if (currentOriginalPath) {
+        } else {
           currentPath[splitPath[node]] = data[key]
         }
-      } else if (currentPath[splitPath[node]] === undefined && data[key]) {
+      } else if (currentPath[splitPath[node]] === undefined) {
         currentPath[splitPath[node]] = {}
       }
 
