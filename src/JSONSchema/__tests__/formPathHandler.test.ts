@@ -7,6 +7,9 @@ test('should return an object that matches the schema', () => {
       firstName: {
         type: 'string',
       },
+      middleName: {
+        type: 'string',
+      },
       lastName: {
         type: 'string',
       },
@@ -32,6 +35,8 @@ test('should return an object that matches the schema', () => {
     '#/address/city': 'RJ',
     '#/address/street': 'Praia de Botafogo',
     '#/address/streetNumber': 300,
+    '#/middleName': null,
+    '#/intruderField': 'I am an intruder, you should not return me :)',
   }
 
   const testResult = getObjectFromForm(mockJSONSchema, mockData)
