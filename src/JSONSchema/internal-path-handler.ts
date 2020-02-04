@@ -28,50 +28,46 @@ export const getObjectFromForm = (
       continue
     }
 
-    let current = objectFromData
-    let currentOriginal = originalSchema
+    let currentPath = objectFromData
+    let currentOriginalPath = originalSchema
 
     for (let node = 0; node < splitPath.length; node++) {
-      if (currentOriginal === undefined) {
+      if (currentOriginalPath === undefined) {
         break
       }
 
-      if (currentOriginal.type && currentOriginal.type === 'object') {
-        currentOriginal = currentOriginal.properties
+      if (currentOriginalPath.type && currentOriginalPath.type === 'object') {
+        currentOriginalPath = currentOriginalPath.properties
+        currentOriginalPath = currentOriginalPath[splitPath[node]]
       } else if (
-        !currentOriginal.type &&
-        currentOriginal[splitPath[node]] &&
-        currentOriginal[splitPath[node]].type === 'object'
+        !currentOriginalPath.type &&
+        currentOriginalPath[splitPath[node]] &&
+        currentOriginalPath[splitPath[node]].type === 'object'
       ) {
-        currentOriginal = currentOriginal[splitPath[node]]
+        currentOriginalPath = currentOriginalPath[splitPath[node]]
       }
 
-      if (node === splitPath.length - 1) {
-        if (
-          currentOriginal[splitPath[node]] &&
-          currentOriginal[splitPath[node]].type === 'integer'
-        ) {
-          current[splitPath[node]] = parseInt(data[key])
+      if (node === splitPath.length - 1 && data[key]) {
+        if (currentOriginalPath && currentOriginalPath.type === 'integer') {
+          currentPath[splitPath[node]] = parseInt(data[key])
         } else if (
-          currentOriginal[splitPath[node]] &&
-          currentOriginal[splitPath[node]].type === 'number'
+          currentOriginalPath &&
+          currentOriginalPath.type === 'number'
         ) {
-          current[splitPath[node]] = parseFloat(data[key])
+          currentPath[splitPath[node]] = parseFloat(data[key])
         } else if (
-          currentOriginal[splitPath[node]] &&
-          currentOriginal[splitPath[node]].type === 'boolean'
+          currentOriginalPath &&
+          currentOriginalPath.type === 'boolean'
         ) {
-          current[splitPath[node]] = data[key] === 'true' ? true : false
-        } else {
-          current[splitPath[node]] = data[key]
+          currentPath[splitPath[node]] = data[key] === 'true' ? true : false
+        } else if (currentOriginalPath) {
+          currentPath[splitPath[node]] = data[key]
         }
+      } else if (currentPath[splitPath[node]] === undefined && data[key]) {
+        currentPath[splitPath[node]] = {}
       }
 
-      if (current[splitPath[node]] === undefined) {
-        current[splitPath[node]] = {}
-      }
-
-      current = current[splitPath[node]]
+      currentPath = currentPath[splitPath[node]]
     }
   }
 
