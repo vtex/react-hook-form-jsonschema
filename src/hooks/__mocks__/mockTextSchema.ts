@@ -6,7 +6,6 @@ const mockTextSchema = {
       type: 'string',
       name: 'test-useTextAreaString',
       minLength: 2,
-      maxLength: 3,
     },
     integerTest: {
       type: 'integer',

@@ -1,5 +1,4 @@
 export { useCheckbox } from './useCheckbox'
-export { useGenericInput } from './useGenericInput'
 export { useHidden } from './useHidden'
 export { useInput } from './useInput'
 export { useObject } from './useObject'

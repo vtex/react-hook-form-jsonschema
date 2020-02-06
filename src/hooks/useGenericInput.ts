@@ -1,21 +1,22 @@
-import { FormContextValues, FieldError } from 'react-hook-form'
+import { FieldError } from 'react-hook-form'
 
 import {
   GenericInputParameters,
   BasicInputReturnType,
   InputTypes,
 } from './types'
-import { useFormContext } from '../components'
+import { useFormContext, JSONFormContextValues } from '../components'
 import { useObjectFromPath, JSONSchemaPathInfo } from '../JSONSchema'
 import {
   getError,
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
+  getValidator,
 } from './validators'
 
 export const getGenericInput = (
-  formContext: FormContextValues,
+  formContext: JSONFormContextValues,
   pathInfo: JSONSchemaPathInfo,
   path: string
 ): BasicInputReturnType => {
@@ -39,7 +40,10 @@ export const getGenericInput = (
     isRequired: isRequired,
     formContext: formContext,
     type: InputTypes.generic,
-    validator: {},
+    validator: getValidator(isRequired, formContext.customValidators ?? {}, {
+      currentObject: JSONSchema,
+      path,
+    }),
     getError: () =>
       getError(
         formContext.errors[path]
@@ -54,6 +58,9 @@ export const getGenericInput = (
         step
       ),
     getObject: () => JSONSchema,
+    getCurrentValue: () => {
+      return formContext.getValues()[path]
+    },
   }
 }
 
