@@ -47,7 +47,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "run-s lint",
-      "pre-push": "git stash push --keep-index -m 'husky-pre-commit' && run-s test && git stash pop || true"
+      "pre-push": "set -o pipefail && git stash push --keep-index -m 'husky-pre-commit' && run-s test && git stash pop || true"
     }
   },
   "dependencies": {
