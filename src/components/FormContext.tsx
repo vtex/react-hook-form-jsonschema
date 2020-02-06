@@ -40,7 +40,13 @@ export const FormContext: FC<FormContextProps> = props => {
     formProps.noValidate = props.noNativeValidate
   }
   return (
-    <InternalFormContext.Provider value={{ ...methods, schema: props.schema }}>
+    <InternalFormContext.Provider
+      value={{
+        ...methods,
+        schema: props.schema,
+        customValidators: props.customValidators,
+      }}
+    >
       <form {...formProps}>{props.children}</form>
     </InternalFormContext.Provider>
   )
