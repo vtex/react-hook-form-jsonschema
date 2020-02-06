@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `customValidators` to allow the user to define their own validation functions
+
+### Fixed
+
+- parsing of `floating point` numbers now handles commas
+
+### Changed
+
+- **BREAKING**: Renamed `FormValuesWithSchema` type to `JSONFormContextValues`
+
 ## [0.2.0-beta.4] - 2020-02-05
 
 ### Fixed
