@@ -49,7 +49,7 @@ export const getObjectFromForm = (
         if (currentOriginalPath.type === 'integer') {
           currentPath[splitPath[node]] = parseInt(data[key])
         } else if (currentOriginalPath.type === 'number') {
-          currentPath[splitPath[node]] = parseFloat(data[key].replace(/,/, '.'))
+          currentPath[splitPath[node]] = parseFloat(data[key])
         } else if (currentOriginalPath.type === 'boolean') {
           currentPath[splitPath[node]] = data[key] === 'true' ? true : false
         } else {
