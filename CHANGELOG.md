@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0-beta.5] - 2020-02-11
+
 ### Added
 
 - `customValidators` to allow the user to define their own validation functions
