@@ -39,7 +39,7 @@ test('should render all child properties of the schema', async () => {
         return
       }}
     >
-      <MockObject path="#" />
+      <MockObject path="$" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -64,7 +64,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockObject path="#/errorTest" />
+      <MockObject path="$/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -77,7 +77,7 @@ test('should raise error', async () => {
 test('ui schema should render number and input as select', async () => {
   const { getByText } = render(
     <FormContext schema={frozenSchema}>
-      <MockObject path="#" UISchema={mockUISchema} />
+      <MockObject path="$" UISchema={mockUISchema} />
     </FormContext>
   )
 

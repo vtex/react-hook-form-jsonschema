@@ -35,7 +35,7 @@ test('should have boolean true and false', done => {
         done()
       }}
     >
-      <MockCheckbox path="#/booleanTest" />
+      <MockCheckbox path="$/booleanTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -53,7 +53,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockCheckbox path="#/arrayErrorTest" />
+      <MockCheckbox path="$/arrayErrorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

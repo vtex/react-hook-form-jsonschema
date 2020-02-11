@@ -21,7 +21,7 @@ const mockUISchema: UISchemaType = {
 test('should render all child properties of the schema', () => {
   const { getByText } = render(
     <FormContext schema={mockObjectSchema}>
-      <MockObject path="#" />
+      <MockObject path="$" />
     </FormContext>
   )
 
@@ -41,7 +41,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockObject path="#/errorTest" />
+      <MockObject path="$/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -54,7 +54,7 @@ test('should raise error', async () => {
 test('ui schema should render number and input as select', async () => {
   const { getByText } = render(
     <FormContext schema={mockObjectSchema}>
-      <MockObject path="#" UISchema={mockUISchema} />
+      <MockObject path="$" UISchema={mockUISchema} />
     </FormContext>
   )
 
