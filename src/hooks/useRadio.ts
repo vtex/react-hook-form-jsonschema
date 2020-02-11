@@ -1,5 +1,4 @@
 import React from 'react'
-import { ValidationOptions } from 'react-hook-form'
 
 import {
   UseRadioParameters,
@@ -8,12 +7,9 @@ import {
   InputTypes,
 } from './types'
 import {
-  getBooleanValidator,
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
-  getNumberValidator,
-  getStringValidator,
   toFixed,
 } from './validators'
 import { useGenericInput } from './useGenericInput'
@@ -35,11 +31,13 @@ const getItemLabelId = (
 }
 
 export const getRadioCustomFields = (
-  baseObject: BasicInputReturnType
+  baseInput: BasicInputReturnType
 ): UseRadioReturnType => {
-  const currentObject = baseObject.getObject()
+  const { register } = baseInput.formContext
+  const { validator } = baseInput
 
-  let validator: ValidationOptions = {}
+  const currentObject = baseInput.getObject()
+
   let items: Array<string> = []
   let minimum: number | undefined
   let maximum: number | undefined
@@ -48,7 +46,6 @@ export const getRadioCustomFields = (
 
   if (currentObject.type === 'string') {
     items = currentObject.enum ? currentObject.enum : []
-    validator = getStringValidator(currentObject, baseObject.isRequired)
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'
@@ -61,44 +58,39 @@ export const getRadioCustomFields = (
     maximum = getNumberMaximum(currentObject)
 
     if (minimum !== undefined && maximum !== undefined && step != 'any') {
-      validator = getNumberValidator(currentObject, baseObject.isRequired)
       for (let i = minimum; i <= maximum; i += step) {
         items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
       }
     }
   } else if (currentObject.type === 'boolean') {
-    validator = getBooleanValidator(baseObject.isRequired)
     items = ['true', 'false']
   }
 
   return {
-    ...baseObject,
-    validator,
+    ...baseInput,
     type: InputTypes.radio,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}
-      labelProps.id = baseObject.path + '-label'
+      labelProps.id = baseInput.path + '-label'
       labelProps.htmlFor =
-        currentObject.title !== undefined
-          ? currentObject.title
-          : baseObject.path
+        currentObject.title !== undefined ? currentObject.title : baseInput.path
       return labelProps
     },
     getItemInputProps: index => {
       const itemProps: React.ComponentProps<'input'> = { key: '' }
-      itemProps.name = baseObject.path
-      itemProps.ref = baseObject.formContext.register(validator)
+      itemProps.name = baseInput.path
+      itemProps.ref = register(validator)
       itemProps.type = 'radio'
-      itemProps.required = baseObject.isRequired
-      itemProps.id = getItemInputId(baseObject.path, index, items)
+      itemProps.required = baseInput.isRequired
+      itemProps.id = getItemInputId(baseInput.path, index, items)
       itemProps.value = items[index]
 
       return itemProps
     },
     getItemLabelProps: index => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getItemLabelId(baseObject.path, index, items)
-      itemProps.htmlFor = getItemInputId(baseObject.path, index, items)
+      itemProps.id = getItemLabelId(baseInput.path, index, items)
+      itemProps.htmlFor = getItemInputId(baseInput.path, index, items)
 
       return itemProps
     },

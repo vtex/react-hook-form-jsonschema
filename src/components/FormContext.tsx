@@ -1,17 +1,17 @@
 import React, { FC, createContext, useContext } from 'react'
 import { useForm, FieldValues } from 'react-hook-form'
 
-import { FormContextProps, FormValuesWithSchema } from './types'
+import { FormContextProps, JSONFormContextValues } from './types'
 import { getObjectFromForm } from '../JSONSchema/internal-path-handler'
 
-export const InternalFormContext = createContext<FormValuesWithSchema<
-  FieldValues
-> | null>(null)
+export const InternalFormContext = createContext<JSONFormContextValues | null>(
+  null
+)
 
-export function useFormContext<T extends FieldValues>(): FormValuesWithSchema<
-  T
-> {
-  return useContext(InternalFormContext) as FormValuesWithSchema<T>
+export function useFormContext<
+  T extends FieldValues = FieldValues
+>(): JSONFormContextValues<T> {
+  return useContext(InternalFormContext) as JSONFormContextValues<T>
 }
 
 export const FormContext: FC<FormContextProps> = props => {
@@ -40,7 +40,13 @@ export const FormContext: FC<FormContextProps> = props => {
     formProps.noValidate = props.noNativeValidate
   }
   return (
-    <InternalFormContext.Provider value={{ ...methods, schema: props.schema }}>
+    <InternalFormContext.Provider
+      value={{
+        ...methods,
+        schema: props.schema,
+        customValidators: props.customValidators,
+      }}
+    >
       <form {...formProps}>{props.children}</form>
     </InternalFormContext.Provider>
   )

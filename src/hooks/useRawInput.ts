@@ -1,5 +1,4 @@
 import React from 'react'
-import { ValidationOptions } from 'react-hook-form'
 
 import {
   UseRawInputParameters,
@@ -11,8 +10,6 @@ import {
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
-  getNumberValidator,
-  getStringValidator,
   toFixed,
 } from './validators'
 
@@ -25,13 +22,14 @@ const getLabelId = (path: string, inputType: string): string => {
 }
 
 export const getRawInputCustomFields = (
-  baseFields: BasicInputReturnType,
+  baseInput: BasicInputReturnType,
   inputType: string
 ): UseRawInputReturnType => {
-  const { register } = baseFields.formContext
-  const currentObject = baseFields.getObject()
+  const { register } = baseInput.formContext
+  const { validator } = baseInput
 
-  let validator: ValidationOptions = {}
+  const currentObject = baseInput.getObject()
+
   let minimum: number | undefined
   let maximum: number | undefined
   let step: number | 'any'
@@ -39,8 +37,6 @@ export const getRawInputCustomFields = (
 
   const itemProps: React.ComponentProps<'input'> = { key: '' }
   if (currentObject.type === 'string') {
-    validator = getStringValidator(currentObject, baseFields.isRequired)
-
     itemProps.pattern = currentObject.pattern
     itemProps.minLength = currentObject.minLength
     itemProps.maxLength = currentObject.maxLength
@@ -55,8 +51,6 @@ export const getRawInputCustomFields = (
     minimum = getNumberMinimum(currentObject)
     maximum = getNumberMaximum(currentObject)
 
-    validator = getNumberValidator(currentObject, baseFields.isRequired)
-
     itemProps.min = `${minimum}`
     itemProps.max = `${maximum}`
     itemProps.step =
@@ -64,22 +58,21 @@ export const getRawInputCustomFields = (
   }
 
   return {
-    ...baseFields,
-    validator,
+    ...baseInput,
     type: InputTypes.input,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getLabelId(baseFields.path, inputType)
-      itemProps.htmlFor = getInputId(baseFields.path, inputType)
+      itemProps.id = getLabelId(baseInput.path, inputType)
+      itemProps.htmlFor = getInputId(baseInput.path, inputType)
 
       return itemProps
     },
     getInputProps: () => {
-      itemProps.name = baseFields.path
+      itemProps.name = baseInput.path
       itemProps.ref = register(validator)
       itemProps.type = inputType
-      itemProps.required = baseFields.isRequired
-      itemProps.id = getInputId(baseFields.path, inputType)
+      itemProps.required = baseInput.isRequired
+      itemProps.id = getInputId(baseInput.path, inputType)
 
       return itemProps
     },

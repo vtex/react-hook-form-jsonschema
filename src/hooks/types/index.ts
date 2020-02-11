@@ -1,8 +1,9 @@
 import React from 'react'
-import { FormContextValues, ValidationOptions } from 'react-hook-form'
+import { ValidationOptions, FieldValues } from 'react-hook-form'
 
 import { ErrorMessage } from '../validators'
 import { JSONSchemaType } from '../../JSONSchema'
+import { JSONFormContextValues } from '../../components'
 
 export enum InputTypes {
   generic = 'generic',
@@ -27,7 +28,8 @@ export enum UITypes {
 export interface BasicInputReturnType {
   getError(): ErrorMessage
   getObject(): JSONSchemaType
-  formContext: FormContextValues
+  getCurrentValue(): FieldValues
+  formContext: JSONFormContextValues
   isRequired: boolean
   name: string
   path: string

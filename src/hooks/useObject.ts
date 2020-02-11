@@ -1,5 +1,3 @@
-import { FormContextValues } from 'react-hook-form'
-
 import {
   UseObjectProperties,
   UseObjectReturnType,
@@ -16,7 +14,7 @@ import {
 import { getGenericInput } from './useGenericInput'
 import { getInputCustomFields } from './useInput'
 import { getRadioCustomFields } from './useRadio'
-import { useFormContext } from '../components'
+import { useFormContext, JSONFormContextValues } from '../components'
 import { getSelectCustomFields } from './useSelect'
 import { getHiddenCustomFields } from './useHidden'
 import { getPasswordCustomFields } from './usePassword'
@@ -54,7 +52,7 @@ function getChildProperties(
   path: string,
   schema: JSONSchemaType,
   UISchema: UISchemaType | undefined,
-  formContext: FormContextValues
+  formContext: JSONFormContextValues
 ) {
   const requiredFields = schema.required
 
@@ -87,7 +85,7 @@ function getChildProperties(
 }
 
 function getStructure(
-  formContext: FormContextValues,
+  formContext: JSONFormContextValues,
   pathInfo: JSONSchemaPathInfo,
   path: string,
   UISchema: UISchemaType | undefined

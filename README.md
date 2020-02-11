@@ -90,6 +90,14 @@ This component is the top-level component that creates the context with the sche
 
 ##### Optional:
 
+- `customValidators`: An object where each member has to be a funtion with the following format:
+  - `function(value: string, context: CustomValidatorContext) => CustomValidatorReturnValue`
+  - `params`:
+    - `value`: Is the current value in the form input.
+    - `context`: Is an object with the following fields:
+      - `currentObject`: Is the current subschema this field refers to.
+      - `path`: Is the path to that subschema.
+  - `return value`: Must be either a `string` that identifies the error or a `true` value indicating the validation was succesfull.
 - `validationMode`: String to indicate when to validate the input, default is `'onSubmit'`.
   - `'onBlur'`: Validate when an input field is blurred.
   - `'onChange'`: Validate when an input field value changes.

@@ -1,10 +1,14 @@
 import React from 'react'
-import { FormContextValues, Mode } from 'react-hook-form'
+import { FormContextValues, Mode, FieldValues } from 'react-hook-form'
 
 import { JSONSchemaType } from '../../JSONSchema'
+import { CustomValidators } from '../../hooks/validators'
 
-export interface FormValuesWithSchema<T> extends FormContextValues<T> {
+export interface JSONFormContextValues<
+  FormValues extends FieldValues = FieldValues
+> extends FormContextValues<FormValues> {
   schema: JSONSchemaType
+  customValidators?: CustomValidators
 }
 
 export type OnSubmitType = (
@@ -18,5 +22,6 @@ export type FormContextProps = {
   submitFocusError?: boolean
   onSubmit?: OnSubmitType
   noNativeValidate?: boolean
+  customValidators?: CustomValidators
   schema: JSONSchemaType
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import { ValidationOptions } from 'react-hook-form'
 
 import {
   UseTextAreaParameters,
@@ -7,7 +6,6 @@ import {
   UseTextAreaReturnType,
   InputTypes,
 } from './types'
-import { getNumberValidator, getStringValidator } from './validators'
 import { useGenericInput } from './useGenericInput'
 
 const getInputId = (path: string): string => {
@@ -19,41 +17,34 @@ const getLabelId = (path: string): string => {
 }
 
 export const getTextAreaCustomFields = (
-  baseObject: BasicInputReturnType
+  baseInput: BasicInputReturnType
 ): UseTextAreaReturnType => {
-  const currentObject = baseObject.getObject()
+  const { register } = baseInput.formContext
+  const { validator } = baseInput
 
-  let validator: ValidationOptions = {}
+  const currentObject = baseInput.getObject()
 
   const itemProps: React.ComponentProps<'textarea'> = {}
   if (currentObject.type === 'string') {
-    validator = getStringValidator(currentObject, baseObject.isRequired)
-
     itemProps.minLength = currentObject.minLength
     itemProps.maxLength = currentObject.maxLength
-  } else if (
-    currentObject.type === 'number' ||
-    currentObject.type === 'integer'
-  ) {
-    validator = getNumberValidator(currentObject, baseObject.isRequired)
   }
 
   return {
-    ...baseObject,
+    ...baseInput,
     type: InputTypes.textArea,
-    validator,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getLabelId(baseObject.path)
-      itemProps.htmlFor = getInputId(baseObject.path)
+      itemProps.id = getLabelId(baseInput.path)
+      itemProps.htmlFor = getInputId(baseInput.path)
 
       return itemProps
     },
     getTextAreaProps: () => {
-      itemProps.name = baseObject.path
-      itemProps.ref = baseObject.formContext.register(validator)
-      itemProps.required = baseObject.isRequired
-      itemProps.id = getInputId(baseObject.path)
+      itemProps.name = baseInput.path
+      itemProps.ref = register(validator)
+      itemProps.required = baseInput.isRequired
+      itemProps.id = getInputId(baseInput.path)
 
       return itemProps
     },

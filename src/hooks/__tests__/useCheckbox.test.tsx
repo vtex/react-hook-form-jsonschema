@@ -14,7 +14,10 @@ const MockCheckbox: FC<{ path: string }> = props => {
         return (
           <label {...methods.getItemLabelProps(index)} key={`${value}${index}`}>
             {methods.isSingle ? methods.getObject().title : value}
-            <input {...methods.getItemInputProps(index)} />
+            <input
+              {...methods.getItemInputProps(index)}
+              ref={methods.formContext.register({})}
+            />
           </label>
         )
       })}

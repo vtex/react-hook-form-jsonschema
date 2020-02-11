@@ -45,7 +45,10 @@ export const getError = (
   }
 
   const retError: ErrorMessage = {
-    message: ErrorTypes.undefinedError,
+    message:
+      typeof errors.message == 'string'
+        ? errors.message
+        : ErrorTypes.undefinedError,
     expected: undefined,
   }
 

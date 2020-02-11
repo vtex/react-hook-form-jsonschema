@@ -1,5 +1,4 @@
 import React from 'react'
-import { ValidationOptions } from 'react-hook-form'
 
 import {
   UseSelectParameters,
@@ -8,12 +7,9 @@ import {
   InputTypes,
 } from './types'
 import {
-  getBooleanValidator,
   getNumberMaximum,
   getNumberMinimum,
   getNumberStep,
-  getNumberValidator,
-  getStringValidator,
   toFixed,
 } from './validators'
 import { useGenericInput } from './useGenericInput'
@@ -31,10 +27,13 @@ const getOptionId = (
 }
 
 export const getSelectCustomFields = (
-  baseObject: BasicInputReturnType
+  baseInput: BasicInputReturnType
 ): UseSelectReturnType => {
-  const currentObject = baseObject.getObject()
-  let validator: ValidationOptions = {}
+  const { register } = baseInput.formContext
+  const { validator } = baseInput
+
+  const currentObject = baseInput.getObject()
+
   let items: Array<string> = ['']
   let minimum: number | undefined
   let maximum: number | undefined
@@ -43,7 +42,6 @@ export const getSelectCustomFields = (
 
   if (currentObject.type === 'string') {
     items = items.concat(currentObject.enum ? currentObject.enum : [])
-    validator = getStringValidator(currentObject, baseObject.isRequired)
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'
@@ -56,39 +54,37 @@ export const getSelectCustomFields = (
     maximum = getNumberMaximum(currentObject)
 
     if (minimum !== undefined && maximum !== undefined && step != 'any') {
-      validator = getNumberValidator(currentObject, baseObject.isRequired)
       for (let i = minimum; i <= maximum; i += step) {
         items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
       }
     }
   } else if (currentObject.type === 'boolean') {
-    validator = getBooleanValidator(baseObject.isRequired)
     items = ['true', 'false']
   }
 
   return {
-    ...baseObject,
+    ...baseInput,
     type: InputTypes.select,
     validator,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}
-      labelProps.id = baseObject.path + '-label'
-      labelProps.htmlFor = getSelectId(baseObject.path)
+      labelProps.id = baseInput.path + '-label'
+      labelProps.htmlFor = getSelectId(baseInput.path)
 
       return labelProps
     },
     getSelectProps: () => {
       const itemProps: React.ComponentProps<'select'> = {}
-      itemProps.name = baseObject.path
-      itemProps.ref = baseObject.formContext.register(validator)
-      itemProps.required = baseObject.isRequired
-      itemProps.id = getSelectId(baseObject.path)
+      itemProps.name = baseInput.path
+      itemProps.ref = register(validator)
+      itemProps.required = baseInput.isRequired
+      itemProps.id = getSelectId(baseInput.path)
 
       return itemProps
     },
     getItemOptionProps: index => {
       const itemProps: React.ComponentProps<'option'> = {}
-      itemProps.id = getOptionId(baseObject.path, index, items)
+      itemProps.id = getOptionId(baseInput.path, index, items)
       itemProps.value = items[index]
 
       return itemProps

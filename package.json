@@ -1,6 +1,6 @@
 {
   "name": "react-hook-form-jsonschema",
-  "version": "0.2.0-beta.4",
+  "version": "0.2.0-beta.5",
   "description": "Wrapper arround react-hook-form to create forms from a JSON schema.",
   "main": "output/index.cjs.js",
   "module": "output/index.esm.js",
@@ -46,8 +46,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "git stash push --keep-index -m 'husky-pre-commit' && run-s lint && git stash pop || true",
-      "pre-push": "git stash push --keep-index -m 'husky-pre-commit' && run-s test && git stash pop || true"
+      "pre-commit": "run-s lint",
+      "pre-push": "set -o pipefail && git stash push --keep-index -m 'husky-pre-commit' && run-s test && git stash pop || true"
     }
   },
   "dependencies": {
