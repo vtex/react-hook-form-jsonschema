@@ -86,4 +86,8 @@ export type JSONSchemaPathInfo = {
   JSONSchema: JSONSchemaType
   isRequired: boolean
   objectName: string
+  invalidPointer: boolean
+  path: string
 }
+
+export type IDSchemaPair = Record<string, JSONSchemaType>

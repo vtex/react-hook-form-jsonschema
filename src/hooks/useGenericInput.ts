@@ -6,7 +6,7 @@ import {
   InputTypes,
 } from './types'
 import { useFormContext, JSONFormContextValues } from '../components'
-import { useObjectFromPath, JSONSchemaPathInfo } from '../JSONSchema'
+import { useAnnotatedSchemaFromPath, JSONSchemaPathInfo } from '../JSONSchema'
 import {
   getError,
   getNumberMaximum,
@@ -66,6 +66,6 @@ export const getGenericInput = (
 
 export const useGenericInput: GenericInputParameters = path => {
   const formContext = useFormContext()
-  const pathInfo = useObjectFromPath(path)
+  const pathInfo = useAnnotatedSchemaFromPath(path, formContext.watch(path))
   return getGenericInput(formContext, pathInfo, path)
 }

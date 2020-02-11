@@ -43,11 +43,20 @@ export const FormContext: FC<FormContextProps> = props => {
   if (props.noNativeValidate) {
     formProps.noValidate = props.noNativeValidate
   }
+
+  const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
+
+  const resolvedSchemaRefs = useMemo(
+    () => resolveRefs(props.schema, idMap, []),
+    [props.schema, idMap]
+  )
+
   return (
     <InternalFormContext.Provider
       value={{
         ...methods,
-        schema: props.schema,
+        schema: resolvedSchemaRefs,
+        idMap: idMap,
         customValidators: props.customValidators,
       }}
     >
