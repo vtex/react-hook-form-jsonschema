@@ -1,19 +1,6 @@
-import { JSONSchemaType } from './types'
-
-export const getSplitPath = (path: string): Array<string> => {
-  const split = path.split('/')
-  // Removes the root path if it is present(it should always be, but if it
-  // isn't this can prevent some errors)
-  if (split[0] === '#') {
-    split.shift()
-  }
-  // If there was a '/' at the end of the path before it is split(it should not
-  // be there) this removes the non-existent path
-  if (split[split.length - 1] === '') {
-    split.pop()
-  }
-  return split
-}
+import { JSONSchemaType, JSONSchemaPathInfo } from '../types'
+import { JSONFormContextValues } from '../../components'
+import { getSplitPath } from './pathUtils'
 
 export const getObjectFromForm = (
   originalSchema: JSONSchemaType,
@@ -64,4 +51,66 @@ export const getObjectFromForm = (
   }
 
   return objectFromData
+}
+
+export const getAnnotatedSchemaFromPath = (
+  path: string,
+  data: JSONSchemaType,
+  formContext: JSONFormContextValues
+): JSONSchemaPathInfo => {
+  const { schema } = formContext
+
+  const splitPath = getSplitPath(path)
+  let currentJSONNode = schema
+  let currentData = data
+
+  let objectName = ''
+  let isRequired = false
+  let fatherIsRequired = false
+  let invalidPointer = false
+
+  let fatherExists = true
+
+  for (let node = 0; node < splitPath.length; node++) {
+    if (
+      !(
+        currentJSONNode &&
+        currentJSONNode.type === 'object' &&
+        currentJSONNode.properties
+      )
+    ) {
+      invalidPointer = true
+      currentJSONNode = {}
+      break
+    }
+    if (currentData) {
+      currentData = currentData[splitPath[node]]
+    } else {
+      fatherExists = false
+    }
+
+    fatherIsRequired = isRequired
+    if (
+      currentJSONNode.required &&
+      (currentJSONNode.required as Array<string>).indexOf(splitPath[node]) > -1
+    ) {
+      isRequired = true
+    } else {
+      isRequired = false
+    }
+
+    objectName = splitPath[node]
+
+    currentJSONNode = currentJSONNode.properties[splitPath[node]]
+  }
+
+  return {
+    objectName,
+    invalidPointer,
+    path,
+    JSONSchema: currentJSONNode,
+    isRequired:
+      (fatherIsRequired && isRequired) ||
+      (!fatherIsRequired && isRequired && fatherExists),
+  }
 }

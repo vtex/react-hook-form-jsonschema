@@ -1,8 +1,12 @@
-import React, { FC, createContext, useContext } from 'react'
+import React, { FC, createContext, useContext, useMemo } from 'react'
 import { useForm, FieldValues } from 'react-hook-form'
 
 import { FormContextProps, JSONFormContextValues } from './types'
-import { getObjectFromForm } from '../JSONSchema/internal-path-handler'
+import {
+  getObjectFromForm,
+  getIdSchemaPairs,
+  resolveRefs,
+} from '../JSONSchema/logic'
 
 export const InternalFormContext = createContext<JSONFormContextValues | null>(
   null

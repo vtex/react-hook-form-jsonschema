@@ -20,6 +20,7 @@ import { getHiddenCustomFields } from './useHidden'
 import { getPasswordCustomFields } from './usePassword'
 import { getTextAreaCustomFields } from './useTextArea'
 import { getCheckboxCustomFields } from './useCheckbox'
+import { getAnnotatedSchemaFromPath } from '../JSONSchema/logic'
 
 function getFromGeneric(
   genericInput: BasicInputReturnType

@@ -1,4 +1,4 @@
-import { getObjectFromForm } from '../internal-path-handler'
+import { getObjectFromForm } from '../logic'
 
 test('should return an object that matches the schema', () => {
   const mockJSONSchema = {
