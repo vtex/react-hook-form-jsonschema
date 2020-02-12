@@ -4,14 +4,15 @@
 
 `react-hook-form-jsonschema` is a React hooks library that manages all the stateful logic needed to make a functional form based on a JSON Schema. It returns a set of props that are meant to be called and their results destructured on the desired input field.
 
-## Table of Contents
+# Table of Contents
 
 - [react-hook-form-jsonschema](#react-hook-form-jsonschema)
+  - [Table of Contents](#table-of-contents)
   - [Simple Usage](#simple-usage)
   - [Installation](#installation)
   - [API](#api)
   - [Components API](#components-api)
-    - [FormContext component](#formcontext-component)
+    - [FormContext component API](#formcontext-component-api)
   - [Hooks API](#hooks-api)
     - [useCheckbox(path)](#usecheckboxpath)
     - [useHidden(path)](#usehiddenpath)
