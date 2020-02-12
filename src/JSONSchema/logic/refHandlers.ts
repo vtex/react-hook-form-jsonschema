@@ -56,7 +56,6 @@ export const resolveRefs = (
     usedRefs.push($ref)
 
     resolvedRefs = {
-      ...schema,
       ...getSchemaFromRef($ref, idMap),
     }
   } else {
