@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `$ref` and `$id` resolving in accord to the [JSON Schema specification](https://tools.ietf.org/html/draft-wright-json-schema-01)
+
+### Changed
+
+- **BREAKING**: Now uses paths starting with `$` to represent objects of an instance of the JSON Schema, instead of a path starting with `#`, which resembled a URI fragment identifier representation of a JSON pointer.
+
+### Fixed
+
+- Not checking if value exists before using enum validation on it
+- `isRequired` not evaluating correctly if it is inside another object that is not required
+- Empty data no being ignored when parsing form data
+
 ## [0.2.0-beta.5] - 2020-02-11
 
 ### Added
