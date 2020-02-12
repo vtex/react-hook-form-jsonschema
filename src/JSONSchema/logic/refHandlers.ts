@@ -54,7 +54,6 @@ export const resolveRefs = (
       return resolvedRefs
     }
     usedRefs.push($ref)
-    delete schema.$ref
 
     resolvedRefs = {
       ...schema,
