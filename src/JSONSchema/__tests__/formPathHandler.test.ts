@@ -41,15 +41,13 @@ test('should return an object that matches the schema', () => {
 
   const testResult = getObjectFromForm(mockJSONSchema, mockData)
 
-  expect(testResult).toEqual(
-    expect.objectContaining({
-      firstName: 'Jane',
-      lastName: 'Doe',
-      address: expect.objectContaining({
-        city: 'RJ',
-        street: 'Praia de Botafogo',
-        streetNumber: 300,
-      }),
-    })
-  )
+  expect(testResult).toEqual({
+    firstName: 'Jane',
+    lastName: 'Doe',
+    address: {
+      city: 'RJ',
+      street: 'Praia de Botafogo',
+      streetNumber: 300,
+    },
+  })
 })
