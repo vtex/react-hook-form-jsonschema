@@ -27,14 +27,14 @@ export const getSchemaFromRef = (
       )
     }
   } else if (isURIFragmentPointer($ref) && schema) {
-    let currentSchema = schema
-
-    for (const pointer of getSplitPointer($ref)) {
-      if (currentSchema) {
-        currentSchema = currentSchema[pointer]
-      }
-    }
-    return currentSchema
+    return getSplitPointer($ref).reduce(
+      (currentSchema: JSONSchemaType, pointer: string) => {
+        if (currentSchema) {
+          return currentSchema[pointer]
+        }
+      },
+      schema
+    )
   }
 
   return IDRecord[$ref]
@@ -62,25 +62,20 @@ export const resolveRefs = (
     resolvedRefs = { ...schema }
   }
 
-  for (const key of Object.keys(resolvedRefs)) {
-    if (
-      typeof resolvedRefs[key] == 'object' &&
-      resolvedRefs[key] !== null &&
-      !Array.isArray(resolvedRefs[key])
-    ) {
-      if (usedRefs.indexOf(resolvedRefs[key].$ref) > -1) {
-        continue
+  return Object.keys(resolvedRefs).reduce(
+    (acc: JSONSchemaType, key: string) => {
+      if (
+        typeof acc[key] == 'object' &&
+        acc[key] !== null &&
+        !Array.isArray(acc[key]) &&
+        !(usedRefs.indexOf(acc[key].$ref) > -1)
+      ) {
+        acc[key] = resolveRefs(acc[key], idMap, usedRefs.slice())
       }
-
-      resolvedRefs[key] = resolveRefs(
-        resolvedRefs[key],
-        idMap,
-        usedRefs.slice()
-      )
-    }
-  }
-
-  return resolvedRefs
+      return acc
+    },
+    resolvedRefs
+  )
 }
 
 export const getIdSchemaPairs = (schema: JSONSchemaType) => {
@@ -89,42 +84,41 @@ export const getIdSchemaPairs = (schema: JSONSchemaType) => {
     currentSchema: JSONSchemaType,
     baseUrl: URL | undefined
   ): Record<string, JSONSchemaType> => {
-    let IDs: Record<string, JSONSchemaType> = {}
-    IDs[currentPath] = currentSchema
-
-    for (const key of Object.keys(currentSchema)) {
-      if (
-        typeof currentSchema[key] == 'object' &&
-        currentSchema[key] !== null &&
-        !Array.isArray(currentSchema[key])
-      ) {
-        IDs = {
-          ...recursiveGetIdSchemaPairs(
-            concatFormPath(currentPath, key),
-            currentSchema[key],
-            baseUrl
-          ),
-          ...IDs,
+    return Object.keys(currentSchema).reduce(
+      (IDs: Record<string, JSONSchemaType>, key: string) => {
+        if (
+          typeof currentSchema[key] == 'object' &&
+          currentSchema[key] !== null &&
+          !Array.isArray(currentSchema[key])
+        ) {
+          return {
+            ...recursiveGetIdSchemaPairs(
+              concatFormPath(currentPath, key),
+              currentSchema[key],
+              baseUrl
+            ),
+            ...IDs,
+          }
         }
-        continue
-      }
 
-      const id = currentSchema[key]
-      if (key === '$id' && id) {
-        IDs[id] = currentSchema
+        const id = currentSchema[key]
+        if (key === '$id' && id) {
+          IDs[id] = currentSchema
 
-        if (!isAbsoluteURI(id)) {
-          try {
-            IDs[new URL(id, baseUrl).href] = currentSchema
-          } catch (e) {
-            if (!(e instanceof TypeError)) {
-              throw e
+          if (!isAbsoluteURI(id)) {
+            try {
+              IDs[new URL(id, baseUrl).href] = currentSchema
+            } catch (e) {
+              if (!(e instanceof TypeError)) {
+                throw e
+              }
             }
           }
         }
-      }
-    }
-    return IDs
+        return IDs
+      },
+      { [currentPath]: currentSchema }
+    )
   }
 
   let baseUrl: URL | undefined = undefined
