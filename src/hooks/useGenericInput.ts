@@ -7,6 +7,7 @@ import {
 } from './types'
 import { useFormContext, JSONFormContextValues } from '../components'
 import { useAnnotatedSchemaFromPath, JSONSchemaPathInfo } from '../JSONSchema'
+import { getObjectFromForm } from '../JSONSchema/logic'
 import {
   getError,
   getNumberMaximum,
@@ -66,6 +67,7 @@ export const getGenericInput = (
 
 export const useGenericInput: GenericInputParameters = path => {
   const formContext = useFormContext()
-  const pathInfo = useAnnotatedSchemaFromPath(path, formContext.watch(path))
+  const data = getObjectFromForm(formContext.schema, formContext.getValues())
+  const pathInfo = useAnnotatedSchemaFromPath(path, data)
   return getGenericInput(formContext, pathInfo, path)
 }
