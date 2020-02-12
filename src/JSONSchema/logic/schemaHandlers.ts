@@ -1,6 +1,6 @@
 import { JSONSchemaType, JSONSchemaPathInfo } from '../types'
 import { JSONFormContextValues } from '../../components'
-import { getSplitPath } from './pathUtils'
+import { getSplitPath, concatFormPath } from './pathUtils'
 
 export const getObjectFromForm = (
   originalSchema: JSONSchemaType,
@@ -66,6 +66,7 @@ export const getAnnotatedSchemaFromPath = (
 
   let objectName = ''
   let invalidPointer = false
+  let pointer = '#'
 
   let isRequired = true
   let fatherIsRequired = true
@@ -104,12 +105,16 @@ export const getAnnotatedSchemaFromPath = (
     objectName = splitPath[node]
 
     currentJSONNode = currentJSONNode.properties[splitPath[node]]
+
+    pointer = concatFormPath(pointer, 'properties')
+    pointer = concatFormPath(pointer, splitPath[node])
   }
 
   return {
     objectName,
     invalidPointer,
     path,
+    pointer,
     JSONSchema: currentJSONNode,
     isRequired:
       (fatherIsRequired && isRequired) ||

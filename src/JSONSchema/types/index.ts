@@ -88,6 +88,7 @@ export type JSONSchemaPathInfo = {
   objectName: string
   invalidPointer: boolean
   path: string
+  pointer: string
 }
 
 export type IDSchemaPair = Record<string, JSONSchemaType>
