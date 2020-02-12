@@ -11,7 +11,7 @@ export const getObjectFromForm = (
 
   for (const key of orderedSchemaKeys) {
     const splitPath = getSplitPath(key)
-    if (!splitPath && data[key]) {
+    if (!splitPath || !data[key]) {
       continue
     }
 
@@ -42,7 +42,7 @@ export const getObjectFromForm = (
         } else {
           currentPath[splitPath[node]] = data[key]
         }
-      } else if (currentPath[splitPath[node]] === undefined) {
+      } else if (currentPath[splitPath[node]] == undefined) {
         currentPath[splitPath[node]] = {}
       }
 
