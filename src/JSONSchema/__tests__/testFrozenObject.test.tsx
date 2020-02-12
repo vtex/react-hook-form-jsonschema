@@ -5,6 +5,7 @@ import { FormContext } from '../../components'
 import { UISchemaType, UITypes } from '../../hooks'
 import mockObjectSchema from '../../hooks/__mocks__/mockSchema'
 import { MockObject } from '../../__mocks__/mockObjectComponent'
+import { deepFreeze } from '../__mocks__/deepFreeze'
 
 const mockUISchema: UISchemaType = {
   type: UITypes.default,
@@ -15,21 +16,6 @@ const mockUISchema: UISchemaType = {
   },
 }
 
-function deepFreeze(obj) {
-  // Gets all properties names to freeze
-  const propNames = Object.getOwnPropertyNames(obj)
-
-  // Freezes each property before freezing the object itself
-  propNames.forEach(function(name) {
-    const prop = obj[name]
-
-    // Freezes prop if it is an object
-    if (typeof prop == 'object' && prop !== null) deepFreeze(prop)
-  })
-
-  // Freezes itself
-  return Object.freeze(obj)
-}
 const frozenSchema = deepFreeze(mockObjectSchema)
 test('should render all child properties of the schema', async () => {
   const { getByText } = render(
