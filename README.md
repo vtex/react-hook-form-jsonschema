@@ -45,7 +45,7 @@ And suppose you want to create a form field for the `firstName` field, simply us
 
 ```JSX
 function FirstNameField(props) {
-  const inputMethods = useInput('#/firstName');
+  const inputMethods = useInput('$/firstName');
 
   return (
     <FormContext schema={personSchema}>
@@ -91,12 +91,16 @@ This component is the top-level component that creates the context with the sche
 ##### Optional:
 
 - `customValidators`: An object where each member has to be a funtion with the following format:
-  - `function(value: string, context: CustomValidatorContext) => CustomValidatorReturnValue`
+  - `function(value: string, context: PathInfo) => CustomValidatorReturnValue`
   - `params`:
     - `value`: Is the current value in the form input.
     - `context`: Is an object with the following fields:
-      - `currentObject`: Is the current subschema this field refers to.
-      - `path`: Is the path to that subschema.
+      - `JSONSchema`: Is the sub schema of the current field
+      - `isRequired`: Wether the current field is required or not
+      - `objectName`: The name of the sub schema
+      - `invalidPointer`: A `boolean` indicating wether the referenced field was found within the schema or not. If it is false it is because of an error in the schema.
+      - `path`: Path in the instance of the JSON Schema. The path is always in the form: `$/some/child/data/field/here` where `$` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
+      - `pointer`: A pointer to the location in the schema where the sub schema is located
   - `return value`: Must be either a `string` that identifies the error or a `true` value indicating the validation was succesfull.
 - `validationMode`: String to indicate when to validate the input, default is `'onSubmit'`.
   - `'onBlur'`: Validate when an input field is blurred.
@@ -107,7 +111,7 @@ This component is the top-level component that creates the context with the sche
   - `'onChange'`: Validate when an input field value changes.
   - `'onSubmit'`: Validate when the submit is triggered.
 - `submitFocusError`: Boolean, when `true` focus on the first field with error after submit validates, if there is any. Defaults to `true`.
-- `onSubmit`: Callback function that the form values are passed to when submit is triggered.
+- `onSubmit`: Callback function that the form values are passed to when submit is triggered without errors.
 - `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that `react-hook-form-jsonschema` does NOT yet implement validation for URIs and email addresses).
 
 ## Hooks API
@@ -121,7 +125,7 @@ The following are the common fields returned in the object from every `use'SomeI
   - `input`: Type used for generic `<input \>`
   - `textArea`: Type used for `<textarea>`
   - `checkbox`: Type used for `<input type='checkbox' \>`
-- `path`: Path in the jsonschema this input is validated against. The path is always in the form: `#/some/child/data/field/here` where `#` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
+- `path`: Path in the instance of the JSON Schema this input is validated against. The path is always in the form: `$/some/child/data/field/here` where `$` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
 - `name`: The last object/data field name in the tree. In the case of `#/some/child/data/field/here` the name value will be `here`.
 - `isRequired`: indicates whether the field is required or not.
 - `validator`: is the object passed to `react-hook-form` to validate the form. See the [`react-hook-form`](https://github.com/react-hook-form/react-hook-form) for more information
@@ -204,7 +208,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function HiddenField(props) {
-  const inputMethods = useHidden('#/some/child/you/want/hidden');
+  const inputMethods = useHidden('$/some/child/you/want/hidden');
 
   return (
     <React.Fragment>
@@ -238,7 +242,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function InputField(props) {
-  const inputMethods = useInput('#/some/child/you/want/as/input');
+  const inputMethods = useInput('$/some/child/you/want/as/input');
 
   return (
     <React.Fragment>
@@ -441,7 +445,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function PasswordField(props) {
-  const inputMethods = usePassword('#/some/child/you/want/as/input');
+  const inputMethods = usePassword('$/some/child/you/want/as/input');
 
   return (
     <React.Fragment>
@@ -476,7 +480,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function InputField(props) {
-  const inputMethods = useRadio('#/some/child/with/limited/possible/values');
+  const inputMethods = useRadio('$/some/child/with/limited/possible/values');
 
   return (
     <React.Fragment>
@@ -517,7 +521,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function InputField(props) {
-  const inputMethods = useSelect('#/some/child/with/limited/possible/values');
+  const inputMethods = useSelect('$/some/child/with/limited/possible/values');
 
   return (
     <React.Fragment>
@@ -561,7 +565,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function HiddenField(props) {
-  const inputMethods = useTextArea('#/some/child/you/want/as/TextArea');
+  const inputMethods = useTextArea('$/some/child/you/want/as/TextArea');
 
   return (
     <React.Fragment>
