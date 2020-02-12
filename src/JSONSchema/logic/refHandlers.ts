@@ -106,20 +106,19 @@ export const getIdSchemaPairs = (schema: JSONSchemaType) => {
           ),
           ...IDs,
         }
-      } else if (key === '$id') {
-        // I have to declare id here, if not typescript complains, even if I
-        // check if currentSchema[key] is defined
-        const id = currentSchema[key]
-        if (id) {
-          IDs[id] = currentSchema
+        continue
+      }
 
-          if (!isAbsoluteURI(id)) {
-            try {
-              IDs[new URL(id, baseUrl).href] = currentSchema
-            } catch (e) {
-              if (!(e instanceof TypeError)) {
-                throw e
-              }
+      const id = currentSchema[key]
+      if (key === '$id' && id) {
+        IDs[id] = currentSchema
+
+        if (!isAbsoluteURI(id)) {
+          try {
+            IDs[new URL(id, baseUrl).href] = currentSchema
+          } catch (e) {
+            if (!(e instanceof TypeError)) {
+              throw e
             }
           }
         }
