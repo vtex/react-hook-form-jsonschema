@@ -41,10 +41,7 @@ export const getGenericInput = (
     isRequired: isRequired,
     formContext: formContext,
     type: InputTypes.generic,
-    validator: getValidator(isRequired, formContext.customValidators ?? {}, {
-      currentObject: JSONSchema,
-      path,
-    }),
+    validator: getValidator(pathInfo, formContext.customValidators ?? {}),
     getError: () =>
       getError(
         formContext.errors[path]
