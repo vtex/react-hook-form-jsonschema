@@ -49,11 +49,13 @@ export const getValidator = (
             ...(currentObject.enum
               ? {
                   enumValidator: (value: string) => {
-                    if (currentObject.enum) {
-                      for (const item of currentObject.enum) {
-                        if (item == value) {
-                          return true
-                        }
+                    if (!currentObject.enum || !value) {
+                      return true
+                    }
+
+                    for (const item of currentObject.enum) {
+                      if (item == value) {
+                        return true
                       }
                     }
                     return false
