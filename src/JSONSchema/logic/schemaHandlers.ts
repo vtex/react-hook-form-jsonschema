@@ -65,10 +65,10 @@ export const getAnnotatedSchemaFromPath = (
   let currentData = data
 
   let objectName = ''
-  let isRequired = true
-  let fatherIsRequired = true
   let invalidPointer = false
 
+  let isRequired = true
+  let fatherIsRequired = true
   let fatherExists = true
 
   for (let node = 0; node < splitPath.length; node++) {
@@ -83,6 +83,8 @@ export const getAnnotatedSchemaFromPath = (
       currentJSONNode = {}
       break
     }
+
+    fatherExists = true
     if (currentData) {
       currentData = currentData[splitPath[node]]
     } else {
