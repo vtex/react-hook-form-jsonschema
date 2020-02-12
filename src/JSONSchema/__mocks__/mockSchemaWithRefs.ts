@@ -23,6 +23,7 @@ const mockSchema = {
     },
   },
   definitions: {
+    $id: 'definitions.json',
     address: {
       type: 'object',
       title: 'Address',
@@ -36,6 +37,9 @@ const mockSchema = {
         streetNumber: {
           $ref:
             'https://vtex.io/oneSampleschema.json#/definitions/streetNumber',
+        },
+        zipCode: {
+          $ref: 'https://vtex.io/definitions.json#/zipCode',
         },
       },
     },
@@ -54,6 +58,10 @@ const mockSchema = {
       type: 'integer',
       title: 'Address Number',
       minimum: 0,
+    },
+    zipCode: {
+      type: 'integer',
+      title: 'Zip Code',
     },
   },
 }

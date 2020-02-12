@@ -18,4 +18,5 @@ test('should render all child properties of the schema', async () => {
   expect(getByText('street')).toBeDefined()
   expect(getByText('streetType')).toBeDefined()
   expect(getByText('streetNumber')).toBeDefined()
+  expect(getByText('zipCode')).toBeDefined()
 })
