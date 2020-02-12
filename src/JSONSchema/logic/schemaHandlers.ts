@@ -65,8 +65,8 @@ export const getAnnotatedSchemaFromPath = (
   let currentData = data
 
   let objectName = ''
-  let isRequired = false
-  let fatherIsRequired = false
+  let isRequired = true
+  let fatherIsRequired = true
   let invalidPointer = false
 
   let fatherExists = true
