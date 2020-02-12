@@ -1,13 +1,13 @@
 import { JSONSchemaType, IDSchemaPair } from '../types'
 import { getSplitPointer, concatFormPath } from './pathUtils'
 
+const absoluteRegExp = /^[a-z][a-z0-9+.-]*:/i
 const isAbsoluteURI = (uri: string) => {
-  const absoluteRegExp = new RegExp(/^[a-z][a-z0-9+.-]*:/, 'i')
   return absoluteRegExp.test(uri)
 }
 
+const fragmentRegExp = /^#(\/(([^#/~])|(~[01]))*)*/i
 const isURIFragmentPointer = (pointer: string) => {
-  const fragmentRegExp = new RegExp(/^#(\/(([^#/~])|(~[01]))*)*/, 'i')
   return fragmentRegExp.test(pointer)
 }
 
