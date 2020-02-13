@@ -1,5 +1,9 @@
 import { JSONSchemaType, IDSchemaPair } from '../types'
-import { getSplitPointer, concatFormPath } from './pathUtils'
+import {
+  getSplitPointer,
+  concatFormPath,
+  JSONSchemaRootPath,
+} from './pathUtils'
 
 const absoluteRegExp = /^[a-z][a-z0-9+.-]*:/i
 const isAbsoluteURI = (uri: string) => {
@@ -136,8 +140,8 @@ export const getIdSchemaPairs = (schema: JSONSchemaType) => {
   if (baseUrl) {
     return {
       [baseUrl.href]: schema,
-      ...recursiveGetIdSchemaPairs('#', schema, baseUrl),
+      ...recursiveGetIdSchemaPairs(JSONSchemaRootPath, schema, baseUrl),
     }
   }
-  return recursiveGetIdSchemaPairs('#', schema, baseUrl)
+  return recursiveGetIdSchemaPairs(JSONSchemaRootPath, schema, baseUrl)
 }

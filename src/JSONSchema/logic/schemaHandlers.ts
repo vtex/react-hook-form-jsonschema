@@ -1,6 +1,6 @@
 import { JSONSchemaType, JSONSchemaPathInfo } from '../types'
 import { JSONFormContextValues } from '../../components'
-import { getSplitPath, concatFormPath } from './pathUtils'
+import { getSplitPath, concatFormPath, JSONSchemaRootPath } from './pathUtils'
 
 const parsers: Record<string, (data: string) => number | boolean> = {
   integer: (data: string): number => parseInt(data),
@@ -114,7 +114,7 @@ export const getAnnotatedSchemaFromPath = (
       invalidPointer: false,
       isRequired: true,
       objectName: '',
-      pointer: '#',
+      pointer: JSONSchemaRootPath,
     }
   )
 

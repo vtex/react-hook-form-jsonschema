@@ -1,3 +1,6 @@
+export const instantiatedSchemaRootPath = '$'
+export const JSONSchemaRootPath = '#'
+
 export const concatFormPath = (path: string, newNode: string): string => {
   return path + '/' + newNode
 }
@@ -18,9 +21,9 @@ const getSplit = (root: string, path: string): Array<string> => {
 }
 
 export const getSplitPath = (path: string): Array<string> => {
-  return getSplit('$', path)
+  return getSplit(instantiatedSchemaRootPath, path)
 }
 
 export const getSplitPointer = (path: string): Array<string> => {
-  return getSplit('#', path)
+  return getSplit(JSONSchemaRootPath, path)
 }
