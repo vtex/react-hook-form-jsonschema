@@ -53,6 +53,17 @@ export const getObjectFromForm = (
   return objectFromData
 }
 
+interface ReducerInfo {
+  JSONSchema: JSONSchemaType
+  currentData: JSONSchemaType
+  invalidPointer: boolean
+  isRequired: boolean
+  fatherExists: boolean
+  fatherIsRequired: boolean
+  pointer: string
+  objectName: string
+}
+
 export const getAnnotatedSchemaFromPath = (
   path: string,
   data: JSONSchemaType,
@@ -60,64 +71,62 @@ export const getAnnotatedSchemaFromPath = (
 ): JSONSchemaPathInfo => {
   const { schema } = formContext
 
-  const splitPath = getSplitPath(path)
-  let currentJSONNode = schema
-  let currentData = data
+  const info = getSplitPath(path).reduce(
+    (currentInfo: ReducerInfo, node: string) => {
+      const { JSONSchema, currentData } = currentInfo
 
-  let objectName = ''
-  let invalidPointer = false
-  let pointer = '#'
+      if (
+        !(JSONSchema && JSONSchema.type === 'object' && JSONSchema.properties)
+      ) {
+        return {
+          ...currentInfo,
+          JSONSchema: undefined,
+          invalidPointer: true,
+        }
+      }
 
-  let isRequired = true
-  let fatherIsRequired = true
-  let fatherExists = true
+      const fatherExists = currentData ? true : false
+      const newCurrentData = currentData ? currentData[node] : currentData
 
-  for (let node = 0; node < splitPath.length; node++) {
-    if (
-      !(
-        currentJSONNode &&
-        currentJSONNode.type === 'object' &&
-        currentJSONNode.properties
-      )
-    ) {
-      invalidPointer = true
-      currentJSONNode = {}
-      break
+      const fatherIsRequired = currentInfo.isRequired
+      const isRequired =
+        JSONSchema.required &&
+        (JSONSchema.required as Array<string>).indexOf(node) > -1
+
+      return {
+        JSONSchema: JSONSchema.properties[node],
+        currentData: newCurrentData,
+        fatherExists,
+        fatherIsRequired,
+        invalidPointer: false,
+        isRequired,
+        objectName: node,
+        pointer: concatFormPath(
+          concatFormPath(currentInfo.pointer, 'properties'),
+          node
+        ),
+      }
+    },
+    {
+      JSONSchema: schema,
+      currentData: data,
+      fatherExists: true,
+      fatherIsRequired: true,
+      invalidPointer: false,
+      isRequired: true,
+      objectName: '',
+      pointer: '#',
     }
-
-    fatherExists = true
-    if (currentData) {
-      currentData = currentData[splitPath[node]]
-    } else {
-      fatherExists = false
-    }
-
-    fatherIsRequired = isRequired
-    if (
-      currentJSONNode.required &&
-      (currentJSONNode.required as Array<string>).indexOf(splitPath[node]) > -1
-    ) {
-      isRequired = true
-    } else {
-      isRequired = false
-    }
-
-    objectName = splitPath[node]
-
-    currentJSONNode = currentJSONNode.properties[splitPath[node]]
-
-    pointer = concatFormPath(pointer, 'properties')
-    pointer = concatFormPath(pointer, splitPath[node])
-  }
+  )
 
   return {
-    objectName,
-    invalidPointer,
-    path,
-    pointer,
-    JSONSchema: currentJSONNode,
+    JSONSchema: info.JSONSchema,
+    invalidPointer: info.invalidPointer,
     isRequired:
-      (fatherIsRequired && isRequired) ||
-      (!fatherIsRequired && isRequired && fatherExists),
+      (info.fatherIsRequired && info.isRequired) ||
+      (!info.fatherIsRequired && info.isRequired && info.fatherExists),
+    objectName: info.objectName,
+    path,
+    pointer: info.pointer,
   }
 }
