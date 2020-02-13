@@ -1,8 +1,12 @@
-import React, { FC, createContext, useContext } from 'react'
+import React, { FC, createContext, useContext, useMemo } from 'react'
 import { useForm, FieldValues } from 'react-hook-form'
 
 import { FormContextProps, JSONFormContextValues } from './types'
-import { getObjectFromForm } from '../JSONSchema/internal-path-handler'
+import {
+  getObjectFromForm,
+  getIdSchemaPairs,
+  resolveRefs,
+} from '../JSONSchema/logic'
 
 export const InternalFormContext = createContext<JSONFormContextValues | null>(
   null
@@ -39,11 +43,20 @@ export const FormContext: FC<FormContextProps> = props => {
   if (props.noNativeValidate) {
     formProps.noValidate = props.noNativeValidate
   }
+
+  const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
+
+  const resolvedSchemaRefs = useMemo(
+    () => resolveRefs(props.schema, idMap, []),
+    [props.schema, idMap]
+  )
+
   return (
     <InternalFormContext.Provider
       value={{
         ...methods,
-        schema: props.schema,
+        schema: resolvedSchemaRefs,
+        idMap: idMap,
         customValidators: props.customValidators,
       }}
     >

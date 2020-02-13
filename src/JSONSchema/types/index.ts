@@ -8,7 +8,7 @@ export type JSONSchemaType =
   | NullJSONSchemaType
 
 export interface BasicJSONSchemaType {
-  type?: string | Array<string>
+  type?: string
   title?: string
   description?: string
   $comment?: string
@@ -86,4 +86,9 @@ export type JSONSchemaPathInfo = {
   JSONSchema: JSONSchemaType
   isRequired: boolean
   objectName: string
+  invalidPointer: boolean
+  path: string
+  pointer: string
 }
+
+export type IDSchemaPair = Record<string, JSONSchemaType>

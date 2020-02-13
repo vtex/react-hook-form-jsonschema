@@ -6,7 +6,8 @@ import {
   InputTypes,
 } from './types'
 import { useFormContext, JSONFormContextValues } from '../components'
-import { useObjectFromPath, JSONSchemaPathInfo } from '../JSONSchema'
+import { useAnnotatedSchemaFromPath, JSONSchemaPathInfo } from '../JSONSchema'
+import { getObjectFromForm } from '../JSONSchema/logic'
 import {
   getError,
   getNumberMaximum,
@@ -40,10 +41,7 @@ export const getGenericInput = (
     isRequired: isRequired,
     formContext: formContext,
     type: InputTypes.generic,
-    validator: getValidator(isRequired, formContext.customValidators ?? {}, {
-      currentObject: JSONSchema,
-      path,
-    }),
+    validator: getValidator(pathInfo, formContext.customValidators ?? {}),
     getError: () =>
       getError(
         formContext.errors[path]
@@ -66,6 +64,7 @@ export const getGenericInput = (
 
 export const useGenericInput: GenericInputParameters = path => {
   const formContext = useFormContext()
-  const pathInfo = useObjectFromPath(path)
+  const data = getObjectFromForm(formContext.schema, formContext.getValues())
+  const pathInfo = useAnnotatedSchemaFromPath(path, data)
   return getGenericInput(formContext, pathInfo, path)
 }

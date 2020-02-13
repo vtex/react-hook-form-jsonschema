@@ -25,7 +25,7 @@ test('should have string enum items', () => {
         return
       }}
     >
-      <MockTextArea path="#/stringTest" />
+      <MockTextArea path="$/stringTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -43,7 +43,7 @@ test('should have all integers in interval', () => {
         return
       }}
     >
-      <MockTextArea path="#/integerTest" />
+      <MockTextArea path="$/integerTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -56,7 +56,7 @@ test('should have all integers in interval', () => {
 test('should have all floats in interval, separated by step', () => {
   const { getByText, container } = render(
     <FormContext schema={mockTextAreaSchema}>
-      <MockTextArea path="#/numberTest" />
+      <MockTextArea path="$/numberTest" />
     </FormContext>
   )
 
@@ -73,7 +73,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockTextArea path="#/errorTest" />
+      <MockTextArea path="$/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

@@ -6,11 +6,15 @@ import {
   UITypes,
 } from './types'
 import {
-  useObjectFromPath,
+  useAnnotatedSchemaFromPath,
   concatFormPath,
   JSONSchemaPathInfo,
   JSONSchemaType,
 } from '../JSONSchema'
+import {
+  getAnnotatedSchemaFromPath,
+  getObjectFromForm,
+} from '../JSONSchema/logic'
 import { getGenericInput } from './useGenericInput'
 import { getInputCustomFields } from './useInput'
 import { getRadioCustomFields } from './useRadio'
@@ -50,34 +54,29 @@ function getFromGeneric(
 // Outside of this function
 function getChildProperties(
   path: string,
-  schema: JSONSchemaType,
   UISchema: UISchemaType | undefined,
-  formContext: JSONFormContextValues
+  formContext: JSONFormContextValues,
+  data: JSONSchemaType
 ) {
-  const requiredFields = schema.required
-
   return (allInputs: UseObjectReturnType, key: string) => {
-    const isRequired = requiredFields
-      ? requiredFields.indexOf(key) !== -1
-      : false
-
     const newUISchema =
       UISchema && UISchema.properties ? UISchema.properties[key] : undefined
 
     const currentPath = concatFormPath(path, key)
 
-    const currentPathInfo: JSONSchemaPathInfo = {
-      JSONSchema: schema.properties[key],
-      isRequired: isRequired,
-      objectName: key,
-    }
+    const currentPathInfo = getAnnotatedSchemaFromPath(
+      currentPath,
+      data,
+      formContext
+    )
 
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const newInput = getStructure(
       formContext,
       currentPathInfo,
       currentPath,
-      newUISchema
+      newUISchema,
+      data
     )
 
     return allInputs.concat(newInput)
@@ -88,7 +87,8 @@ function getStructure(
   formContext: JSONFormContextValues,
   pathInfo: JSONSchemaPathInfo,
   path: string,
-  UISchema: UISchemaType | undefined
+  UISchema: UISchemaType | undefined,
+  data: JSONSchemaType
 ): UseObjectReturnType {
   let inputs: UseObjectReturnType = []
   const { JSONSchema } = pathInfo
@@ -98,7 +98,7 @@ function getStructure(
   if (JSONSchema.type === 'object') {
     const objKeys = Object.keys(JSONSchema.properties)
     const childInputs = objKeys.reduce(
-      getChildProperties(path, JSONSchema, UISchema, formContext),
+      getChildProperties(path, UISchema, formContext, data),
       []
     )
     return childInputs
@@ -139,11 +139,14 @@ function getStructure(
 }
 
 export const useObject: UseObjectProperties = props => {
+  const formContext = useFormContext()
+  const data = getObjectFromForm(formContext.schema, formContext.getValues())
   const childArray = getStructure(
-    useFormContext(),
-    useObjectFromPath(props.path),
+    formContext,
+    useAnnotatedSchemaFromPath(props.path, data),
     props.path,
-    props.UISchema
+    props.UISchema,
+    data
   )
 
   return childArray

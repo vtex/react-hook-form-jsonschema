@@ -26,7 +26,7 @@ const MockRadio: FC<{ path: string }> = props => {
 test('should have string enum items', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="#/stringTest" />
+      <MockRadio path="$/stringTest" />
     </FormContext>
   )
 
@@ -38,7 +38,7 @@ test('should have string enum items', () => {
 test('should have all integers in interval', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="#/integerTest" />
+      <MockRadio path="$/integerTest" />
     </FormContext>
   )
 
@@ -51,7 +51,7 @@ test('should have all integers in interval', () => {
 test('should have all floats in interval, separated by step', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="#/numberTest" />
+      <MockRadio path="$/numberTest" />
     </FormContext>
   )
 
@@ -66,7 +66,7 @@ test('should have all floats in interval, separated by step', () => {
 test('should have boolean true and false', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="#/booleanTest" />
+      <MockRadio path="$/booleanTest" />
     </FormContext>
   )
 
@@ -82,7 +82,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockRadio path="#/errorTest" />
+      <MockRadio path="$/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

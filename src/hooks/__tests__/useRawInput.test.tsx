@@ -26,7 +26,7 @@ test('should have string enum items', () => {
         return
       }}
     >
-      <MockRawForm path="#/stringTest" />
+      <MockRawForm path="$/stringTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -44,7 +44,7 @@ test('should have all integers in interval', () => {
         return
       }}
     >
-      <MockRawForm path="#/integerTest" />
+      <MockRawForm path="$/integerTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -57,7 +57,7 @@ test('should have all integers in interval', () => {
 test('should have all floats in interval, separated by step', () => {
   const { getByText, container } = render(
     <FormContext schema={mockRawFormSchema}>
-      <MockRawForm path="#/numberTest" />
+      <MockRawForm path="$/numberTest" />
     </FormContext>
   )
 
@@ -74,7 +74,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockRawForm path="#/errorTest" />
+      <MockRawForm path="$/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

@@ -1,4 +1,4 @@
-import { getObjectFromForm } from '../internal-path-handler'
+import { getObjectFromForm } from '../logic'
 
 test('should return an object that matches the schema', () => {
   const mockJSONSchema = {
@@ -30,26 +30,24 @@ test('should return an object that matches the schema', () => {
     },
   }
   const mockData = {
-    '#/firstName': 'Jane',
-    '#/lastName': 'Doe',
-    '#/address/city': 'RJ',
-    '#/address/street': 'Praia de Botafogo',
-    '#/address/streetNumber': 300,
-    '#/middleName': null,
-    '#/intruderField': 'I am an intruder, you should not return me :)',
+    '$/firstName': 'Jane',
+    '$/lastName': 'Doe',
+    '$/address/city': 'RJ',
+    '$/address/street': 'Praia de Botafogo',
+    '$/address/streetNumber': 300,
+    '$/middleName': null,
+    '$/intruderField': 'I am an intruder, you should not return me :)',
   }
 
   const testResult = getObjectFromForm(mockJSONSchema, mockData)
 
-  expect(testResult).toEqual(
-    expect.objectContaining({
-      firstName: 'Jane',
-      lastName: 'Doe',
-      address: expect.objectContaining({
-        city: 'RJ',
-        street: 'Praia de Botafogo',
-        streetNumber: 300,
-      }),
-    })
-  )
+  expect(testResult).toEqual({
+    firstName: 'Jane',
+    lastName: 'Doe',
+    address: {
+      city: 'RJ',
+      street: 'Praia de Botafogo',
+      streetNumber: 300,
+    },
+  })
 })

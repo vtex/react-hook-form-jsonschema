@@ -2,12 +2,12 @@ import { ValidationOptions } from 'react-hook-form'
 
 import {
   ErrorTypes,
-  CustomValidatorContext,
   CustomValidators,
   CustomValidatorReturnValue,
 } from './types'
 import { getNumberValidator } from './getNumberValidator'
 import { getStringValidator } from './getStringValidator'
+import { JSONSchemaPathInfo } from '../../JSONSchema'
 
 type GetCustomValidatorReturnType = Record<
   string,
@@ -16,7 +16,7 @@ type GetCustomValidatorReturnType = Record<
 
 function getCustomValidator(
   customValidators: CustomValidators,
-  context: CustomValidatorContext
+  context: JSONSchemaPathInfo
 ): GetCustomValidatorReturnType {
   return Object.keys(customValidators).reduce(
     (acc: GetCustomValidatorReturnType, key: string) => {
@@ -30,33 +30,34 @@ function getCustomValidator(
 }
 
 export const getValidator = (
-  required: boolean,
-  customValidators: CustomValidators,
-  context: CustomValidatorContext
+  context: JSONSchemaPathInfo,
+  customValidators: CustomValidators
 ): ValidationOptions => {
-  const { currentObject } = context
+  const { JSONSchema, isRequired } = context
 
   // The use of this variable prevents a strange undocumented behaviour of react-hook-form
   // that is it fails to validate if the `validate` field exists but is empty.
   const hasValidate =
-    Object.keys(customValidators).length > 0 || currentObject.enum
+    Object.keys(customValidators).length > 0 || JSONSchema.enum
   const validator: ValidationOptions = {
     ...(hasValidate
       ? {
           validate: {
             ...getCustomValidator(customValidators, context),
 
-            ...(currentObject.enum
+            ...(JSONSchema.enum
               ? {
                   enumValidator: (value: string) => {
-                    if (currentObject.enum) {
-                      for (const item of currentObject.enum) {
-                        if (item == value) {
-                          return true
-                        }
+                    if (!JSONSchema.enum || !value) {
+                      return true
+                    }
+
+                    for (const item of JSONSchema.enum) {
+                      if (item == value) {
+                        return true
                       }
                     }
-                    return false
+                    return ErrorTypes.notInEnum
                   },
                 }
               : undefined),
@@ -65,16 +66,16 @@ export const getValidator = (
       : undefined),
   }
 
-  if (required) {
+  if (isRequired) {
     validator.required = ErrorTypes.required
   }
 
-  switch (currentObject.type) {
+  switch (JSONSchema.type) {
     case 'integer':
     case 'number':
-      return getNumberValidator(currentObject, validator)
+      return getNumberValidator(JSONSchema, validator)
     case 'string':
-      return getStringValidator(currentObject, validator)
+      return getStringValidator(JSONSchema, validator)
     case 'boolean':
       return validator
     default:

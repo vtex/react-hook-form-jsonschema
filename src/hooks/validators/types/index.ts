@@ -1,4 +1,4 @@
-import { JSONSchemaType } from '../../../JSONSchema'
+import { JSONSchemaPathInfo } from '../../../JSONSchema'
 
 export enum ErrorTypes {
   required = '__form_error_required__',
@@ -23,16 +23,11 @@ export type ErrorMessage =
     }
   | undefined
 
-export interface CustomValidatorContext {
-  currentObject: JSONSchemaType
-  path: string
-}
-
 export type CustomValidatorReturnValue = string | true
 
 export type CustomValidator = (
   value: string,
-  context: CustomValidatorContext
+  context: JSONSchemaPathInfo
 ) => CustomValidatorReturnValue
 
 export type CustomValidators = Record<string, CustomValidator>
