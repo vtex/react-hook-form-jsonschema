@@ -2,58 +2,57 @@ import { JSONSchemaType, JSONSchemaPathInfo } from '../types'
 import { JSONFormContextValues } from '../../components'
 import { getSplitPath, concatFormPath } from './pathUtils'
 
+const parsers: Record<string, (data: string) => number | boolean> = {
+  integer: (data: string): number => parseInt(data),
+  number: (data: string): number => parseFloat(data),
+  boolean: (data: string): boolean => data === 'true',
+}
+
 export const getObjectFromForm = (
   originalSchema: JSONSchemaType,
   data: JSONSchemaType
 ): JSONSchemaType => {
-  const orderedSchemaKeys = Object.keys(data).sort()
-  const objectFromData: JSONSchemaType = {}
-
-  for (const key of orderedSchemaKeys) {
-    const splitPath = getSplitPath(key)
-    if (!splitPath || !data[key]) {
-      continue
-    }
-
-    let currentPath = objectFromData
-    let currentOriginalPath = originalSchema
-
-    for (let node = 0; node < splitPath.length; node++) {
-      if (currentOriginalPath === undefined) {
-        break
+  return Object.keys(data)
+    .sort()
+    .reduce((objectFromData: JSONSchemaType, key: string) => {
+      const splitPath = getSplitPath(key)
+      if (!splitPath || !data[key]) {
+        return objectFromData
       }
 
-      if (currentOriginalPath.type && currentOriginalPath.type === 'object') {
-        currentOriginalPath = currentOriginalPath.properties
-        currentOriginalPath = currentOriginalPath[splitPath[node]]
-      }
+      let currentPath = objectFromData
+      let currentOriginalPath = originalSchema
 
-      if (node === splitPath.length - 1) {
-        if (!currentOriginalPath) {
+      for (let node = 0; node < splitPath.length; node++) {
+        if (currentOriginalPath == undefined) {
           break
         }
 
-        if (currentOriginalPath.type === 'integer') {
-          currentPath[splitPath[node]] = parseInt(data[key])
-        } else if (currentOriginalPath.type === 'number') {
-          currentPath[splitPath[node]] = parseFloat(data[key])
-        } else if (currentOriginalPath.type === 'boolean') {
-          currentPath[splitPath[node]] = data[key] === 'true' ? true : false
-        } else {
-          currentPath[splitPath[node]] = data[key]
+        if (currentOriginalPath.type && currentOriginalPath.type === 'object') {
+          currentOriginalPath = currentOriginalPath.properties
+          currentOriginalPath = currentOriginalPath[splitPath[node]]
         }
-      } else if (currentPath[splitPath[node]] == undefined) {
-        currentPath[splitPath[node]] = {}
+
+        if (node === splitPath.length - 1) {
+          if (!currentOriginalPath) {
+            break
+          }
+
+          currentPath[splitPath[node]] =
+            currentOriginalPath.type && parsers[currentOriginalPath.type]
+              ? parsers[currentOriginalPath.type](data[key])
+              : data[key] ?? {}
+        } else if (currentPath[splitPath[node]] == undefined) {
+          currentPath[splitPath[node]] = {}
+        }
+
+        currentPath = currentPath[splitPath[node]]
       }
-
-      currentPath = currentPath[splitPath[node]]
-    }
-  }
-
-  return objectFromData
+      return objectFromData
+    }, {})
 }
 
-interface ReducerInfo {
+interface ReducerPathInfo {
   JSONSchema: JSONSchemaType
   currentData: JSONSchemaType
   invalidPointer: boolean
@@ -72,7 +71,7 @@ export const getAnnotatedSchemaFromPath = (
   const { schema } = formContext
 
   const info = getSplitPath(path).reduce(
-    (currentInfo: ReducerInfo, node: string) => {
+    (currentInfo: ReducerPathInfo, node: string) => {
       const { JSONSchema, currentData } = currentInfo
 
       if (
