@@ -97,9 +97,9 @@ This component is the top-level component that creates the context with the sche
     - `value`: Is the current value in the form input.
     - `context`: Is an object with the following fields:
       - `JSONSchema`: Is the sub schema of the current field
-      - `isRequired`: Wether the current field is required or not
+      - `isRequired`: Whether the current field is required or not
       - `objectName`: The name of the sub schema
-      - `invalidPointer`: A `boolean` indicating wether the referenced field was found within the schema or not. If it is false it is because of an error in the schema.
+      - `invalidPointer`: A `boolean` indicating whether the referenced field was found within the schema or not. If it is false it is because of an error in the schema.
       - `path`: Path in the instance of the JSON Schema. The path is always in the form: `$/some/child/data/field/here` where `$` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
       - `pointer`: A pointer to the location in the schema where the sub schema is located
   - `return value`: Must be either a `string` that identifies the error or a `true` value indicating the validation was succesfull.
