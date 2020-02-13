@@ -8,7 +8,7 @@ export type JSONSchemaType =
   | NullJSONSchemaType
 
 export interface BasicJSONSchemaType {
-  type?: string | Array<string>
+  type?: string
   title?: string
   description?: string
   $comment?: string
