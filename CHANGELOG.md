@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0-beta.7] - 2020-02-14
+
+### Changed
+
+- **BREAKING**: `onSubmit` now passes an object with `data`, `event` and `methods` as members to the callback.
+
 ## [0.2.0-beta.6] - 2020-02-13
 
 ### Added
