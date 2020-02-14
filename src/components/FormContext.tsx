@@ -51,7 +51,7 @@ export const FormContext: FC<FormContextProps> = props => {
 
   formProps.onSubmit = methods.handleSubmit(async (data, event) => {
     if (props.onSubmit) {
-      return await props.onSubmit({
+      return props.onSubmit({
         data: getObjectFromForm(props.schema, data),
         event: event,
         methods: formContext,
