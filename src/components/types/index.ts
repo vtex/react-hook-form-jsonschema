@@ -12,10 +12,12 @@ export interface JSONFormContextValues<
   customValidators?: CustomValidators
 }
 
-export type OnSubmitType = (
-  data: JSONSchemaType,
+export type OnSubmitParameters = {
+  data: JSONSchemaType
   event: React.BaseSyntheticEvent | undefined
-) => void | Promise<void>
+  methods: JSONFormContextValues
+}
+export type OnSubmitType = (props: OnSubmitParameters) => void | Promise<void>
 
 export type FormContextProps = {
   validationMode?: Mode

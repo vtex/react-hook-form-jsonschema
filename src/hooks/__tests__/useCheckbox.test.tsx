@@ -30,7 +30,7 @@ test('should have boolean true and false', done => {
   const { getByText } = render(
     <FormContext
       schema={mockCheckboxSchema}
-      onSubmit={data => {
+      onSubmit={({ data }) => {
         expect(data.booleanTest).toBe(true)
         done()
       }}

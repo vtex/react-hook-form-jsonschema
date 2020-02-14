@@ -31,11 +31,29 @@ export const FormContext: FC<FormContextProps> = props => {
     submitFocusError: submitFocusError,
   })
 
+  const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
+
+  const resolvedSchemaRefs = useMemo(
+    () => resolveRefs(props.schema, idMap, []),
+    [props.schema, idMap]
+  )
+
+  const formContext: JSONFormContextValues = {
+    ...methods,
+    schema: resolvedSchemaRefs,
+    idMap: idMap,
+    customValidators: props.customValidators,
+  }
+
   const formProps: React.ComponentProps<'form'> = {}
 
-  formProps.onSubmit = methods.handleSubmit((data, event) => {
+  formProps.onSubmit = methods.handleSubmit(async (data, event) => {
     if (props.onSubmit) {
-      props.onSubmit(getObjectFromForm(props.schema, data), event)
+      return await props.onSubmit({
+        data: getObjectFromForm(props.schema, data),
+        event: event,
+        methods: formContext,
+      })
     }
     return
   })
@@ -44,22 +62,8 @@ export const FormContext: FC<FormContextProps> = props => {
     formProps.noValidate = props.noNativeValidate
   }
 
-  const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
-
-  const resolvedSchemaRefs = useMemo(
-    () => resolveRefs(props.schema, idMap, []),
-    [props.schema, idMap]
-  )
-
   return (
-    <InternalFormContext.Provider
-      value={{
-        ...methods,
-        schema: resolvedSchemaRefs,
-        idMap: idMap,
-        customValidators: props.customValidators,
-      }}
-    >
+    <InternalFormContext.Provider value={formContext}>
       <form {...formProps}>{props.children}</form>
     </InternalFormContext.Provider>
   )

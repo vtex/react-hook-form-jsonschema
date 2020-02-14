@@ -112,7 +112,10 @@ This component is the top-level component that creates the context with the sche
   - `'onChange'`: Validate when an input field value changes.
   - `'onSubmit'`: Validate when the submit is triggered.
 - `submitFocusError`: Boolean, when `true` focus on the first field with error after submit validates, if there is any. Defaults to `true`.
-- `onSubmit`: Callback function that the form values are passed to when submit is triggered without errors.
+- `onSubmit`: If provided `react-hook-form-jsonschema` will call this function as the submit action, it passes an object with the following members:
+  - `data`: The data that was provided as inputs to the form, correctly formatted as an instance of the JSON Schema provided.
+  - `event`: A react event
+  - `methods`: Provides access to the methods of [`react-hook-form`](https://react-hook-form.com/api) `useForm`, from this you can extract, for example, the `triggerValidation` method to revalidate the form if an error occured while submitting.
 - `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that `react-hook-form-jsonschema` does NOT yet implement validation for URIs and email addresses).
 
 ## Hooks API
