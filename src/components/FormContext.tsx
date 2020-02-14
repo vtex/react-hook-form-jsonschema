@@ -38,12 +38,14 @@ export const FormContext: FC<FormContextProps> = props => {
     [props.schema, idMap]
   )
 
-  const formContext: JSONFormContextValues = {
-    ...methods,
-    schema: resolvedSchemaRefs,
-    idMap: idMap,
-    customValidators: props.customValidators,
-  }
+  const formContext: JSONFormContextValues = useMemo(() => {
+    return {
+      ...methods,
+      schema: resolvedSchemaRefs,
+      idMap: idMap,
+      customValidators: props.customValidators,
+    }
+  }, [methods, resolvedSchemaRefs, idMap, props.customValidators])
 
   const formProps: React.ComponentProps<'form'> = {}
 
