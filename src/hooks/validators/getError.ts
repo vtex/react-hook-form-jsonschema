@@ -81,6 +81,9 @@ export const getError = (
       retError.message = ErrorTypes.pattern
       retError.expected = currentObject.pattern
       break
+    case ErrorTypes.notInEnum:
+      retError.message = ErrorTypes.notInEnum
+      retError.expected = currentObject.enum
   }
   return retError
 }

@@ -14,7 +14,12 @@ export enum ErrorTypes {
   undefinedError = '__form_error_undefinedError__',
 }
 
-export type ErrorMessageValues = boolean | number | string | undefined
+export type ErrorMessageValues =
+  | boolean
+  | number
+  | string
+  | undefined
+  | Array<boolean | number | string | null>
 
 export type ErrorMessage =
   | {
