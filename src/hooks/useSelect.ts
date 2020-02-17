@@ -41,7 +41,16 @@ export const getSelectCustomFields = (
   let decimalPlaces: number | undefined
 
   if (currentObject.type === 'string') {
-    items = items.concat(currentObject.enum ? currentObject.enum : [])
+    items = items.concat(
+      currentObject.enum
+        ? currentObject.enum.map(obj => {
+            if (obj) {
+              return obj.toString()
+            }
+            return ''
+          })
+        : []
+    )
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'

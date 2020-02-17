@@ -19,8 +19,7 @@ export interface BasicJSONSchemaType {
   allOf?: Array<JSONSchemaType>
   oneOf?: Array<JSONSchemaType>
   not?: Array<JSONSchemaType>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  enum?: Array<any>
+  enum?: Array<boolean | string | number | null>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const?: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

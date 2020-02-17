@@ -48,7 +48,14 @@ export const getCheckboxCustomFields = (
     if (currentObject.items.enum) {
       items = currentObject.items.enum
     } else if (currentObject.items.type === 'string') {
-      items = currentObject.enum ? currentObject.enum : []
+      items = currentObject.enum
+        ? currentObject.enum.map(obj => {
+            if (obj) {
+              return obj.toString()
+            }
+            return ''
+          })
+        : []
     } else if (
       currentObject.items.type === 'number' ||
       currentObject.items.type === 'integer'
