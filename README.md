@@ -143,7 +143,10 @@ The following are the common fields returned in the object from every `use'SomeI
     - `maxValue`: maximum value of number input was surpassed
     - `minValue`: minimum value of number input was not met
     - `pattern`: the pattern or type defined in the schema was not met
+    - `notInteger`: the input was expected to be an integer but is not
+    - `notFloat`: the input was expected to be a float but is not
     - `multipleOf`: the number is not a multiple of the number defined in the schema
+    - `notInEnum`: the input does not match any of the expected values defined in the `enum` option in the schema
     - `undefinedError`: the error type could not be defined
   - **`ErrorMessageValues`**, is the expected value to be met, it will be `true` for required, and the minimum value expected for `minValue` for example.
 - `getObject()`: Returns the data field in the schema that this input refers to
