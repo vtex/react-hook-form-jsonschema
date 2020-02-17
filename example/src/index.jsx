@@ -4,7 +4,7 @@
  *  of the project.
  */
 
-import React from 'react'
+import React, { useState, useReducer } from 'react'
 import ReactDOM from 'react-dom'
 import {
   useObject,
@@ -35,6 +35,15 @@ const personSchema = {
       minimum: 1930,
       maximum: 2010,
       title: 'Birth Year',
+    },
+  },
+}
+
+const UISchema = {
+  type: UITypes.default,
+  properties: {
+    birthYear: {
+      type: UITypes.select,
     },
   },
 }
@@ -111,19 +120,47 @@ function ObjectRenderer(props) {
   )
 }
 
-function RenderMyJSONSchema() {
-  const UISchema = {
-    type: UITypes.default,
-    properties: {
-      birthYear: {
-        type: UITypes.select,
-      },
-    },
+function save(data) {
+  return new Promise(resolve => {
+    setTimeout(resolve, 2000)
+  })
+}
+
+const initialState = { loading: false, error: null, success: null }
+function reducer(state, action) {
+  switch (action.type) {
+    case 'START_SAVING': {
+      return { loading: true, error: null, success: null }
+    }
+    case 'SUCCESS_SAVING': {
+      return { loading: false, error: false, success: true }
+    }
+    case 'ERROR_SAVING': {
+      return { loading: false, error: true, success: false }
+    }
+    default:
+      return state
   }
+}
+
+function RenderMyJSONSchema() {
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <FormContext schema={personSchema}>
-      <ObjectRenderer path="#" UISchema={UISchema} />
+    <FormContext
+      schema={personSchema}
+      onSubmit={({ data }) => {
+        dispatch({ type: 'START_SAVING' })
+        save(data)
+          .then(() => dispatch({ type: 'SUCCESS_SAVING' }))
+          .catch(() => dispatch({ type: 'ERROR_SAVING' }))
+      }}
+    >
+      <ObjectRenderer path="$" UISchema={UISchema} />
+      <input type="submit" />
+      {state.loading && <p>Loading...</p>}
+      {state.error && <p>Error saving!</p>}
+      {state.success && <p>Saved succesfully!</p>}
     </FormContext>
   )
 }
