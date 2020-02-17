@@ -30,12 +30,12 @@ export const getNumberValidator = (
   if (currentObject.type === 'integer') {
     baseValidator.pattern = {
       value: /^([+-]?[1-9]\d*|0)$/,
-      message: ErrorTypes.pattern,
+      message: ErrorTypes.notInteger,
     }
   } else {
     baseValidator.pattern = {
-      value: /^([0-9]+([,.][0-9]+))?$/,
-      message: ErrorTypes.pattern,
+      value: /^([+-]?[0-9]+([.][0-9]+))?$/,
+      message: ErrorTypes.notFloat,
     }
   }
 
