@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- `notInEnum` to return expected value in `expected` field of the `ErrorMessage`.
+
 ## [0.2.0-beta.8] - 2020-02-17
 
 ### Changed
