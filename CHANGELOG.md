@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **BREAKING**: `number` error messages to now return messages describing wether the input does not match the expected pattern for a number.
+
 ## [0.2.0-beta.7] - 2020-02-14
 
 ### Changed
