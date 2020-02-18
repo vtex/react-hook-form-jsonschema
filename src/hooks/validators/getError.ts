@@ -67,11 +67,11 @@ export const getError = (
       break
     case ErrorTypes.maxValue:
       retError.message = ErrorTypes.maxValue
-      retError.expected = minimum
+      retError.expected = maximum
       break
     case ErrorTypes.minValue:
       retError.message = ErrorTypes.minValue
-      retError.expected = maximum
+      retError.expected = minimum
       break
     case ErrorTypes.multipleOf:
       retError.message = ErrorTypes.multipleOf
