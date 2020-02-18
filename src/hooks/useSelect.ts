@@ -13,6 +13,7 @@ import {
   toFixed,
 } from './validators'
 import { useGenericInput } from './useGenericInput'
+import { getEnumAsStringArray } from './validators/getEnum'
 
 const getSelectId = (path: string): string => {
   return path + '-select'
@@ -41,16 +42,7 @@ export const getSelectCustomFields = (
   let decimalPlaces: number | undefined
 
   if (currentObject.type === 'string') {
-    items = items.concat(
-      currentObject.enum
-        ? currentObject.enum.map(obj => {
-            if (obj) {
-              return obj.toString()
-            }
-            return ''
-          })
-        : []
-    )
+    items = items.concat(getEnumAsStringArray(currentObject))
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'

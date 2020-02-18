@@ -13,6 +13,7 @@ import {
   toFixed,
 } from './validators'
 import { useGenericInput } from './useGenericInput'
+import { getEnumAsStringArray } from './validators/getEnum'
 
 const getItemInputId = (
   path: string,
@@ -45,14 +46,7 @@ export const getRadioCustomFields = (
   let decimalPlaces: number | undefined
 
   if (currentObject.type === 'string') {
-    items = currentObject.enum
-      ? currentObject.enum.map(obj => {
-          if (obj) {
-            return obj.toString()
-          }
-          return ''
-        })
-      : []
+    items = getEnumAsStringArray(currentObject)
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'
