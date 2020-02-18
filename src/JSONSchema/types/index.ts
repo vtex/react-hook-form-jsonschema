@@ -19,7 +19,7 @@ export interface BasicJSONSchemaType {
   allOf?: Array<JSONSchemaType>
   oneOf?: Array<JSONSchemaType>
   not?: Array<JSONSchemaType>
-  enum?: Array<boolean | string | number | null>
+  enum?: Array<JSONSchemaBaseInstanceTypes>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const?: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -80,6 +80,8 @@ export interface BooleanJSONSchemaType extends BasicJSONSchemaType {
 export interface NullJSONSchemaType extends BasicJSONSchemaType {
   type?: 'null'
 }
+
+export type JSONSchemaBaseInstanceTypes = boolean | string | number | null
 
 export type JSONSchemaPathInfo = {
   JSONSchema: JSONSchemaType
