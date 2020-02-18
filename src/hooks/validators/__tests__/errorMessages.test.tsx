@@ -18,7 +18,8 @@ const MockInput: FC<{ path: string }> = props => {
       </label>
       {error && (
         <p>
-          This is an error: {`${error.message}:${error.expected?.toString()}`}
+          This is an error:{' '}
+          {`${error.message}:${error.expected?.toString() ?? ''}`}
         </p>
       )}
     </>
@@ -151,7 +152,7 @@ describe('testing integer boundaries', () => {
 
     await wait(() =>
       expect(
-        getByText(`This is an error: ${ErrorTypes.notInteger}:undefined`)
+        getByText(`This is an error: ${ErrorTypes.notInteger}:`)
       ).toBeDefined()
     )
   })
