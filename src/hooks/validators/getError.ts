@@ -16,7 +16,7 @@ export const getError = (
   // This is a special element to check errors against
   if (currentObject.type === 'array') {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const currentValues: Array<any> | undefined = formContext.getValues({
+    const currentValues: any[] | undefined = formContext.getValues({
       nest: true,
     })[path]
 

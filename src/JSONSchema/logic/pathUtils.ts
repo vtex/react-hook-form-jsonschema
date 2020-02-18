@@ -5,7 +5,7 @@ export const concatFormPath = (path: string, newNode: string): string => {
   return path + '/' + newNode
 }
 
-const getSplit = (root: string, path: string): Array<string> => {
+const getSplit = (root: string, path: string): string[] => {
   const split = path.split('/')
   // Removes the root path if it is present(it should always be, but if it
   // isn't this can prevent some errors)
@@ -20,10 +20,10 @@ const getSplit = (root: string, path: string): Array<string> => {
   return split
 }
 
-export const getSplitPath = (path: string): Array<string> => {
+export const getSplitPath = (path: string): string[] => {
   return getSplit(instantiatedSchemaRootPath, path)
 }
 
-export const getSplitPointer = (path: string): Array<string> => {
+export const getSplitPointer = (path: string): string[] => {
   return getSplit(JSONSchemaRootPath, path)
 }
