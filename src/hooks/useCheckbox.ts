@@ -13,11 +13,12 @@ import {
   toFixed,
 } from './validators'
 import { useGenericInput } from './useGenericInput'
+import { getEnumAsStringArray } from './validators/getEnum'
 
 const getItemInputId = (
   path: string,
   index: number,
-  items: Array<string>
+  items: string[]
 ): string => {
   return path + '-checkbox-input-' + (items[index] ? items[index] : '')
 }
@@ -25,7 +26,7 @@ const getItemInputId = (
 const getItemLabelId = (
   path: string,
   index: number,
-  items: Array<string>
+  items: string[]
 ): string => {
   return path + '-checkbox-label-' + (items[index] ? items[index] : '')
 }
@@ -38,7 +39,7 @@ export const getCheckboxCustomFields = (
 
   const currentObject = baseInput.getObject()
 
-  let items: Array<string> = []
+  let items: string[] = []
   let minimum: number | undefined
   let maximum: number | undefined
   let step: number | 'any'
@@ -46,9 +47,9 @@ export const getCheckboxCustomFields = (
 
   if (currentObject.type === 'array') {
     if (currentObject.items.enum) {
-      items = currentObject.items.enum
+      items = getEnumAsStringArray(currentObject.items)
     } else if (currentObject.items.type === 'string') {
-      items = currentObject.enum ? currentObject.enum : []
+      items = getEnumAsStringArray(currentObject)
     } else if (
       currentObject.items.type === 'number' ||
       currentObject.items.type === 'integer'

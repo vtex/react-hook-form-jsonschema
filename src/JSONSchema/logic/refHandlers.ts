@@ -47,7 +47,7 @@ export const getSchemaFromRef = (
 export const resolveRefs = (
   schema: JSONSchemaType,
   idMap: IDSchemaPair,
-  usedRefs: Array<string>
+  usedRefs: string[]
 ): JSONSchemaType => {
   let resolvedRefs: JSONSchemaType = {}
 

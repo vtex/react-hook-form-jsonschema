@@ -13,11 +13,12 @@ import {
   toFixed,
 } from './validators'
 import { useGenericInput } from './useGenericInput'
+import { getEnumAsStringArray } from './validators/getEnum'
 
 const getItemInputId = (
   path: string,
   index: number,
-  items: Array<string>
+  items: string[]
 ): string => {
   return path + '-radio-input-' + (items[index] ? items[index] : '')
 }
@@ -25,7 +26,7 @@ const getItemInputId = (
 const getItemLabelId = (
   path: string,
   index: number,
-  items: Array<string>
+  items: string[]
 ): string => {
   return path + '-radio-label-' + (items[index] ? items[index] : '')
 }
@@ -38,14 +39,14 @@ export const getRadioCustomFields = (
 
   const currentObject = baseInput.getObject()
 
-  let items: Array<string> = []
+  let items: string[] = []
   let minimum: number | undefined
   let maximum: number | undefined
   let step: number | 'any'
   let decimalPlaces: number | undefined
 
   if (currentObject.type === 'string') {
-    items = currentObject.enum ? currentObject.enum : []
+    items = getEnumAsStringArray(currentObject)
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'

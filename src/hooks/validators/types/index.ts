@@ -1,4 +1,8 @@
-import { JSONSchemaPathInfo } from '../../../JSONSchema'
+import {
+  JSONSchemaPathInfo,
+  JSONSchemaType,
+  JSONSchemaBaseInstanceTypes,
+} from '../../../JSONSchema'
 
 export enum ErrorTypes {
   required = '__form_error_required__',
@@ -14,7 +18,10 @@ export enum ErrorTypes {
   undefinedError = '__form_error_undefinedError__',
 }
 
-export type ErrorMessageValues = boolean | number | string | undefined
+export type ErrorMessageValues =
+  | JSONSchemaType['enum']
+  | JSONSchemaBaseInstanceTypes
+  | undefined
 
 export type ErrorMessage =
   | {

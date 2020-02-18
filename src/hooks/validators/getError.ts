@@ -16,7 +16,7 @@ export const getError = (
   // This is a special element to check errors against
   if (currentObject.type === 'array') {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const currentValues: Array<any> | undefined = formContext.getValues({
+    const currentValues: any[] | undefined = formContext.getValues({
       nest: true,
     })[path]
 
@@ -67,11 +67,11 @@ export const getError = (
       break
     case ErrorTypes.maxValue:
       retError.message = ErrorTypes.maxValue
-      retError.expected = minimum
+      retError.expected = maximum
       break
     case ErrorTypes.minValue:
       retError.message = ErrorTypes.minValue
-      retError.expected = maximum
+      retError.expected = minimum
       break
     case ErrorTypes.multipleOf:
       retError.message = ErrorTypes.multipleOf
@@ -81,6 +81,9 @@ export const getError = (
       retError.message = ErrorTypes.pattern
       retError.expected = currentObject.pattern
       break
+    case ErrorTypes.notInEnum:
+      retError.message = ErrorTypes.notInEnum
+      retError.expected = currentObject.enum
   }
   return retError
 }

@@ -15,12 +15,11 @@ export interface BasicJSONSchemaType {
   $schema?: string
   $id?: string
   $ref?: string
-  anyOf?: Array<JSONSchemaType>
-  allOf?: Array<JSONSchemaType>
-  oneOf?: Array<JSONSchemaType>
-  not?: Array<JSONSchemaType>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  enum?: Array<any>
+  anyOf?: JSONSchemaType[]
+  allOf?: JSONSchemaType[]
+  oneOf?: JSONSchemaType[]
+  not?: JSONSchemaType[]
+  enum?: JSONSchemaBaseInstanceTypes[]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const?: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,13 +30,13 @@ export interface BasicJSONSchemaType {
   [key: string]: any
 }
 
-export type PropertyDependencies = Record<string, Array<string>>
+export type PropertyDependencies = Record<string, string[]>
 export type SchemaDependencies = JSONSchemaType
 export interface ObjectJSONSchemaType extends BasicJSONSchemaType {
   type?: 'object'
   properties?: Record<string, JSONSchemaType>
   additionalProperties?: boolean
-  required?: Array<string>
+  required?: string[]
   propertyNames?: StringJSONSchemaType
   minProperties?: number
   maxProperties?: number
@@ -66,7 +65,7 @@ export interface NumberJSONSchemaType extends BasicJSONSchemaType {
 
 export interface ArrayJSONSchemaType extends BasicJSONSchemaType {
   type?: 'array'
-  items?: JSONSchemaType | Array<JSONSchemaType>
+  items?: JSONSchemaType | JSONSchemaType[]
   additionalItems?: boolean | JSONSchemaType
   contains?: JSONSchemaType
   minItems?: number
@@ -81,6 +80,8 @@ export interface BooleanJSONSchemaType extends BasicJSONSchemaType {
 export interface NullJSONSchemaType extends BasicJSONSchemaType {
   type?: 'null'
 }
+
+export type JSONSchemaBaseInstanceTypes = boolean | string | number | null
 
 export type JSONSchemaPathInfo = {
   JSONSchema: JSONSchemaType

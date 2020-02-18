@@ -43,7 +43,7 @@ export interface GenericInputParameters {
 
 export interface UseRadioReturnType extends BasicInputReturnType {
   getLabelProps(): React.ComponentProps<'label'>
-  getItems(): Array<string>
+  getItems(): string[]
   getItemInputProps(index: number): React.ComponentProps<'input'>
   getItemLabelProps(index: number): React.ComponentProps<'label'>
 }
@@ -53,7 +53,7 @@ export interface UseRadioParameters {
 }
 
 export interface UseCheckboxReturnType extends BasicInputReturnType {
-  getItems(): Array<string>
+  getItems(): string[]
   getItemInputProps(index: number): React.ComponentProps<'input'>
   getItemLabelProps(index: number): React.ComponentProps<'label'>
   isSingle: boolean
@@ -67,7 +67,7 @@ export interface UseSelectReturnType extends BasicInputReturnType {
   type: InputTypes.select
   getLabelProps(): React.ComponentProps<'label'>
   getItemOptionProps(index: number): React.ComponentProps<'option'>
-  getItems(): Array<string>
+  getItems(): string[]
   getSelectProps(): React.ComponentProps<'select'>
 }
 
@@ -104,7 +104,7 @@ export type InputReturnTypes =
   | UseRadioReturnType
   | UseCheckboxReturnType
 
-export type UseObjectReturnType = Array<InputReturnTypes>
+export type UseObjectReturnType = InputReturnTypes[]
 
 export type UISchemaType = {
   type: UITypes

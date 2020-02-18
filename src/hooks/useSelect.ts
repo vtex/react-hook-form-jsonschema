@@ -13,16 +13,13 @@ import {
   toFixed,
 } from './validators'
 import { useGenericInput } from './useGenericInput'
+import { getEnumAsStringArray } from './validators/getEnum'
 
 const getSelectId = (path: string): string => {
   return path + '-select'
 }
 
-const getOptionId = (
-  path: string,
-  index: number,
-  items: Array<string>
-): string => {
+const getOptionId = (path: string, index: number, items: string[]): string => {
   return path + '-select-option-' + (items[index] ? items[index] : '')
 }
 
@@ -34,14 +31,14 @@ export const getSelectCustomFields = (
 
   const currentObject = baseInput.getObject()
 
-  let items: Array<string> = ['']
+  let items: string[] = ['']
   let minimum: number | undefined
   let maximum: number | undefined
   let step: number | 'any'
   let decimalPlaces: number | undefined
 
   if (currentObject.type === 'string') {
-    items = items.concat(currentObject.enum ? currentObject.enum : [])
+    items = items.concat(getEnumAsStringArray(currentObject))
   } else if (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'

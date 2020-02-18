@@ -90,7 +90,7 @@ export const getAnnotatedSchemaFromPath = (
       const fatherIsRequired = currentInfo.isRequired
       const isRequired =
         JSONSchema.required &&
-        (JSONSchema.required as Array<string>).indexOf(node) > -1
+        (JSONSchema.required as string[]).indexOf(node) > -1
 
       return {
         JSONSchema: JSONSchema.properties[node],
