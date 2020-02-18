@@ -11,23 +11,27 @@ export const getInputCustomFields = (
 ): UseRawInputReturnType => {
   const currentObject = baseObject.getObject()
 
-  let inputType: string
-  switch (currentObject.format) {
-    case 'date-time':
-      inputType = 'datetime-local'
-      break
-    case 'email':
-      inputType = 'email'
-      break
-    case 'hostname':
-      inputType = 'url'
-      break
-    case 'uri':
-      inputType = 'url'
-      break
-
-    default:
-      inputType = 'text'
+  let inputType = 'text'
+  if (currentObject.type === 'string') {
+    switch (currentObject.format) {
+      case 'date-time':
+        inputType = 'datetime-local'
+        break
+      case 'email':
+        inputType = 'email'
+        break
+      case 'hostname':
+        inputType = 'url'
+        break
+      case 'uri':
+        inputType = 'url'
+        break
+    }
+  } else if (
+    currentObject.type === 'integer' ||
+    currentObject.type === 'number'
+  ) {
+    inputType = 'number'
   }
 
   return getRawInputCustomFields(baseObject, inputType)
