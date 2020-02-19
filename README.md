@@ -17,6 +17,8 @@ Try a live demo on [CodeSandbox](https://codesandbox.io/s/react-hook-form-jsonsc
   - [API](#api)
   - [Components API](#components-api)
     - [FormContext component API](#formcontext-component-api)
+  - [Functions API](#functions-api)
+    - [getDataFromPath(path, data)](#getdatafrompathpath-data)
   - [Hooks API](#hooks-api)
     - [useCheckbox(path)](#usecheckboxpath)
     - [useHidden(path)](#usehiddenpath)
@@ -124,6 +126,44 @@ This component is the top-level component that creates the context with the sche
   - `event`: A react event
   - `methods`: Provides access to the methods of [`react-hook-form`](https://react-hook-form.com/api) `useForm`, from this you can extract, for example, the `triggerValidation` method to revalidate the form if an error occured while submitting.
 - `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that `react-hook-form-jsonschema` does NOT yet implement validation for URIs and email addresses).
+
+## Functions API
+
+### getDataFromPath(path, data)
+
+**Description**
+
+Gets a specifc member of data from a JSON Schema instance(passed in data).
+
+**Parameters**
+
+- `path`: String which represents the path to the data field of the JSON instance which the data will be retrieved from.
+- `data`: An object, as the one passed as parameter to the `onSubmit` function.
+
+**Return**
+
+Returns the data indicated by the path inside the object. Or undefined if the path is not found.
+
+**Example**
+
+```JSX
+// Suppose that the form is rendered by the children passed and focus on the
+// specificInput.
+function SpecificPath(props) {
+  return (
+    <FormContext onSubmit={({data}) => {
+      // Suppose we only want to handle data from a specific path
+      // And the path is defined in props.path
+      // We would do the following:
+      const specificInput = getDataFromPath(props.path, data)
+
+      // doSomeActionWithSpecificInput(specificInput)
+    }>
+      {props.children}
+    </FormContext>
+  )
+}
+```
 
 ## Hooks API
 
