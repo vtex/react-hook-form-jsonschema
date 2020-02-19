@@ -6,6 +6,8 @@
 
 Try a live demo on [CodeSandbox](https://codesandbox.io/s/react-hook-form-jsonschema-basic-example-u68o7)!
 
+[Supported JSON Schema keywords](#supported-json-schema-keywords)
+
 ## Table of Contents
 
 - [react-hook-form-jsonschema](#react-hook-form-jsonschema)
@@ -24,6 +26,9 @@ Try a live demo on [CodeSandbox](https://codesandbox.io/s/react-hook-form-jsonsc
     - [useRadio(path)](#useradiopath)
     - [useSelect(path)](#useselectpath)
     - [useTextArea(path)](#usetextareapath)
+  - [Supported JSON Schema keywords](#supported-json-schema-keywords)
+  - [TODO/Next Steps](#todonext-steps)
+  - [Useful resources](#useful-resources)
 
 ## Simple Usage
 
