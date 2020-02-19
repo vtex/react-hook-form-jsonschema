@@ -130,7 +130,7 @@ The following are the common fields returned in the object from every `use'SomeI
   - `textArea`: Type used for `<textarea>`
   - `checkbox`: Type used for `<input type='checkbox' \>`
 - `path`: Path in the instance of the JSON Schema this input is validated against. The path is always in the form: `$/some/child/data/field/here` where `$` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
-- `name`: The last object/data field name in the tree. In the case of `#/some/child/data/field/here` the name value will be `here`.
+- `name`: The last object/data field name in the tree. In the case of the JSONSchema pointer `#/properties/child/properties/here` the name value will be `here`.
 - `isRequired`: indicates whether the field is required or not.
 - `validator`: is the object passed to `react-hook-form` to validate the form. See the [`react-hook-form`](https://github.com/react-hook-form/react-hook-form) for more information
 - `formContext`: If you want to access internal `react-hook-form` context use this
@@ -421,7 +421,7 @@ function RenderMyJSONSchema() {
 
   return (
     <FormContext schema={personSchema}>
-      <ObjectRenderer path="#" UISchema={UISchema} />
+      <ObjectRenderer path="$" UISchema={UISchema} />
     </FormContext>
   )
 }
