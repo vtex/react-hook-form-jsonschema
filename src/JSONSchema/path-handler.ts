@@ -3,6 +3,7 @@ import {
   getObjectFromForm,
   concatFormPath,
   getAnnotatedSchemaFromPath,
+  getSplitPath,
 } from './logic'
 import { useFormContext } from '../components'
 
@@ -17,4 +18,30 @@ const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
   return getObjectFromForm(useFormContext().schema, data)
 }
 
-export { useObjectFromForm, concatFormPath, useAnnotatedSchemaFromPath }
+const useDataFromFormPath = (path: string) => {
+  return useFormContext().getValues()[path]
+}
+
+const getDataFromPath = (
+  path: string,
+  data: JSONSchemaType
+): undefined | string => {
+  const splitPath = getSplitPath(path)
+  let currentData = data
+
+  for (const node of splitPath) {
+    if (currentData) {
+      currentData = currentData[node]
+    }
+  }
+
+  return currentData?.toString()
+}
+
+export {
+  useObjectFromForm,
+  concatFormPath,
+  useAnnotatedSchemaFromPath,
+  getDataFromPath,
+  useDataFromFormPath,
+}
