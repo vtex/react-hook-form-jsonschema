@@ -586,3 +586,43 @@ function HiddenField(props) {
   )
 }
 ```
+
+## Supported JSON Schema keywords
+
+- `multipleOf`
+- `maximum`
+- `exclusiveMaximum`
+- `minimum`
+- `exclusiveMinimum`
+- `maxLength`
+- `minLength`
+- `pattern`
+- `items` (does not support an array of schemas)
+- `maxItems` (for this one and `minItems` they are missing specific error messages)
+- `minItems`
+- `required`
+- `enum`
+- `type` (does not support array of types)
+- `properties`
+- `$id`
+- `$ref`
+
+Does not support fetching a JSON Schema from an URI (as per the draft this is optional).
+
+## TODO/Next Steps
+
+- [ ] Improve array type support(and it's validation).
+- [ ] Implement `dependencies` keyword for dynamic formularies.
+- [ ] Implement `allOf`, `anyOf`, `oneOf` and `not` for more liberty in creating form schemas.
+- [ ] Implement built-in validation of `format` keyword for all possible formats.
+- [ ] Maybe? Implement new input types for each, or similar, formats, like an `useDate` for format `date-time`
+- [ ] Implement `default` values.
+- [ ] Implement `const` keyword.
+- [ ] Warn user that there is an error in the schema if any of the keywords fails to validate against the expected type and format.
+
+## Useful resources
+
+- [JSON Schema Draft 6 Core](https://tools.ietf.org/html/draft-wright-json-schema-01): Draft of the core JSONSchema, essential for implementing any new feature in the library
+- [JSON Schema Draft 6 Validation](https://tools.ietf.org/html/draft-wright-json-schema-validation-01): Describes the schema keywords with how they shoul be handled, what they do, and how to validate against them, essential for implementing any new keyword
+- [Understanding JSON Schema](https://json-schema.org/understanding-json-schema/index.html) (Beware this is for Draft 7, but it is still a pretty good reference)
+- [JSON Schema Website](https://json-schema.org/)
