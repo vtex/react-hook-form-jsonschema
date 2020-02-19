@@ -664,7 +664,7 @@ Does not support fetching a JSON Schema from an URI (as per the draft this is op
 - [ ] Implement `default` values.
 - [ ] Implement `const` keyword.
 - [ ] Warn user that there is an error in the schema if any of the keywords fails to validate against the expected type and format.
-- [ ] Change paths to JSON Scchema pointers so it does not create and overhead and confusion between the two.
+- [ ] Change paths (usage of $) to JSON Scchema pointers (usage of #) so it does not create and overhead and confusion between the two.
 
 ## Useful resources
 
