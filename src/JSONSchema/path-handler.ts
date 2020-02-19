@@ -18,10 +18,6 @@ const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
   return getObjectFromForm(useFormContext().schema, data)
 }
 
-const useDataFromFormPath = (path: string) => {
-  return useFormContext().getValues()[path]
-}
-
 const getDataFromPath = (
   path: string,
   data: JSONSchemaType
@@ -43,5 +39,4 @@ export {
   concatFormPath,
   useAnnotatedSchemaFromPath,
   getDataFromPath,
-  useDataFromFormPath,
 }
