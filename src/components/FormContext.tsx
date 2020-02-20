@@ -34,7 +34,7 @@ export const FormContext: FC<FormContextProps> = props => {
   })
 
   if (typeof onChange === 'function') {
-    onChange(methods.watch())
+    onChange(getObjectFromForm(props.schema, methods.watch()))
   }
 
   const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
