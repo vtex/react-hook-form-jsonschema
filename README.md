@@ -6,6 +6,8 @@
 
 Try a live demo on [CodeSandbox](https://codesandbox.io/s/react-hook-form-jsonschema-basic-example-u68o7)!
 
+[Supported JSON Schema keywords](#supported-json-schema-keywords)
+
 ## Table of Contents
 
 - [react-hook-form-jsonschema](#react-hook-form-jsonschema)
@@ -15,6 +17,8 @@ Try a live demo on [CodeSandbox](https://codesandbox.io/s/react-hook-form-jsonsc
   - [API](#api)
   - [Components API](#components-api)
     - [FormContext component API](#formcontext-component-api)
+  - [Functions API](#functions-api)
+    - [getDataFromPath(path, data)](#getdatafrompathpath-data)
   - [Hooks API](#hooks-api)
     - [useCheckbox(path)](#usecheckboxpath)
     - [useHidden(path)](#usehiddenpath)
@@ -24,6 +28,9 @@ Try a live demo on [CodeSandbox](https://codesandbox.io/s/react-hook-form-jsonsc
     - [useRadio(path)](#useradiopath)
     - [useSelect(path)](#useselectpath)
     - [useTextArea(path)](#usetextareapath)
+  - [Supported JSON Schema keywords](#supported-json-schema-keywords)
+  - [TODO/Next Steps](#todonext-steps)
+  - [Useful resources](#useful-resources)
 
 ## Simple Usage
 
@@ -119,6 +126,35 @@ This component is the top-level component that creates the context with the sche
   - `event`: A react event
   - `methods`: Provides access to the methods of [`react-hook-form`](https://react-hook-form.com/api) `useForm`, from this you can extract, for example, the `triggerValidation` method to revalidate the form if an error occured while submitting.
 - `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that `react-hook-form-jsonschema` does NOT yet implement validation for URIs and email addresses).
+
+## Functions API
+
+### getDataFromPath(path, data)
+
+**Description**
+
+Gets a specific member of data given a path.
+
+**Parameters**
+
+- `path`: String which represents the path to the data field of the JSON instance which the data will be retrieved from.
+- `data`: An object, as the one passed as parameter to the `onSubmit` function.
+
+**Return**
+
+Returns the data indicated by the path inside the object. Or undefined if the path is not found.
+
+**Example**
+
+```JSX
+const data = {
+  address: {
+    name: "Foo"
+  }
+}
+const path = '$/address/name'
+const result = getDataFromPath(path, data) // "Foo"
+```
 
 ## Hooks API
 
@@ -619,6 +655,7 @@ Does not support fetching a JSON Schema from an URI (as per the draft this is op
 - [ ] Implement `default` values.
 - [ ] Implement `const` keyword.
 - [ ] Warn user that there is an error in the schema if any of the keywords fails to validate against the expected type and format.
+- [ ] Change paths (usage of \$) to JSON Scchema pointers (usage of #) so it does not create and overhead and confusion between the two.
 
 ## Useful resources
 

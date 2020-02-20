@@ -5,6 +5,8 @@ export {
   FormContext,
   FormContextProps,
   JSONFormContextValues,
+  OnSubmitParameters,
+  OnSubmitType,
 } from './components'
 
 export * from './hooks'
