@@ -133,7 +133,7 @@ This component is the top-level component that creates the context with the sche
 
 **Description**
 
-Gets a specifc member of data from a JSON Schema instance(passed in data).
+Gets a specific member of data given a path.
 
 **Parameters**
 
@@ -147,22 +147,13 @@ Returns the data indicated by the path inside the object. Or undefined if the pa
 **Example**
 
 ```JSX
-// Suppose that the form is rendered by the children passed and focus on the
-// specificInput.
-function SpecificPath(props) {
-  return (
-    <FormContext onSubmit={({data}) => {
-      // Suppose we only want to handle data from a specific path
-      // And the path is defined in props.path
-      // We would do the following:
-      const specificInput = getDataFromPath(props.path, data)
-
-      // doSomeActionWithSpecificInput(specificInput)
-    }>
-      {props.children}
-    </FormContext>
-  )
+const data = {
+  address: {
+    name: "Foo"
+  }
 }
+const path = '$/address/name'
+const result = getDataFromPath(path, data) // "Foo"
 ```
 
 ## Hooks API
@@ -664,7 +655,7 @@ Does not support fetching a JSON Schema from an URI (as per the draft this is op
 - [ ] Implement `default` values.
 - [ ] Implement `const` keyword.
 - [ ] Warn user that there is an error in the schema if any of the keywords fails to validate against the expected type and format.
-- [ ] Change paths (usage of $) to JSON Scchema pointers (usage of #) so it does not create and overhead and confusion between the two.
+- [ ] Change paths (usage of \$) to JSON Scchema pointers (usage of #) so it does not create and overhead and confusion between the two.
 
 ## Useful resources
 
