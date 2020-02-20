@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `onChange` and `formProps` props to `FormContext`.
+
 ## [0.2.0-beta.9] - 2020-02-18
 
 ### Fix
