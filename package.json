@@ -57,5 +57,17 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
-  "repository": "git@github.com:vtex/react-hook-form-jsonschema.git"
+  "repository": "git@github.com:vtex/react-hook-form-jsonschema.git",
+  "keywords": [
+    "react",
+    "hooks",
+    "json-schema",
+    "jsonschema",
+    "form",
+    "form-validation",
+    "validation",
+    "typescript",
+    "react-hooks"
+  ],
+  "homepage": "https://github.com/vtex/react-hook-form-jsonschema"
 }
