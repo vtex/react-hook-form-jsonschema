@@ -18,16 +18,16 @@ Try a live demo on [CodeSandbox](https://codesandbox.io/s/react-hook-form-jsonsc
   - [Components API](#components-api)
     - [FormContext component API](#formcontext-component-api)
   - [Functions API](#functions-api)
-    - [getDataFromPath(path, data)](#getdatafrompathpath-data)
+    - [getDataFromPointer(pointer, data)](#getdatafrompointerpointer-data)
   - [Hooks API](#hooks-api)
-    - [useCheckbox(path)](#usecheckboxpath)
-    - [useHidden(path)](#usehiddenpath)
-    - [useInput(path)](#useinputpath)
-    - [useObject(path, UISchema)](#useobjectpath-uischema)
-    - [usePassword(path)](#usepasswordpath)
-    - [useRadio(path)](#useradiopath)
-    - [useSelect(path)](#useselectpath)
-    - [useTextArea(path)](#usetextareapath)
+    - [useCheckbox(pointer)](#usecheckboxpointer)
+    - [useHidden(pointer)](#usehiddenpointer)
+    - [useInput(pointer)](#useinputpointer)
+    - [useObject(pointer, UISchema)](#useobjectpointer-uischema)
+    - [usePassword(pointer)](#usepasswordpointer)
+    - [useRadio(pointer)](#useradiopointer)
+    - [useSelect(pointer)](#useselectpointer)
+    - [useTextArea(pointer)](#usetextareapointer)
   - [Supported JSON Schema keywords](#supported-json-schema-keywords)
   - [TODO/Next Steps](#todonext-steps)
   - [Useful resources](#useful-resources)
@@ -55,7 +55,7 @@ And suppose you want to create a form field for the `firstName` field, simply us
 
 ```JSX
 function FirstNameField(props) {
-  const inputMethods = useInput('$/firstName');
+  const inputMethods = useInput('#/properties/firstName');
 
   return (
     <FormContext schema={personSchema}>
@@ -101,7 +101,7 @@ This component is the top-level component that creates the context with the sche
 ##### Optional:
 
 - `customValidators`: An object where each member has to be a funtion with the following format:
-  - `function(value: string, context: PathInfo) => CustomValidatorReturnValue`
+  - `function(value: string, context: SubSchemaInfo) => CustomValidatorReturnValue`
   - `params`:
     - `value`: Is the current value in the form input.
     - `context`: Is an object with the following fields:
@@ -109,8 +109,7 @@ This component is the top-level component that creates the context with the sche
       - `isRequired`: Whether the current field is required or not
       - `objectName`: The name of the sub schema
       - `invalidPointer`: A `boolean` indicating whether the referenced field was found within the schema or not. If it is false it is because of an error in the schema.
-      - `path`: Path in the instance of the JSON Schema. The path is always in the form: `$/some/child/data/field/here` where `$` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
-      - `pointer`: A pointer to the location in the schema where the sub schema is located
+      - `pointer`: JSON Pointer to sub schema that should be validated. The pointer is always in the form: `#/properties/some/properties/data` where `#` represents the root of the schema, and the `properties/some/properties/data` represents the tree of objects (from `some` to `data`) to get to the desired field, which in this case is `data`. Also see the definition of JSON Pointers on [RFC 6901](https://tools.ietf.org/html/rfc6901).
   - `return value`: Must be either a `string` that identifies the error or a `true` value indicating the validation was succesfull.
 - `formProps`: An object that is passed to the underlying `<form>` element. Accepts the same attributes as when declaring a `<form>` with React, except `onSubmit`.
 - `validationMode`: String to indicate when to validate the input, default is `'onSubmit'`.
@@ -131,31 +130,50 @@ This component is the top-level component that creates the context with the sche
 
 ## Functions API
 
-### getDataFromPath(path, data)
+### getDataFromPointer(pointer, data)
 
 **Description**
 
-Gets a specific member of data given a path.
+Gets a specific member of data given a pointer.
 
 **Parameters**
 
-- `path`: String which represents the path to the data field of the JSON instance which the data will be retrieved from.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 - `data`: An object, as the one passed as parameter to the `onSubmit` function.
 
 **Return**
 
-Returns the data indicated by the path inside the object. Or undefined if the path is not found.
+Returns the data indicated by the pointer inside an instance of a JSON Schema the object. Or undefined if the pointer is not found.
 
 **Example**
 
 ```JSX
+// Suppose you have a schema with the following format:
+const schema = {
+  type: 'object',
+  properties: {
+    address: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' }
+      }
+    }
+  }
+}
+
+// A valid instance of this schema is this:
 const data = {
   address: {
     name: "Foo"
   }
 }
-const path = '$/address/name'
-const result = getDataFromPath(path, data) // "Foo"
+
+// And suppose you have a pointer to a sub schema only:
+const pointer = '#/properties/address/properties/name'
+
+// Use this function to get the data from the instance of the schema(data) that
+// coincides with the sub schema the pointer points to.
+const result = getDataFromPointer(pointer, data) // returns "Foo"
 ```
 
 ## Hooks API
@@ -169,7 +187,7 @@ The following are the common fields returned in the object from every `use'SomeI
   - `input`: Type used for generic `<input \>`
   - `textArea`: Type used for `<textarea>`
   - `checkbox`: Type used for `<input type='checkbox' \>`
-- `path`: Path in the instance of the JSON Schema this input is validated against. The path is always in the form: `$/some/child/data/field/here` where `$` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
+- `pointer`: JSON Pointer to sub schema that should be validated. The pointer is always in the form: `#/properties/some/properties/data` where `#` represents the root of the schema, and the `properties/some/properties/data` represents the tree of objects (from `some` to `data`) to get to the desired field, which in this case is `data`. Also see the definition of JSON Pointers on [RFC 6901](https://tools.ietf.org/html/rfc6901).
 - `name`: The last object/data field name in the tree. In the case of the JSONSchema pointer `#/properties/child/properties/here` the name value will be `here`.
 - `isRequired`: indicates whether the field is required or not.
 - `validator`: is the object passed to `react-hook-form` to validate the form. See the [`react-hook-form`](https://github.com/react-hook-form/react-hook-form) for more information
@@ -193,7 +211,7 @@ The following are the common fields returned in the object from every `use'SomeI
 
 **Please notice that in all of the following examples it is assumed the components are already children of a `FormContext` component**
 
-### useCheckbox(path)
+### useCheckbox(pointer)
 
 **Description**
 
@@ -201,7 +219,7 @@ Use this hook to build a single or multiple checkbox field in your form.
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 
 **Return:**
 
@@ -216,7 +234,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function InputField(props) {
-  const inputMethods = useCheckbox(props.path)
+  const inputMethods = useCheckbox(props.pointer)
 
   return (
     <React.Fragment>
@@ -234,7 +252,7 @@ function InputField(props) {
 }
 ```
 
-### useHidden(path)
+### useHidden(pointer)
 
 **Description**
 
@@ -242,7 +260,7 @@ Use this hook to build a hidden field in the form, the user will not be able to 
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 
 **Return:**
 
@@ -255,7 +273,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function HiddenField(props) {
-  const inputMethods = useHidden('$/some/child/you/want/hidden');
+  const inputMethods = useHidden('#/properties/Foo');
 
   return (
     <React.Fragment>
@@ -268,7 +286,7 @@ function HiddenField(props) {
 }
 ```
 
-### useInput(path)
+### useInput(pointer)
 
 **Description**
 
@@ -276,7 +294,7 @@ Use this hook to build a generic input field in your form, with validation based
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 
 **Return:**
 
@@ -289,7 +307,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function InputField(props) {
-  const inputMethods = useInput('$/some/child/you/want/as/input');
+  const inputMethods = useInput('#/properties/Foo');
 
   return (
     <React.Fragment>
@@ -302,7 +320,7 @@ function InputField(props) {
 }
 ```
 
-### useObject(path, UISchema)
+### useObject(pointer, UISchema)
 
 **Description**
 
@@ -310,8 +328,8 @@ This hook works a little differently than the others. `useObject` returns an arr
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
-- `UISchema` (Optional): This UISchema is a modified schema type, relative to the object passed in the `path` prop, the format of the UISchema is the following:
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
+- `UISchema` (Optional): This UISchema is a modified schema type, relative to the sub schema passed in the `pointer` prop, the format of the UISchema is the following:
 
 ```js
 const UISchema = {
@@ -344,7 +362,7 @@ const UISchema = {
 
 **Return:**
 
-Returns an array, with each element being the return of a different call to a hook for each child of the object that was passed in the path.
+Returns an array, with each element being the return of a different call to a hook for each child of the object that was passed in the pointer.
 
 **Example:**
 
@@ -428,7 +446,7 @@ function SpecializedObject(props) {
 }
 
 function ObjectRenderer(props) {
-  const inputMethods = useObject({ path: props.path, UISchema: props.UISchema })
+  const inputMethods = useObject({ pointer: props.pointer, UISchema: props.UISchema })
 
   const objectForm = []
 
@@ -437,7 +455,7 @@ function ObjectRenderer(props) {
   // anb give a more specialized warning to the user.
   for (const obj of inputMethods) {
     objectForm.push(
-      <div key={`${obj.type}${obj.path}`}>
+      <div key={`${obj.type}${obj.pointer}`}>
         <SpecializedObject baseObject={obj} />
         {obj.getError() && <p>This is an error!</p>}
       </div>
@@ -461,7 +479,7 @@ function RenderMyJSONSchema() {
 
   return (
     <FormContext schema={personSchema}>
-      <ObjectRenderer path="$" UISchema={UISchema} />
+      <ObjectRenderer pointer="#" UISchema={UISchema} />
     </FormContext>
   )
 }
@@ -471,7 +489,7 @@ This is the result of this example:
 
 <img src="https://user-images.githubusercontent.com/19346539/72556402-48b35080-387d-11ea-92a0-8b5914462603.png" alt="useObject Example" width="200"/>
 
-### usePassword(path)
+### usePassword(pointer)
 
 **Description**
 
@@ -479,7 +497,7 @@ Use this hook to build a password input field in your form, with validation base
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 
 **Return:**
 
@@ -492,7 +510,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function PasswordField(props) {
-  const inputMethods = usePassword('$/some/child/you/want/as/input');
+  const inputMethods = usePassword('#/properties/Foo');
 
   return (
     <React.Fragment>
@@ -505,7 +523,7 @@ function PasswordField(props) {
 }
 ```
 
-### useRadio(path)
+### useRadio(pointer)
 
 **Description**
 
@@ -513,7 +531,7 @@ Use this hook to build a radio field in your form.
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 
 **Return:**
 
@@ -527,7 +545,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function InputField(props) {
-  const inputMethods = useRadio('$/some/child/with/limited/possible/values');
+  const inputMethods = useRadio('#/properties/Foo');
 
   return (
     <React.Fragment>
@@ -545,7 +563,7 @@ function InputField(props) {
 }
 ```
 
-### useSelect(path)
+### useSelect(pointer)
 
 **Description**
 
@@ -553,7 +571,7 @@ Use this hook to build a select field in your form.
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 
 **Return:**
 
@@ -568,7 +586,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function InputField(props) {
-  const inputMethods = useSelect('$/some/child/with/limited/possible/values');
+  const inputMethods = useSelect('#/properties/Foo');
 
   return (
     <React.Fragment>
@@ -591,7 +609,7 @@ function InputField(props) {
 }
 ```
 
-### useTextArea(path)
+### useTextArea(pointer)
 
 **Description**
 
@@ -599,7 +617,7 @@ Use this hook to build a textarea field in the form.
 
 **Parameters:**
 
-- `path`: String which represents the path to the data field of the JSON Schema that this input will be built for.
+- `pointer`: JSON Pointer to the desired sub schema that will be rendered.
 
 **Return:**
 
@@ -612,7 +630,7 @@ Returns an object with the following fields, besides the common one's:
 
 ```JSX
 function HiddenField(props) {
-  const inputMethods = useTextArea('$/some/child/you/want/as/TextArea');
+  const inputMethods = useTextArea('#/properties/Foo');
 
   return (
     <React.Fragment>
@@ -657,11 +675,12 @@ Does not support fetching a JSON Schema from an URI (as per the draft this is op
 - [ ] Implement `default` values.
 - [ ] Implement `const` keyword.
 - [ ] Warn user that there is an error in the schema if any of the keywords fails to validate against the expected type and format.
-- [ ] Change paths (usage of \$) to JSON Scchema pointers (usage of #) so it does not create and overhead and confusion between the two.
+- [x] Change paths (usage of \$) to JSON Scchema pointers (usage of #) so it does not create and overhead and confusion between the two.
 
 ## Useful resources
 
 - [JSON Schema Draft 6 Core](https://tools.ietf.org/html/draft-wright-json-schema-01): Draft of the core JSONSchema, essential for implementing any new feature in the library
 - [JSON Schema Draft 6 Validation](https://tools.ietf.org/html/draft-wright-json-schema-validation-01): Describes the schema keywords with how they shoul be handled, what they do, and how to validate against them, essential for implementing any new keyword
+- [RFC 6901](https://tools.ietf.org/html/rfc6901): RFC of JSON Pointers.
 - [Understanding JSON Schema](https://json-schema.org/understanding-json-schema/index.html) (Beware this is for Draft 7, but it is still a pretty good reference)
 - [JSON Schema Website](https://json-schema.org/)
