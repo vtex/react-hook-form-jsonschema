@@ -20,6 +20,8 @@ export function useFormContext<
 
 export const FormContext: FC<FormContextProps> = props => {
   const {
+    formProps: userFormProps,
+    onChange,
     validationMode = 'onSubmit',
     revalidateMode = 'onChange',
     submitFocusError = true,
@@ -30,6 +32,10 @@ export const FormContext: FC<FormContextProps> = props => {
     reValidateMode: revalidateMode,
     submitFocusError: submitFocusError,
   })
+
+  if (typeof onChange === 'function') {
+    onChange(getObjectFromForm(props.schema, methods.watch()))
+  }
 
   const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
 
@@ -47,7 +53,7 @@ export const FormContext: FC<FormContextProps> = props => {
     }
   }, [methods, resolvedSchemaRefs, idMap, props.customValidators])
 
-  const formProps: React.ComponentProps<'form'> = {}
+  const formProps: React.ComponentProps<'form'> = { ...userFormProps }
 
   formProps.onSubmit = methods.handleSubmit(async (data, event) => {
     if (props.onSubmit) {
