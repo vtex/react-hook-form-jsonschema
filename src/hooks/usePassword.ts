@@ -12,6 +12,6 @@ export const getPasswordCustomFields = (
   return getRawInputCustomFields(baseObject, 'password')
 }
 
-export const usePassword: UseInputParameters = path => {
-  return getPasswordCustomFields(useGenericInput(path))
+export const usePassword: UseInputParameters = pointer => {
+  return getPasswordCustomFields(useGenericInput(pointer))
 }

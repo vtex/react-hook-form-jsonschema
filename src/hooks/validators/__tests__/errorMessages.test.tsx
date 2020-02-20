@@ -34,7 +34,7 @@ test('should raise error when writing value not in enum', async () => {
         return
       }}
     >
-      <MockInput path="$/stringTest" />
+      <MockInput path="#/properties/stringTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -62,7 +62,7 @@ describe('testing integer boundaries', () => {
         }}
         noNativeValidate
       >
-        <MockInput path="$/integerTest" />
+        <MockInput path="#/properties/integerTest" />
         <input type="submit" value="Submit" />
       </FormContext>
     )
@@ -88,7 +88,7 @@ describe('testing integer boundaries', () => {
         }}
         noNativeValidate
       >
-        <MockInput path="$/integerTest" />
+        <MockInput path="#/properties/integerTest" />
         <input type="submit" value="Submit" />
       </FormContext>
     )
@@ -114,7 +114,7 @@ describe('testing integer boundaries', () => {
         }}
         noNativeValidate
       >
-        <MockInput path="$/integerTest" />
+        <MockInput path="#/properties/integerTest" />
         <input type="submit" value="Submit" />
       </FormContext>
     )
@@ -140,7 +140,7 @@ describe('testing integer boundaries', () => {
         }}
         noNativeValidate
       >
-        <MockInput path="$/integerTest" />
+        <MockInput path="#/properties/integerTest" />
         <input type="submit" value="Submit" />
       </FormContext>
     )
@@ -168,7 +168,7 @@ describe('testing float boundaries', () => {
         }}
         noNativeValidate
       >
-        <MockInput path="$/numberTest" />
+        <MockInput path="#/properties/numberTest" />
         <input type="submit" value="Submit" />
       </FormContext>
     )
@@ -194,7 +194,7 @@ describe('testing float boundaries', () => {
         }}
         noNativeValidate
       >
-        <MockInput path="$/numberTest" />
+        <MockInput path="#/properties/numberTest" />
         <input type="submit" value="Submit" />
       </FormContext>
     )
@@ -220,7 +220,7 @@ test('should raise required error', async () => {
         return
       }}
     >
-      <MockInput path="$/errorTest" />
+      <MockInput path="#/properties/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

@@ -1,8 +1,8 @@
 import { JSONSchemaType, IDSchemaPair } from '../types'
 import {
   getSplitPointer,
-  concatFormPath,
-  JSONSchemaRootPath,
+  concatFormPointer,
+  JSONSchemaRootPointer,
 } from './pathUtils'
 
 const absoluteRegExp = /^[a-z][a-z0-9+.-]*:/i
@@ -84,7 +84,7 @@ export const resolveRefs = (
 
 export const getIdSchemaPairs = (schema: JSONSchemaType) => {
   const recursiveGetIdSchemaPairs = (
-    currentPath: string,
+    currentPointer: string,
     currentSchema: JSONSchemaType,
     baseUrl: URL | undefined
   ): Record<string, JSONSchemaType> => {
@@ -97,7 +97,7 @@ export const getIdSchemaPairs = (schema: JSONSchemaType) => {
         ) {
           return {
             ...recursiveGetIdSchemaPairs(
-              concatFormPath(currentPath, key),
+              concatFormPointer(currentPointer, key),
               currentSchema[key],
               baseUrl
             ),
@@ -121,7 +121,7 @@ export const getIdSchemaPairs = (schema: JSONSchemaType) => {
         }
         return IDs
       },
-      { [currentPath]: currentSchema }
+      { [currentPointer]: currentSchema }
     )
   }
 
@@ -140,8 +140,8 @@ export const getIdSchemaPairs = (schema: JSONSchemaType) => {
   if (baseUrl) {
     return {
       [baseUrl.href]: schema,
-      ...recursiveGetIdSchemaPairs(JSONSchemaRootPath, schema, baseUrl),
+      ...recursiveGetIdSchemaPairs(JSONSchemaRootPointer, schema, baseUrl),
     }
   }
-  return recursiveGetIdSchemaPairs(JSONSchemaRootPath, schema, baseUrl)
+  return recursiveGetIdSchemaPairs(JSONSchemaRootPointer, schema, baseUrl)
 }

@@ -32,7 +32,7 @@ test('should use custom validator', async () => {
         },
       }}
     >
-      <MockRawForm path="$/stringTest" />
+      <MockRawForm path="#/properties/stringTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

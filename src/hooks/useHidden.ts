@@ -18,6 +18,6 @@ export const getHiddenCustomFields = (
   }
 }
 
-export const useHidden: UseInputParameters = path => {
-  return getHiddenCustomFields(useGenericInput(path))
+export const useHidden: UseInputParameters = pointer => {
+  return getHiddenCustomFields(useGenericInput(pointer))
 }

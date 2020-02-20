@@ -13,12 +13,12 @@ import {
   toFixed,
 } from './validators'
 
-const getInputId = (path: string, inputType: string): string => {
-  return path + '-' + inputType + '-input'
+const getInputId = (pointer: string, inputType: string): string => {
+  return pointer + '-' + inputType + '-input'
 }
 
-const getLabelId = (path: string, inputType: string): string => {
-  return path + '-' + inputType + '-label'
+const getLabelId = (pointer: string, inputType: string): string => {
+  return pointer + '-' + inputType + '-label'
 }
 
 export const getRawInputCustomFields = (
@@ -62,17 +62,17 @@ export const getRawInputCustomFields = (
     type: InputTypes.input,
     getLabelProps: () => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getLabelId(baseInput.path, inputType)
-      itemProps.htmlFor = getInputId(baseInput.path, inputType)
+      itemProps.id = getLabelId(baseInput.pointer, inputType)
+      itemProps.htmlFor = getInputId(baseInput.pointer, inputType)
 
       return itemProps
     },
     getInputProps: () => {
-      itemProps.name = baseInput.path
+      itemProps.name = baseInput.pointer
       itemProps.ref = register(validator)
       itemProps.type = inputType
       itemProps.required = baseInput.isRequired
-      itemProps.id = getInputId(baseInput.path, inputType)
+      itemProps.id = getInputId(baseInput.pointer, inputType)
 
       return itemProps
     },

@@ -15,12 +15,16 @@ import {
 import { useGenericInput } from './useGenericInput'
 import { getEnumAsStringArray } from './validators/getEnum'
 
-const getSelectId = (path: string): string => {
-  return path + '-select'
+const getSelectId = (pointer: string): string => {
+  return pointer + '-select'
 }
 
-const getOptionId = (path: string, index: number, items: string[]): string => {
-  return path + '-select-option-' + (items[index] ? items[index] : '')
+const getOptionId = (
+  pointer: string,
+  index: number,
+  items: string[]
+): string => {
+  return pointer + '-select-option-' + (items[index] ? items[index] : '')
 }
 
 export const getSelectCustomFields = (
@@ -65,23 +69,23 @@ export const getSelectCustomFields = (
     validator,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}
-      labelProps.id = baseInput.path + '-label'
-      labelProps.htmlFor = getSelectId(baseInput.path)
+      labelProps.id = baseInput.pointer + '-label'
+      labelProps.htmlFor = getSelectId(baseInput.pointer)
 
       return labelProps
     },
     getSelectProps: () => {
       const itemProps: React.ComponentProps<'select'> = {}
-      itemProps.name = baseInput.path
+      itemProps.name = baseInput.pointer
       itemProps.ref = register(validator)
       itemProps.required = baseInput.isRequired
-      itemProps.id = getSelectId(baseInput.path)
+      itemProps.id = getSelectId(baseInput.pointer)
 
       return itemProps
     },
     getItemOptionProps: index => {
       const itemProps: React.ComponentProps<'option'> = {}
-      itemProps.id = getOptionId(baseInput.path, index, items)
+      itemProps.id = getOptionId(baseInput.pointer, index, items)
       itemProps.value = items[index]
 
       return itemProps
@@ -90,6 +94,6 @@ export const getSelectCustomFields = (
   }
 }
 
-export const useSelect: UseSelectParameters = path => {
-  return getSelectCustomFields(useGenericInput(path))
+export const useSelect: UseSelectParameters = pointer => {
+  return getSelectCustomFields(useGenericInput(pointer))
 }

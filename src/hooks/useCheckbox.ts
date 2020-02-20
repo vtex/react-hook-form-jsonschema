@@ -84,19 +84,19 @@ export const getCheckboxCustomFields = (
       // This ternary decides wether to treat the input as an array or not
       itemProps.name =
         currentObject.type === 'array'
-          ? `${baseInput.path}[${index}]`
-          : baseInput.path
+          ? `${baseInput.pointer}[${index}]`
+          : baseInput.pointer
       itemProps.ref = register(validator)
       itemProps.type = 'checkbox'
-      itemProps.id = getItemInputId(baseInput.path, index, items)
+      itemProps.id = getItemInputId(baseInput.pointer, index, items)
       itemProps.value = items[index]
 
       return itemProps
     },
     getItemLabelProps: index => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getItemLabelId(baseInput.path, index, items)
-      itemProps.htmlFor = getItemInputId(baseInput.path, index, items)
+      itemProps.id = getItemLabelId(baseInput.pointer, index, items)
+      itemProps.htmlFor = getItemInputId(baseInput.pointer, index, items)
 
       return itemProps
     },

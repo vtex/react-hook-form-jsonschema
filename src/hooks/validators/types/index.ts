@@ -1,5 +1,5 @@
 import {
-  JSONSchemaPathInfo,
+  JSONSubSchemaInfo,
   JSONSchemaType,
   JSONSchemaBaseInstanceTypes,
 } from '../../../JSONSchema'
@@ -34,7 +34,7 @@ export type CustomValidatorReturnValue = string | true
 
 export type CustomValidator = (
   value: string,
-  context: JSONSchemaPathInfo
+  context: JSONSubSchemaInfo
 ) => CustomValidatorReturnValue
 
 export type CustomValidators = Record<string, CustomValidator>

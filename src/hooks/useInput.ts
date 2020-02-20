@@ -37,6 +37,6 @@ export const getInputCustomFields = (
   return getRawInputCustomFields(baseObject, inputType)
 }
 
-export const useInput: UseInputParameters = path => {
-  return getInputCustomFields(useGenericInput(path))
+export const useInput: UseInputParameters = pointer => {
+  return getInputCustomFields(useGenericInput(pointer))
 }

@@ -32,13 +32,13 @@ export interface BasicInputReturnType {
   formContext: JSONFormContextValues
   isRequired: boolean
   name: string
-  path: string
   type: InputTypes
+  pointer: string
   validator: ValidationOptions
 }
 
 export interface GenericInputParameters {
-  (path: string): BasicInputReturnType
+  (pointer: string): BasicInputReturnType
 }
 
 export interface UseRadioReturnType extends BasicInputReturnType {
@@ -49,7 +49,7 @@ export interface UseRadioReturnType extends BasicInputReturnType {
 }
 
 export interface UseRadioParameters {
-  (path: string): UseRadioReturnType
+  (pointer: string): UseRadioReturnType
 }
 
 export interface UseCheckboxReturnType extends BasicInputReturnType {
@@ -60,7 +60,7 @@ export interface UseCheckboxReturnType extends BasicInputReturnType {
 }
 
 export interface UseCheckboxParameters {
-  (path: string): UseCheckboxReturnType
+  (pointer: string): UseCheckboxReturnType
 }
 
 export interface UseSelectReturnType extends BasicInputReturnType {
@@ -72,7 +72,7 @@ export interface UseSelectReturnType extends BasicInputReturnType {
 }
 
 export interface UseSelectParameters {
-  (path: string): UseSelectReturnType
+  (pointer: string): UseSelectReturnType
 }
 
 export interface UseRawInputReturnType extends BasicInputReturnType {
@@ -85,7 +85,7 @@ export interface UseRawInputParameters {
 }
 
 export interface UseInputParameters {
-  (path: string): UseRawInputReturnType
+  (pointer: string): UseRawInputReturnType
 }
 
 export interface UseTextAreaReturnType extends BasicInputReturnType {
@@ -94,7 +94,7 @@ export interface UseTextAreaReturnType extends BasicInputReturnType {
 }
 
 export interface UseTextAreaParameters {
-  (path: string): UseTextAreaReturnType
+  (pointer: string): UseTextAreaReturnType
 }
 
 export type InputReturnTypes =
@@ -113,7 +113,7 @@ export type UISchemaType = {
   }
 }
 
-export type UseObjectParameters = { path: string; UISchema?: UISchemaType }
+export type UseObjectParameters = { pointer: string; UISchema?: UISchemaType }
 
 export interface UseObjectProperties {
   (props: UseObjectParameters): UseObjectReturnType

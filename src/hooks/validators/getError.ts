@@ -8,7 +8,7 @@ export const getError = (
   currentObject: JSONSchemaType,
   isRequired: boolean,
   formContext: FormContextValues,
-  path: string,
+  pointer: string,
   minimum?: number,
   maximum?: number,
   step?: number | 'any'
@@ -18,7 +18,7 @@ export const getError = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const currentValues: any[] | undefined = formContext.getValues({
       nest: true,
-    })[path]
+    })[pointer]
 
     if (currentValues) {
       const numberOfSelected =

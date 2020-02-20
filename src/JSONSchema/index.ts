@@ -1,2 +1,2 @@
 export * from './types'
-export * from './path-handler'
+export { getDataFromPath } from './path-handler'

@@ -5,14 +5,13 @@ import {
   UISchemaType,
   UITypes,
 } from './types'
+import { JSONSubSchemaInfo, JSONSchemaType } from '../JSONSchema'
 import {
-  useAnnotatedSchemaFromPath,
-  concatFormPath,
-  JSONSchemaPathInfo,
-  JSONSchemaType,
-} from '../JSONSchema'
+  useAnnotatedSchemaFromPointer,
+  concatFormPointer,
+} from '../JSONSchema/path-handler'
 import {
-  getAnnotatedSchemaFromPath,
+  getAnnotatedSchemaFromPointer,
   getObjectFromForm,
 } from '../JSONSchema/logic'
 import { getGenericInput } from './useGenericInput'
@@ -53,7 +52,7 @@ function getFromGeneric(
 
 // Outside of this function
 function getChildProperties(
-  path: string,
+  pointer: string,
   UISchema: UISchemaType | undefined,
   formContext: JSONFormContextValues,
   data: JSONSchemaType
@@ -62,10 +61,13 @@ function getChildProperties(
     const newUISchema =
       UISchema && UISchema.properties ? UISchema.properties[key] : undefined
 
-    const currentPath = concatFormPath(path, key)
+    const currentPointer = concatFormPointer(
+      concatFormPointer(pointer, 'properties'),
+      key
+    )
 
-    const currentPathInfo = getAnnotatedSchemaFromPath(
-      currentPath,
+    const currentPointerInfo = getAnnotatedSchemaFromPointer(
+      currentPointer,
       data,
       formContext
     )
@@ -73,8 +75,8 @@ function getChildProperties(
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const newInput = getStructure(
       formContext,
-      currentPathInfo,
-      currentPath,
+      currentPointerInfo,
+      currentPointer,
       newUISchema,
       data
     )
@@ -85,20 +87,20 @@ function getChildProperties(
 
 function getStructure(
   formContext: JSONFormContextValues,
-  pathInfo: JSONSchemaPathInfo,
-  path: string,
+  pointerInfo: JSONSubSchemaInfo,
+  pointer: string,
   UISchema: UISchemaType | undefined,
   data: JSONSchemaType
 ): UseObjectReturnType {
   let inputs: UseObjectReturnType = []
-  const { JSONSchema } = pathInfo
+  const { JSONSchema } = pointerInfo
 
-  const genericInput = getGenericInput(formContext, pathInfo, path)
+  const genericInput = getGenericInput(formContext, pointerInfo, pointer)
 
   if (JSONSchema.type === 'object') {
     const objKeys = Object.keys(JSONSchema.properties)
     const childInputs = objKeys.reduce(
-      getChildProperties(path, UISchema, formContext, data),
+      getChildProperties(pointer, UISchema, formContext, data),
       []
     )
     return childInputs
@@ -143,8 +145,8 @@ export const useObject: UseObjectProperties = props => {
   const data = getObjectFromForm(formContext.schema, formContext.getValues())
   const childArray = getStructure(
     formContext,
-    useAnnotatedSchemaFromPath(props.path, data),
-    props.path,
+    useAnnotatedSchemaFromPointer(props.pointer, data),
+    props.pointer,
     props.UISchema,
     data
   )
