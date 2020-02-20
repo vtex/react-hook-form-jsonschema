@@ -20,9 +20,11 @@ export type OnSubmitParameters = {
 export type OnSubmitType = (props: OnSubmitParameters) => void | Promise<void>
 
 export type FormContextProps = {
+  formProps?: Omit<React.HTMLAttributes<HTMLFormElement>, 'onSubmit'>
   validationMode?: Mode
   revalidateMode?: Mode
   submitFocusError?: boolean
+  onChange?: (data: JSONSchemaType) => void
   onSubmit?: OnSubmitType
   noNativeValidate?: boolean
   customValidators?: CustomValidators
