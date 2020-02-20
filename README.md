@@ -112,6 +112,7 @@ This component is the top-level component that creates the context with the sche
       - `path`: Path in the instance of the JSON Schema. The path is always in the form: `$/some/child/data/field/here` where `$` represents the root of the schema, and the `some/child/data/field/here` represents the tree of objects (from `some` to `here`) to get to the desired field, which in this case is `here`.
       - `pointer`: A pointer to the location in the schema where the sub schema is located
   - `return value`: Must be either a `string` that identifies the error or a `true` value indicating the validation was succesfull.
+- `formProps`: An object that is passed to the underlying `<form>` element. Accepts the same attributes as when declaring a `<form>` with React, except `onSubmit`.
 - `validationMode`: String to indicate when to validate the input, default is `'onSubmit'`.
   - `'onBlur'`: Validate when an input field is blurred.
   - `'onChange'`: Validate when an input field value changes.
@@ -121,6 +122,7 @@ This component is the top-level component that creates the context with the sche
   - `'onChange'`: Validate when an input field value changes.
   - `'onSubmit'`: Validate when the submit is triggered.
 - `submitFocusError`: Boolean, when `true` focus on the first field with error after submit validates, if there is any. Defaults to `true`.
+- `onChange`: Callback called when there's a change in the form. It passes the form *data* formatted by the provided JSON Schema.
 - `onSubmit`: If provided `react-hook-form-jsonschema` will call this function as the submit action, it passes an object with the following members:
   - `data`: The data that was provided as inputs to the form, correctly formatted as an instance of the JSON Schema provided.
   - `event`: A react event
