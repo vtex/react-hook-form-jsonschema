@@ -6,7 +6,8 @@ import {
   InputTypes,
 } from './types'
 import { useFormContext, JSONFormContextValues } from '../components'
-import { useAnnotatedSchemaFromPath, JSONSchemaPathInfo } from '../JSONSchema'
+import { JSONSubSchemaInfo } from '../JSONSchema'
+import { useAnnotatedSchemaFromPointer } from '../JSONSchema/path-handler'
 import { getObjectFromForm } from '../JSONSchema/logic'
 import {
   getError,
@@ -18,10 +19,10 @@ import {
 
 export const getGenericInput = (
   formContext: JSONFormContextValues,
-  pathInfo: JSONSchemaPathInfo,
-  path: string
+  subSchemaInfo: JSONSubSchemaInfo,
+  pointer: string
 ): BasicInputReturnType => {
-  const { JSONSchema, isRequired, objectName } = pathInfo
+  const { JSONSchema, isRequired, objectName } = subSchemaInfo
 
   let minimum: number | undefined
   let maximum: number | undefined
@@ -37,34 +38,34 @@ export const getGenericInput = (
 
   return {
     name: objectName,
-    path: path,
+    pointer: pointer,
     isRequired: isRequired,
     formContext: formContext,
     type: InputTypes.generic,
-    validator: getValidator(pathInfo, formContext.customValidators ?? {}),
+    validator: getValidator(subSchemaInfo, formContext.customValidators ?? {}),
     getError: () =>
       getError(
-        formContext.errors[path]
-          ? (formContext.errors[path] as FieldError)
+        formContext.errors[pointer]
+          ? (formContext.errors[pointer] as FieldError)
           : undefined,
         JSONSchema,
         isRequired,
         formContext,
-        path,
+        pointer,
         minimum,
         maximum,
         step
       ),
     getObject: () => JSONSchema,
     getCurrentValue: () => {
-      return formContext.getValues()[path]
+      return formContext.getValues()[pointer]
     },
   }
 }
 
-export const useGenericInput: GenericInputParameters = path => {
+export const useGenericInput: GenericInputParameters = pointer => {
   const formContext = useFormContext()
   const data = getObjectFromForm(formContext.schema, formContext.getValues())
-  const pathInfo = useAnnotatedSchemaFromPath(path, data)
-  return getGenericInput(formContext, pathInfo, path)
+  const subSchemaInfo = useAnnotatedSchemaFromPointer(pointer, data)
+  return getGenericInput(formContext, subSchemaInfo, pointer)
 }

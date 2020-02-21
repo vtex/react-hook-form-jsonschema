@@ -30,13 +30,14 @@ test('should return an object that matches the schema', () => {
     },
   }
   const mockData = {
-    '$/firstName': 'Jane',
-    '$/lastName': 'Doe',
-    '$/address/city': 'RJ',
-    '$/address/street': 'Praia de Botafogo',
-    '$/address/streetNumber': 300,
-    '$/middleName': null,
-    '$/intruderField': 'I am an intruder, you should not return me :)',
+    '#/properties/firstName': 'Jane',
+    '#/properties/lastName': 'Doe',
+    '#/properties/address/properties/city': 'RJ',
+    '#/properties/address/properties/street': 'Praia de Botafogo',
+    '#/properties/address/properties/streetNumber': 300,
+    '#/properties/middleName': null,
+    '#/properties/intruderField':
+      'I am an intruder, you should not return me :)',
   }
 
   const testResult = getObjectFromForm(mockJSONSchema, mockData)

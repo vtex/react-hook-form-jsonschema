@@ -10,7 +10,7 @@ import { deepFreeze } from '../__mocks__/deepFreeze'
 test('should render all child properties of the schema', async () => {
   const { getByText } = render(
     <FormContext schema={mockObjectSchema}>
-      <MockObject path="$" />
+      <MockObject pointer="#" />
     </FormContext>
   )
 
@@ -27,7 +27,7 @@ test('should render all child properties of the schema even if frozen', async ()
   const mockSchema = deepFreeze(mockObjectSchema)
   const { getByText } = render(
     <FormContext schema={mockSchema}>
-      <MockObject path="$" />
+      <MockObject pointer="#" />
     </FormContext>
   )
 

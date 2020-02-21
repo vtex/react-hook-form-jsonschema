@@ -16,19 +16,19 @@ import { useGenericInput } from './useGenericInput'
 import { getEnumAsStringArray } from './validators/getEnum'
 
 const getItemInputId = (
-  path: string,
+  pointer: string,
   index: number,
   items: string[]
 ): string => {
-  return path + '-radio-input-' + (items[index] ? items[index] : '')
+  return pointer + '-radio-input-' + (items[index] ? items[index] : '')
 }
 
 const getItemLabelId = (
-  path: string,
+  pointer: string,
   index: number,
   items: string[]
 ): string => {
-  return path + '-radio-label-' + (items[index] ? items[index] : '')
+  return pointer + '-radio-label-' + (items[index] ? items[index] : '')
 }
 
 export const getRadioCustomFields = (
@@ -72,26 +72,28 @@ export const getRadioCustomFields = (
     type: InputTypes.radio,
     getLabelProps: () => {
       const labelProps: React.ComponentProps<'label'> = {}
-      labelProps.id = baseInput.path + '-label'
+      labelProps.id = baseInput.pointer + '-label'
       labelProps.htmlFor =
-        currentObject.title !== undefined ? currentObject.title : baseInput.path
+        currentObject.title !== undefined
+          ? currentObject.title
+          : baseInput.pointer
       return labelProps
     },
     getItemInputProps: index => {
       const itemProps: React.ComponentProps<'input'> = { key: '' }
-      itemProps.name = baseInput.path
+      itemProps.name = baseInput.pointer
       itemProps.ref = register(validator)
       itemProps.type = 'radio'
       itemProps.required = baseInput.isRequired
-      itemProps.id = getItemInputId(baseInput.path, index, items)
+      itemProps.id = getItemInputId(baseInput.pointer, index, items)
       itemProps.value = items[index]
 
       return itemProps
     },
     getItemLabelProps: index => {
       const itemProps: React.ComponentProps<'label'> = {}
-      itemProps.id = getItemLabelId(baseInput.path, index, items)
-      itemProps.htmlFor = getItemInputId(baseInput.path, index, items)
+      itemProps.id = getItemLabelId(baseInput.pointer, index, items)
+      itemProps.htmlFor = getItemInputId(baseInput.pointer, index, items)
 
       return itemProps
     },
@@ -99,6 +101,6 @@ export const getRadioCustomFields = (
   }
 }
 
-export const useRadio: UseRadioParameters = path => {
-  return getRadioCustomFields(useGenericInput(path))
+export const useRadio: UseRadioParameters = pointer => {
+  return getRadioCustomFields(useGenericInput(pointer))
 }

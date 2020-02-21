@@ -5,8 +5,8 @@ import { useSelect } from '../useSelect'
 import { FormContext } from '../../components'
 import mockSelectSchema, { toFixed } from '../__mocks__/mockSchema'
 
-const MockSelect: FC<{ path: string }> = props => {
-  const methods = useSelect(props.path)
+const MockSelect: FC<{ pointer: string }> = props => {
+  const methods = useSelect(props.pointer)
 
   return (
     <>
@@ -31,7 +31,7 @@ const MockSelect: FC<{ path: string }> = props => {
 test('should have string enum items', () => {
   const { getByText } = render(
     <FormContext schema={mockSelectSchema}>
-      <MockSelect path="$/stringTest" />
+      <MockSelect pointer="#/properties/stringTest" />
     </FormContext>
   )
 
@@ -43,7 +43,7 @@ test('should have string enum items', () => {
 test('should have all integers in interval', () => {
   const { getByText } = render(
     <FormContext schema={mockSelectSchema}>
-      <MockSelect path="$/integerTest" />
+      <MockSelect pointer="#/properties/integerTest" />
     </FormContext>
   )
 
@@ -56,7 +56,7 @@ test('should have all integers in interval', () => {
 test('should have all floats in interval, separated by step', () => {
   const { getByText } = render(
     <FormContext schema={mockSelectSchema}>
-      <MockSelect path="$/numberTest" />
+      <MockSelect pointer="#/properties/numberTest" />
     </FormContext>
   )
 
@@ -71,7 +71,7 @@ test('should have all floats in interval, separated by step', () => {
 test('should have boolean true and false', () => {
   const { getByText } = render(
     <FormContext schema={mockSelectSchema}>
-      <MockSelect path="$/booleanTest" />
+      <MockSelect pointer="#/properties/booleanTest" />
     </FormContext>
   )
 
@@ -88,7 +88,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockSelect path="$/errorTest" />
+      <MockSelect pointer="#/properties/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

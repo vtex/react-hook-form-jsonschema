@@ -1,6 +1,10 @@
-import { JSONSchemaType, JSONSchemaPathInfo } from '../types'
+import { JSONSchemaType, JSONSubSchemaInfo } from '../types'
 import { JSONFormContextValues } from '../../components'
-import { getSplitPath, concatFormPath, JSONSchemaRootPath } from './pathUtils'
+import {
+  concatFormPointer,
+  JSONSchemaRootPointer,
+  getSplitPointer,
+} from './pathUtils'
 
 const parsers: Record<string, (data: string) => number | boolean> = {
   integer: (data: string): number => parseInt(data),
@@ -15,44 +19,50 @@ export const getObjectFromForm = (
   return Object.keys(data)
     .sort()
     .reduce((objectFromData: JSONSchemaType, key: string) => {
-      const splitPath = getSplitPath(key)
-      if (!splitPath || !data[key]) {
+      const splitPointer = getSplitPointer(key)
+      if (!splitPointer || !data[key]) {
         return objectFromData
       }
 
-      let currentPath = objectFromData
-      let currentOriginalPath = originalSchema
+      splitPointer.reduce(
+        (currentContext, node: string, index: number, src: string[]) => {
+          currentContext.currentSubSchema = currentContext.currentSubSchema
+            ? currentContext.currentSubSchema[node]
+            : undefined
 
-      for (let node = 0; node < splitPath.length; node++) {
-        if (currentOriginalPath == undefined) {
-          break
-        }
-
-        if (currentOriginalPath.type && currentOriginalPath.type === 'object') {
-          currentOriginalPath = currentOriginalPath.properties
-          currentOriginalPath = currentOriginalPath[splitPath[node]]
-        }
-
-        if (node === splitPath.length - 1) {
-          if (!currentOriginalPath) {
-            break
+          if (node === 'properties' && !currentContext.insideProperties) {
+            return { ...currentContext, insideProperties: true }
           }
 
-          currentPath[splitPath[node]] =
-            currentOriginalPath.type && parsers[currentOriginalPath.type]
-              ? parsers[currentOriginalPath.type](data[key])
-              : data[key] ?? {}
-        } else if (currentPath[splitPath[node]] == undefined) {
-          currentPath[splitPath[node]] = {}
-        }
+          if (index === src.length - 1 && currentContext.currentSubSchema) {
+            currentContext.currentJSON[node] =
+              currentContext.currentSubSchema.type &&
+              parsers[currentContext.currentSubSchema.type]
+                ? parsers[currentContext.currentSubSchema.type](data[key])
+                : currentContext.targetData ?? {}
+          } else if (
+            !currentContext.currentJSON[node] &&
+            currentContext.currentSubSchema
+          ) {
+            currentContext.currentJSON[node] = {}
+          }
 
-        currentPath = currentPath[splitPath[node]]
-      }
+          currentContext.currentJSON = currentContext.currentJSON[node]
+
+          return { ...currentContext, insideProperties: false }
+        },
+        {
+          currentJSON: objectFromData,
+          currentSubSchema: originalSchema,
+          insideProperties: false,
+          targetData: data[key],
+        }
+      )
       return objectFromData
     }, {})
 }
 
-interface ReducerPathInfo {
+interface ReducerSubSchemaInfo {
   JSONSchema: JSONSchemaType
   currentData: JSONSchemaType
   invalidPointer: boolean
@@ -61,49 +71,57 @@ interface ReducerPathInfo {
   fatherIsRequired: boolean
   pointer: string
   objectName: string
+  insideProperties: boolean
+  currentRequiredField: string[]
 }
 
-export const getAnnotatedSchemaFromPath = (
-  path: string,
+export const getAnnotatedSchemaFromPointer = (
+  pointer: string,
   data: JSONSchemaType,
   formContext: JSONFormContextValues
-): JSONSchemaPathInfo => {
+): JSONSubSchemaInfo => {
   const { schema } = formContext
 
-  const info = getSplitPath(path).reduce(
-    (currentInfo: ReducerPathInfo, node: string) => {
+  const info = getSplitPointer(pointer).reduce(
+    (currentInfo: ReducerSubSchemaInfo, node: string) => {
       const { JSONSchema, currentData } = currentInfo
 
       if (
-        !(JSONSchema && JSONSchema.type === 'object' && JSONSchema.properties)
+        !(JSONSchema && JSONSchema.type === 'object') &&
+        !currentInfo.insideProperties
       ) {
         return {
           ...currentInfo,
           JSONSchema: undefined,
           invalidPointer: true,
         }
+      } else if (node === 'properties' && !currentInfo.insideProperties) {
+        const fatherIsRequired = currentInfo.isRequired
+
+        return {
+          ...currentInfo,
+          JSONSchema: JSONSchema.properties,
+          fatherIsRequired,
+          pointer: concatFormPointer(currentInfo.pointer, node),
+          insideProperties: true,
+          currentRequiredField: JSONSchema.required ?? [],
+        }
       }
 
       const fatherExists = currentData ? true : false
       const newCurrentData = currentData ? currentData[node] : currentData
-
-      const fatherIsRequired = currentInfo.isRequired
-      const isRequired =
-        JSONSchema.required &&
-        (JSONSchema.required as string[]).indexOf(node) > -1
+      const isRequired = currentInfo.currentRequiredField.indexOf(node) > -1
 
       return {
-        JSONSchema: JSONSchema.properties[node],
+        ...currentInfo,
+        JSONSchema: JSONSchema[node],
         currentData: newCurrentData,
         fatherExists,
-        fatherIsRequired,
-        invalidPointer: false,
         isRequired,
+        invalidPointer: false,
         objectName: node,
-        pointer: concatFormPath(
-          concatFormPath(currentInfo.pointer, 'properties'),
-          node
-        ),
+        pointer: concatFormPointer(currentInfo.pointer, node),
+        insideProperties: false,
       }
     },
     {
@@ -114,7 +132,9 @@ export const getAnnotatedSchemaFromPath = (
       invalidPointer: false,
       isRequired: true,
       objectName: '',
-      pointer: JSONSchemaRootPath,
+      pointer: JSONSchemaRootPointer,
+      insideProperties: false,
+      currentRequiredField: schema.required ?? [],
     }
   )
 
@@ -125,7 +145,6 @@ export const getAnnotatedSchemaFromPath = (
       (info.fatherIsRequired && info.isRequired) ||
       (!info.fatherIsRequired && info.isRequired && info.fatherExists),
     objectName: info.objectName,
-    path,
     pointer: info.pointer,
   }
 }

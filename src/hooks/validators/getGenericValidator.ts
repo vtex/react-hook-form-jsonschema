@@ -7,7 +7,7 @@ import {
 } from './types'
 import { getNumberValidator } from './getNumberValidator'
 import { getStringValidator } from './getStringValidator'
-import { JSONSchemaPathInfo } from '../../JSONSchema'
+import { JSONSubSchemaInfo } from '../../JSONSchema'
 
 type GetCustomValidatorReturnType = Record<
   string,
@@ -16,7 +16,7 @@ type GetCustomValidatorReturnType = Record<
 
 function getCustomValidator(
   customValidators: CustomValidators,
-  context: JSONSchemaPathInfo
+  context: JSONSubSchemaInfo
 ): GetCustomValidatorReturnType {
   return Object.keys(customValidators).reduce(
     (acc: GetCustomValidatorReturnType, key: string) => {
@@ -30,7 +30,7 @@ function getCustomValidator(
 }
 
 export const getValidator = (
-  context: JSONSchemaPathInfo,
+  context: JSONSubSchemaInfo,
   customValidators: CustomValidators
 ): ValidationOptions => {
   const { JSONSchema, isRequired } = context

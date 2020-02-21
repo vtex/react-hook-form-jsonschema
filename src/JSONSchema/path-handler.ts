@@ -1,17 +1,17 @@
-import { JSONSchemaType, JSONSchemaPathInfo } from './types'
+import { JSONSchemaType, JSONSubSchemaInfo } from './types'
 import {
   getObjectFromForm,
-  concatFormPath,
-  getAnnotatedSchemaFromPath,
-  getSplitPath,
+  concatFormPointer,
+  getAnnotatedSchemaFromPointer,
+  getSplitPointer,
 } from './logic'
 import { useFormContext } from '../components'
 
-const useAnnotatedSchemaFromPath = (
+const useAnnotatedSchemaFromPointer = (
   path: string,
   data: JSONSchemaType
-): JSONSchemaPathInfo => {
-  return getAnnotatedSchemaFromPath(path, data, useFormContext())
+): JSONSubSchemaInfo => {
+  return getAnnotatedSchemaFromPointer(path, data, useFormContext())
 }
 
 const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
@@ -22,21 +22,34 @@ const getDataFromPath = (
   path: string,
   data: JSONSchemaType
 ): undefined | string => {
-  const splitPath = getSplitPath(path)
-  let currentData = data
+  const splitPointer = getSplitPointer(path)
 
-  for (const node of splitPath) {
-    if (currentData) {
-      currentData = currentData[node]
-    }
-  }
+  let insideProperties = false
 
-  return currentData?.toString()
+  return splitPointer
+    .reduce(
+      (currentContext, node: string) => {
+        if (node === 'properties' && !insideProperties) {
+          insideProperties = true
+          return { ...currentContext, insideProperties: true }
+        }
+        insideProperties = false
+
+        return {
+          currentData: currentContext.currentData
+            ? currentContext.currentData[node]
+            : undefined,
+          insideProperties: true,
+        }
+      },
+      { currentData: data, insideProperties: false }
+    )
+    .currentData?.toString()
 }
 
 export {
   useObjectFromForm,
-  concatFormPath,
-  useAnnotatedSchemaFromPath,
+  concatFormPointer,
+  useAnnotatedSchemaFromPointer,
   getDataFromPath,
 }

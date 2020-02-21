@@ -5,8 +5,8 @@ import { useRadio } from '../useRadio'
 import { FormContext } from '../../components'
 import mockRadioSchema, { toFixed } from '../__mocks__/mockSchema'
 
-const MockRadio: FC<{ path: string }> = props => {
-  const methods = useRadio(props.path)
+const MockRadio: FC<{ pointer: string }> = props => {
+  const methods = useRadio(props.pointer)
 
   return (
     <label {...methods.getLabelProps()}>
@@ -26,7 +26,7 @@ const MockRadio: FC<{ path: string }> = props => {
 test('should have string enum items', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="$/stringTest" />
+      <MockRadio pointer="#/properties/stringTest" />
     </FormContext>
   )
 
@@ -38,7 +38,7 @@ test('should have string enum items', () => {
 test('should have all integers in interval', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="$/integerTest" />
+      <MockRadio pointer="#/properties/integerTest" />
     </FormContext>
   )
 
@@ -51,7 +51,7 @@ test('should have all integers in interval', () => {
 test('should have all floats in interval, separated by step', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="$/numberTest" />
+      <MockRadio pointer="#/properties/numberTest" />
     </FormContext>
   )
 
@@ -66,7 +66,7 @@ test('should have all floats in interval, separated by step', () => {
 test('should have boolean true and false', () => {
   const { getByText } = render(
     <FormContext schema={mockRadioSchema}>
-      <MockRadio path="$/booleanTest" />
+      <MockRadio pointer="#/properties/booleanTest" />
     </FormContext>
   )
 
@@ -82,7 +82,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockRadio path="$/errorTest" />
+      <MockRadio pointer="#/properties/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

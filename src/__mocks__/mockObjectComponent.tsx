@@ -85,15 +85,18 @@ const SpecializedObject: FC<{ baseObject: InputReturnTypes }> = props => {
 }
 
 export const MockObject: FC<{
-  path: string
+  pointer: string
   UISchema?: UISchemaType
 }> = props => {
-  const methods = useObject({ path: props.path, UISchema: props.UISchema })
+  const methods = useObject({
+    pointer: props.pointer,
+    UISchema: props.UISchema,
+  })
 
   return (
     <>
       {methods.map(obj => (
-        <div key={`${obj.type}${obj.path}`}>
+        <div key={`${obj.type}${obj.pointer}`}>
           <SpecializedObject baseObject={obj} />
           {obj.getError() && <p>This is an error!</p>}
         </div>

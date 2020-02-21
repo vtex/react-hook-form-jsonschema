@@ -5,8 +5,8 @@ import { useCheckbox } from '../useCheckbox'
 import { FormContext } from '../../components'
 import mockCheckboxSchema from '../__mocks__/mockSchema'
 
-const MockCheckbox: FC<{ path: string }> = props => {
-  const methods = useCheckbox(props.path)
+const MockCheckbox: FC<{ pointer: string }> = props => {
+  const methods = useCheckbox(props.pointer)
 
   return (
     <>
@@ -35,7 +35,7 @@ test('should have boolean true and false', done => {
         done()
       }}
     >
-      <MockCheckbox path="$/booleanTest" />
+      <MockCheckbox pointer="#/properties/booleanTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -53,7 +53,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockCheckbox path="$/arrayErrorTest" />
+      <MockCheckbox pointer="#/properties/arrayErrorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
