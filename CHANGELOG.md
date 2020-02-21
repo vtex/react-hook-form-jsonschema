@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Typo in `ErrorTypes`
+
 ### Added
 
 - `onChange` and `formProps` props to `FormContext`.
@@ -16,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0-beta.9] - 2020-02-18
 
-### Fix
+### Fixed
 
 - `notInEnum` to return expected value in `expected` field of the `ErrorMessage`.
 
