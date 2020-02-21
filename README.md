@@ -194,18 +194,18 @@ The following are the common fields returned in the object from every `use'SomeI
 - `formContext`: If you want to access internal `react-hook-form` context use this
 - `getError()`: Returns an `ErrorMessage`, which has the following format:
   - `{message: ErrorTypes, expected: ErrorMessageValues}`
-  - **`ErrorTypes`**, is an enum, with the following values:
-    - `required`: the field is required to be filled
-    - `maxLength`: maximum length of string input was surpassed
-    - `minLength`: minimum length of string input was not met
-    - `maxValue`: maximum value of number input was surpassed
-    - `minValue`: minimum value of number input was not met
-    - `pattern`: the pattern or type defined in the schema was not met
-    - `notInteger`: the input was expected to be an integer but is not
-    - `notFloat`: the input was expected to be a float but is not
-    - `multipleOf`: the number is not a multiple of the number defined in the schema
-    - `notInEnum`: the input does not match any of the expected values defined in the `enum` option in the schema
-    - `undefinedError`: the error type could not be defined
+  - **`ErrorTypes`**, is an enum, with the following keys:
+    - `required`: the field is required to be filled. Value is `__form_error_required__`.
+    - `maxLength`: maximum length of string input was surpassed. Value is `__form_error_maxLength__`.
+    - `minLength`: minimum length of string input was not met. Value is `__form_error_minLength__`.
+    - `maxValue`: maximum value of number input was surpassed. Value is `__form_error_maxValue__`.
+    - `minValue`: minimum value of number input was not met. Value is `__form_error_minValue__`.
+    - `pattern`: the pattern or type defined in the schema was not met. Value is `__form_error_pattern__`.
+    - `notInteger`: the input was expected to be an integer but is not. Value is `__form_error_notInteger__`.
+    - `notFloat`: the input was expected to be a float but is not. Value is `__form_error_notFloat__`.
+    - `multipleOf`: the number is not a multiple of the number defined in the schema. Value is `__form_error_multipleOf__`.
+    - `notInEnum`: the input does not match any of the expected values defined in the `enum` option in the schema. Value is `__form_error_notInEnum__`.
+    - `undefinedError`: the error type could not be defined. Value is `__form_error_undefinedError__`.
   - **`ErrorMessageValues`**, is the expected value to be met, it will be `true` for required, and the minimum value expected for `minValue` for example.
 - `getObject()`: Returns the data field in the schema that this input refers to
 
