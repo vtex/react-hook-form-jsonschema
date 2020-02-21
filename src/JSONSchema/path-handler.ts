@@ -18,11 +18,11 @@ const useObjectFromForm = (data: JSONSchemaType): JSONSchemaType => {
   return getObjectFromForm(useFormContext().schema, data)
 }
 
-const getDataFromPath = (
-  path: string,
+const getDataFromPointer = (
+  pointer: string,
   data: JSONSchemaType
 ): undefined | string => {
-  const splitPointer = getSplitPointer(path)
+  const splitPointer = getSplitPointer(pointer)
 
   let insideProperties = false
 
@@ -51,5 +51,5 @@ export {
   useObjectFromForm,
   concatFormPointer,
   useAnnotatedSchemaFromPointer,
-  getDataFromPath,
+  getDataFromPointer,
 }
