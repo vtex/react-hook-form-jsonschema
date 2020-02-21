@@ -7,16 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0-beta.10] - 2020-02-21
+
+### Fixed
+
+- Typo in `ErrorTypes`
+
 ### Added
 
 - `onChange` and `formProps` props to `FormContext`.
+
 ### Changed
 
 - **BREAKING**: no longer uses paths starting with `$` (which was added at version `0.2.0-beta.6`) and all 'paths' should now be relative to the JSON Schema, respecting the [RFC 6901](https://tools.ietf.org/html/rfc6901) which defines the string syntax for JSON Pointers, pay special attention to [section 6](https://tools.ietf.org/html/rfc6901#section-6) which defines the URI frament identifier representation of JSON pointers.
 
 ## [0.2.0-beta.9] - 2020-02-18
 
-### Fix
+### Fixed
 
 - `notInEnum` to return expected value in `expected` field of the `ErrorMessage`.
 
