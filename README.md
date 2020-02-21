@@ -121,7 +121,7 @@ This component is the top-level component that creates the context with the sche
   - `'onChange'`: Validate when an input field value changes.
   - `'onSubmit'`: Validate when the submit is triggered.
 - `submitFocusError`: Boolean, when `true` focus on the first field with error after submit validates, if there is any. Defaults to `true`.
-- `onChange`: Callback called when there's a change in the form. It passes the form *data* formatted by the provided JSON Schema.
+- `onChange`: Callback called when there's a change in the form. It passes the form _data_ formatted by the provided JSON Schema.
 - `onSubmit`: If provided `react-hook-form-jsonschema` will call this function as the submit action, it passes an object with the following members:
   - `data`: The data that was provided as inputs to the form, correctly formatted as an instance of the JSON Schema provided.
   - `event`: A react event
@@ -675,7 +675,6 @@ Does not support fetching a JSON Schema from an URI (as per the draft this is op
 - [ ] Implement `default` values.
 - [ ] Implement `const` keyword.
 - [ ] Warn user that there is an error in the schema if any of the keywords fails to validate against the expected type and format.
-- [x] Change paths (usage of \$) to JSON Scchema pointers (usage of #) so it does not create and overhead and confusion between the two.
 
 ## Useful resources
 
