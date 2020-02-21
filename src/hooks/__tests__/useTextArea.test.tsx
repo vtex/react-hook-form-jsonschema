@@ -5,8 +5,8 @@ import { useTextArea } from '../useTextArea'
 import { FormContext } from '../../components'
 import mockTextAreaSchema from '../__mocks__/mockTextSchema'
 
-const MockTextArea: FC<{ path: string }> = props => {
-  const methods = useTextArea(props.path)
+const MockTextArea: FC<{ pointer: string }> = props => {
+  const methods = useTextArea(props.pointer)
 
   return (
     <>
@@ -25,7 +25,7 @@ test('should have string enum items', () => {
         return
       }}
     >
-      <MockTextArea path="#/properties/stringTest" />
+      <MockTextArea pointer="#/properties/stringTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -43,7 +43,7 @@ test('should have all integers in interval', () => {
         return
       }}
     >
-      <MockTextArea path="#/properties/integerTest" />
+      <MockTextArea pointer="#/properties/integerTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -56,7 +56,7 @@ test('should have all integers in interval', () => {
 test('should have all floats in interval, separated by step', () => {
   const { getByText, container } = render(
     <FormContext schema={mockTextAreaSchema}>
-      <MockTextArea path="#/properties/numberTest" />
+      <MockTextArea pointer="#/properties/numberTest" />
     </FormContext>
   )
 
@@ -73,7 +73,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockTextArea path="#/properties/errorTest" />
+      <MockTextArea pointer="#/properties/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

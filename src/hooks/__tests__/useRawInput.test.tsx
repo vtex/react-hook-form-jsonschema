@@ -6,8 +6,8 @@ import { FormContext } from '../../components'
 import { useGenericInput } from '../useGenericInput'
 import mockRawFormSchema from '../__mocks__/mockTextSchema'
 
-const MockRawForm: FC<{ path: string }> = props => {
-  const methods = useRawInput(useGenericInput(props.path), 'text')
+const MockRawForm: FC<{ pointer: string }> = props => {
+  const methods = useRawInput(useGenericInput(props.pointer), 'text')
 
   return (
     <label {...methods.getLabelProps()}>
@@ -26,7 +26,7 @@ test('should have string enum items', () => {
         return
       }}
     >
-      <MockRawForm path="#/properties/stringTest" />
+      <MockRawForm pointer="#/properties/stringTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -44,7 +44,7 @@ test('should have all integers in interval', () => {
         return
       }}
     >
-      <MockRawForm path="#/properties/integerTest" />
+      <MockRawForm pointer="#/properties/integerTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
@@ -57,7 +57,7 @@ test('should have all integers in interval', () => {
 test('should have all floats in interval, separated by step', () => {
   const { getByText, container } = render(
     <FormContext schema={mockRawFormSchema}>
-      <MockRawForm path="#/properties/numberTest" />
+      <MockRawForm pointer="#/properties/numberTest" />
     </FormContext>
   )
 
@@ -74,7 +74,7 @@ test('should raise error', async () => {
         return
       }}
     >
-      <MockRawForm path="#/properties/errorTest" />
+      <MockRawForm pointer="#/properties/errorTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )

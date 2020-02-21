@@ -6,8 +6,8 @@ import { FormContext } from '../../components'
 import { useGenericInput } from '../useGenericInput'
 import mockRawFormSchema from '../__mocks__/mockTextSchema'
 
-const MockRawForm: FC<{ path: string }> = props => {
-  const methods = useRawInput(useGenericInput(props.path), 'text')
+const MockRawForm: FC<{ pointer: string }> = props => {
+  const methods = useRawInput(useGenericInput(props.pointer), 'text')
 
   const error = methods.getError()
   return (
@@ -32,7 +32,7 @@ test('should use custom validator', async () => {
         },
       }}
     >
-      <MockRawForm path="#/properties/stringTest" />
+      <MockRawForm pointer="#/properties/stringTest" />
       <input type="submit" value="Submit" />
     </FormContext>
   )
