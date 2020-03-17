@@ -25,9 +25,11 @@ export const FormContext: FC<FormContextProps> = props => {
     validationMode = 'onSubmit',
     revalidateMode = 'onChange',
     submitFocusError = true,
+    defaultValues,
   } = props
 
   const methods = useForm({
+    defaultValues,
     mode: validationMode,
     reValidateMode: revalidateMode,
     submitFocusError: submitFocusError,
