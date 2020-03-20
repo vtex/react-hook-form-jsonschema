@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `defaultValues` prop.
+
+### Security
+
+- Upgrade all upgradable dependencies.
+
 ## [0.2.0-beta.11] - 2020-02-21
 
 ### Fixed
