@@ -1,5 +1,10 @@
 import React from 'react'
-import { FormContextValues, Mode, FieldValues } from 'react-hook-form'
+import {
+  DeepPartial,
+  FieldValues,
+  FormContextValues,
+  Mode,
+} from 'react-hook-form'
 
 import { JSONSchemaType, IDSchemaPair } from '../../JSONSchema'
 import { CustomValidators } from '../../hooks/validators'
@@ -19,7 +24,7 @@ export type OnSubmitParameters = {
 }
 export type OnSubmitType = (props: OnSubmitParameters) => void | Promise<void>
 
-export type FormContextProps = {
+export type FormContextProps<FormValues extends FieldValues = FieldValues> = {
   formProps?: Omit<React.HTMLAttributes<HTMLFormElement>, 'onSubmit'>
   validationMode?: Mode
   revalidateMode?: Mode
@@ -29,4 +34,5 @@ export type FormContextProps = {
   noNativeValidate?: boolean
   customValidators?: CustomValidators
   schema: JSONSchemaType
+  defaultValues?: DeepPartial<FormValues> | FormValues
 }

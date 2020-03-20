@@ -127,6 +127,7 @@ This component is the top-level component that creates the context with the sche
   - `event`: A react event
   - `methods`: Provides access to the methods of [`react-hook-form`](https://react-hook-form.com/api) `useForm`, from this you can extract, for example, the `triggerValidation` method to revalidate the form if an error occured while submitting.
 - `noNativeValidate`: Boolean, when `true` disables the default browser validation (notice that `react-hook-form-jsonschema` does NOT yet implement validation for URIs and email addresses).
+- `defaultValues`: An object that defines the form's default values.
 
 ## Functions API
 
