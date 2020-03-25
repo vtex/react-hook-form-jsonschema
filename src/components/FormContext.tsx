@@ -35,8 +35,14 @@ export const FormContext: FC<FormContextProps> = props => {
     submitFocusError: submitFocusError,
   })
 
-  if (typeof onChange === 'function') {
-    onChange(getObjectFromForm(props.schema, methods.watch()))
+  const isFirstRender = React.useRef(true)
+
+  const watchedInputs = methods.watch()
+
+  if (isFirstRender.current === true) {
+    isFirstRender.current = false
+  } else if (typeof onChange === 'function') {
+    onChange(getObjectFromForm(props.schema, watchedInputs))
   }
 
   const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
