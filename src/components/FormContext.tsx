@@ -35,8 +35,14 @@ export const FormContext: FC<FormContextProps> = props => {
     submitFocusError: submitFocusError,
   })
 
+  const isFirstRender = React.useRef(true)
+
   if (typeof onChange === 'function') {
-    onChange(getObjectFromForm(props.schema, methods.watch()))
+    const watchedInputs = methods.watch()
+
+    if (isFirstRender.current === false) {
+      onChange(getObjectFromForm(props.schema, watchedInputs))
+    }
   }
 
   const idMap = useMemo(() => getIdSchemaPairs(props.schema), [props.schema])
@@ -70,6 +76,10 @@ export const FormContext: FC<FormContextProps> = props => {
 
   if (props.noNativeValidate) {
     formProps.noValidate = props.noNativeValidate
+  }
+
+  if (isFirstRender.current === true) {
+    isFirstRender.current = false
   }
 
   return (
