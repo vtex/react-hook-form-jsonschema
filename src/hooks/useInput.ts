@@ -14,6 +14,9 @@ export const getInputCustomFields = (
   let inputType = 'text'
   if (currentObject.type === 'string') {
     switch (currentObject.format) {
+      case 'date':
+        inputType = 'date'
+        break
       case 'date-time':
         inputType = 'datetime-local'
         break
