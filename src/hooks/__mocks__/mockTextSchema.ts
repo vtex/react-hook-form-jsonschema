@@ -26,6 +26,31 @@ const mockTextSchema = {
       name: 'test-showError',
       minLength: 10,
     },
+    stringDateTest: {
+      type: 'string',
+      title: 'test-useInput-format-date',
+      format: 'date',
+    },
+    stringDateTimeTest: {
+      type: 'string',
+      title: 'test-useInput-format-date-time',
+      format: 'date-time',
+    },
+    stringEmailTest: {
+      type: 'string',
+      title: 'test-useInput-format-email',
+      format: 'email',
+    },
+    stringHostnameTest: {
+      type: 'string',
+      title: 'test-useInput-format-hostname',
+      format: 'hostname',
+    },
+    stringUriTest: {
+      type: 'string',
+      title: 'test-useInput-format-uri',
+      format: 'uri',
+    },
   },
 }
 
