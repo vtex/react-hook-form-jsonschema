@@ -51,16 +51,20 @@ export const getRadioCustomFields = (
     currentObject.type === 'number' ||
     currentObject.type === 'integer'
   ) {
-    const stepAndDecimalPlaces = getNumberStep(currentObject)
-    step = stepAndDecimalPlaces[0]
-    decimalPlaces = stepAndDecimalPlaces[1]
+    if (currentObject.enum) {
+      items = getEnumAsStringArray(currentObject)
+    } else {
+      const stepAndDecimalPlaces = getNumberStep(currentObject)
+      step = stepAndDecimalPlaces[0]
+      decimalPlaces = stepAndDecimalPlaces[1]
 
-    minimum = getNumberMinimum(currentObject)
-    maximum = getNumberMaximum(currentObject)
+      minimum = getNumberMinimum(currentObject)
+      maximum = getNumberMaximum(currentObject)
 
-    if (minimum !== undefined && maximum !== undefined && step != 'any') {
-      for (let i = minimum; i <= maximum; i += step) {
-        items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
+      if (minimum !== undefined && maximum !== undefined && step != 'any') {
+        for (let i = minimum; i <= maximum; i += step) {
+          items.push(toFixed(i, decimalPlaces ? decimalPlaces : 0))
+        }
       }
     }
   } else if (currentObject.type === 'boolean') {

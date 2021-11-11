@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- List values in `enum` attribute on `useRadio`
+
 ## [0.2.0] - 2021-08-03
 
 ## [0.2.0-beta.13] - 2020-03-26
