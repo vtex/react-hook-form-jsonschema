@@ -91,3 +91,20 @@ test('should raise error', async () => {
 
   await wait(() => expect(getByText('This is an error!')).toBeDefined())
 })
+
+test('should integer enum values', () => {
+  const { getByText } = render(
+    <FormContext schema={mockRadioSchema}>
+      <MockRadio pointer="#/properties/integerEnumTest" />
+    </FormContext>
+  )
+
+  expect(getByText('0')).toBeDefined()
+  expect(getByText('1')).toBeDefined()
+  expect(getByText('2')).toBeDefined()
+  expect(getByText('3')).toBeDefined()
+  expect(getByText('5')).toBeDefined()
+  expect(getByText('7')).toBeDefined()
+  expect(getByText('11')).toBeDefined()
+  expect(getByText('13')).toBeDefined()
+})

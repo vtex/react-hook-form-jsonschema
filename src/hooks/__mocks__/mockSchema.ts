@@ -19,6 +19,11 @@ const mockSchema = {
       maximum: 6,
       multipleOf: 2,
     },
+    integerEnumTest: {
+      type: 'integer',
+      title: 'test-useSelectIntegerEnum',
+      enum: [0, 1, 2, 3, 5, 7, 11, 13],
+    },
     numberTest: {
       type: 'number',
       title: 'test-useSelectNumber',

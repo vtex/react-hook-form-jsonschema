@@ -1,7 +1,7 @@
 import { JSONSchemaType, JSONSchemaBaseInstanceTypes } from '../../JSONSchema'
 
 const mapEnumItemsToString = (obj: JSONSchemaBaseInstanceTypes): string => {
-  if (obj) {
+  if (obj !== null && obj !== undefined) {
     return obj.toString()
   }
   return ''
