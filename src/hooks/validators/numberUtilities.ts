@@ -1,4 +1,4 @@
-import { ValidationOptions } from 'react-hook-form'
+import { RegisterOptions } from 'react-hook-form'
 
 import { JSONSchemaType } from '../../JSONSchema'
 import { ErrorTypes } from './types'
@@ -85,11 +85,11 @@ export const getNumberMaximum = (
 export const getNumberValidator = (
   currentObject: JSONSchemaType,
   required: boolean
-): ValidationOptions => {
+): RegisterOptions => {
   const minimum = getNumberMinimum(currentObject)
   const maximum = getNumberMaximum(currentObject)
 
-  const validator: ValidationOptions = {
+  const validator: RegisterOptions = {
     validate: {
       multipleOf: (value: string) => {
         if (currentObject.type === 'integer' && value) {

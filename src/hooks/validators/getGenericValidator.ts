@@ -1,4 +1,4 @@
-import { ValidationOptions } from 'react-hook-form'
+import { RegisterOptions } from 'react-hook-form'
 
 import {
   ErrorTypes,
@@ -32,14 +32,14 @@ function getCustomValidator(
 export const getValidator = (
   context: JSONSubSchemaInfo,
   customValidators: CustomValidators
-): ValidationOptions => {
+): RegisterOptions => {
   const { JSONSchema, isRequired } = context
 
   // The use of this variable prevents a strange undocumented behaviour of react-hook-form
   // that is it fails to validate if the `validate` field exists but is empty.
   const hasValidate =
     Object.keys(customValidators).length > 0 || JSONSchema.enum
-  const validator: ValidationOptions = {
+  const validator: RegisterOptions = {
     ...(hasValidate
       ? {
           validate: {

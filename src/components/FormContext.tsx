@@ -24,7 +24,7 @@ export const FormContext: FC<FormContextProps> = props => {
     onChange,
     validationMode = 'onSubmit',
     revalidateMode = 'onChange',
-    submitFocusError = true,
+    shouldFocusError = true,
     defaultValues,
   } = props
 
@@ -32,7 +32,7 @@ export const FormContext: FC<FormContextProps> = props => {
     defaultValues,
     mode: validationMode,
     reValidateMode: revalidateMode,
-    submitFocusError: submitFocusError,
+    shouldFocusError,
   })
 
   const isFirstRender = React.useRef(true)

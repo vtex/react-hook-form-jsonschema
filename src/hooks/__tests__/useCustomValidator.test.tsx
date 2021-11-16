@@ -51,10 +51,10 @@ test('should use custom validator', async () => {
     expect(getByText('__is_not_helena_error__')).toBeDefined()
   })
 
-  getByText('Submit').click()
   fireEvent.change(stringField, {
     target: { value: 'Helena' },
   })
+  getByText('Submit').click()
 
   await wait(() => {
     expect(queryByText('__is_not_helena_error__')).toBeNull()

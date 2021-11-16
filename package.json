@@ -52,7 +52,7 @@
     }
   },
   "dependencies": {
-    "react-hook-form": "^4.4.4"
+    "react-hook-form": "^6.15.8 <7.0.0"
   },
   "peerDependencies": {
     "react": "^16.12.0",
