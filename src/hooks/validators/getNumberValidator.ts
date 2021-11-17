@@ -1,4 +1,4 @@
-import { ValidationOptions } from 'react-hook-form'
+import { RegisterOptions } from 'react-hook-form'
 
 import { getNumberMaximum, getNumberMinimum } from './numberUtilities'
 import { JSONSchemaType } from '../../JSONSchema'
@@ -6,8 +6,8 @@ import { ErrorTypes } from './types'
 
 export const getNumberValidator = (
   currentObject: JSONSchemaType,
-  baseValidator: ValidationOptions
-): ValidationOptions => {
+  baseValidator: RegisterOptions
+): RegisterOptions => {
   const minimum = getNumberMinimum(currentObject)
   const maximum = getNumberMaximum(currentObject)
 

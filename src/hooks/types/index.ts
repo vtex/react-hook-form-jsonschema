@@ -1,5 +1,5 @@
 import React from 'react'
-import { ValidationOptions, FieldValues } from 'react-hook-form'
+import { FieldValues, RegisterOptions } from 'react-hook-form'
 
 import { ErrorMessage } from '../validators'
 import { JSONSchemaType } from '../../JSONSchema'
@@ -34,7 +34,7 @@ export interface BasicInputReturnType {
   name: string
   type: InputTypes
   pointer: string
-  validator: ValidationOptions
+  validator: RegisterOptions
 }
 
 export interface GenericInputParameters {
