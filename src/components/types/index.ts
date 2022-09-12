@@ -25,6 +25,7 @@ export type OnSubmitParameters = {
 export type OnSubmitType = (props: OnSubmitParameters) => void | Promise<void>
 
 export type FormContextProps<FormValues extends FieldValues = FieldValues> = {
+  children?: React.ReactNode
   formProps?: Omit<React.HTMLAttributes<HTMLFormElement>, 'onSubmit'>
   validationMode?: Mode
   revalidateMode?: Mode

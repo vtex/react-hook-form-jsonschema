@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix `FormControlProps` to allow `children` on [React 18+](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-typescript-definitions).
+
 ## [0.2.0] - 2021-08-03
 
 ## [0.2.0-beta.13] - 2020-03-26
